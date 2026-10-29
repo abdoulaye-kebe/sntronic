@@ -1,0 +1,30 @@
+/** Coordonnées et conditions affichées sur le site. À personnaliser. */
+export const site = {
+  name: "SNTRONIC",
+  email: "contact@sntronic.fr",
+  phone: "",
+  hours: "Du lundi au vendredi, 9h–18h",
+  cityLine: "Expédition depuis la France",
+  vatRate: 0.2,
+  /** Parité fixe du franc CFA (BCEAO) : 1 € = 655,957 F CFA. */
+  eurToXof: 655.957,
+  shippingTtc: 8.9,
+  freeShippingFromTtc: 150,
+  returnsDays: 14,
+  adminPin: "atelier",
+  countries: [
+    "France",
+    "Belgique",
+    "Suisse",
+    "Luxembourg",
+    "Sénégal",
+    "Côte d’Ivoire",
+    "Mali",
+    "Burkina Faso",
+    "Bénin",
+    "Togo",
+    "Niger",
+    "Guinée-Bissau",
+    "Autre",
+  ],
+};
