@@ -48,7 +48,7 @@ export function DeviceArt({
             fill={tone.fg}
             opacity="0.72"
             fontSize="12"
-            fontFamily="Instrument Sans, sans-serif"
+            fontFamily="Source Sans 3, sans-serif"
           >
             {label}
           </text>

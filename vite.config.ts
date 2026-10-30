@@ -67,5 +67,8 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   return {
     plugins: [shopChat(env.GEMINI_API_KEY, env.GEMINI_MODEL || "gemini-flash-lite-latest"), tailwindcss(), react()],
+    preview: {
+      allowedHosts: true,
+    },
   };
 });

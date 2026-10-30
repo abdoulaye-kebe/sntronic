@@ -83,7 +83,10 @@ export function HomePage() {
           </button>
           <div className="wrap vitrine-inner">
             <div>
-              <p className="vitrine-kicker">{slide.line}</p>
+              <p className="vitrine-kicker">
+                <span>{String(safeIndex + 1).padStart(2, "0")}</span>
+                {slide.line}
+              </p>
               <h1>{slide.name}</h1>
               <p className="vitrine-text">{slide.summary}</p>
               <Link className="btn btn-banner" to={`/produit/${slide.slug}`}>
