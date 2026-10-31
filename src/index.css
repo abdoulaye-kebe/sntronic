@@ -262,11 +262,12 @@ a { color: inherit; }
 .home-lead { padding-top: 2.4rem; }
 
 .home-lead h1 {
-  max-width: 18ch;
-  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  max-width: none;
+  font-size: clamp(1.45rem, 2.3vw, 2.15rem);
   font-weight: 650;
   letter-spacing: -0.03em;
   line-height: 1.12;
+  white-space: nowrap;
 }
 
 .home-actions {
@@ -1813,6 +1814,7 @@ details p { margin-top: 0.45rem; color: var(--muted); }
 
 @media (max-width: 900px) {
   .family-grid, .use-grid, .catalog .grid-products, .offer-grid { grid-template-columns: 1fr 1fr; }
+  .home-lead h1 { white-space: normal; }
 }
 
 @media (max-width: 900px) {
