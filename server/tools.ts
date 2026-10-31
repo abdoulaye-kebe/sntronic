@@ -21,12 +21,10 @@ export type ShopCard = {
 export type ChatTurn = { role: "user" | "model"; text: string };
 
 const FAMILIES = [
-  { id: "lorawan", name: "Capteurs LoRaWAN" },
-  { id: "lte-m", name: "Terminaux LTE-M" },
-  { id: "nb-iot", name: "Terminaux NB-IoT" },
-  { id: "passerelles-lorawan", name: "Passerelles LoRaWAN" },
-  { id: "passerelles-iot", name: "Passerelles IoT" },
+  { id: "devices", name: "Devices" },
+  { id: "gateways", name: "Gateways" },
   { id: "modules", name: "Modules électroniques" },
+  { id: "domotique", name: "Domotique" },
 ];
 
 function clip(value: unknown, max: number): string {

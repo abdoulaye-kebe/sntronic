@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Link, NavLink, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useCart } from "../context/CartContext.tsx";
 import { useCatalog } from "../context/CatalogContext.tsx";
-import { categories, productsIn, type CategoryId } from "../data/catalog.ts";
+import { aisles, productsInAisle, type AisleId } from "../data/catalog.ts";
 import { formatEUR, formatXOF, lineTtc, toXof } from "../lib/money.ts";
 import { Logo } from "./Logo.tsx";
 
@@ -16,7 +16,7 @@ export function Header() {
   const [focused, setFocused] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [rail, setRail] = useState<CategoryId | null>(null);
+  const [rail, setRail] = useState<AisleId | null>(null);
 
   useEffect(() => {
     setQuery(params.get("q") ?? "");
@@ -42,8 +42,8 @@ export function Header() {
   }, [menuOpen, rail, searchOpen]);
 
   const results = useMemo(() => (query.trim().length < 2 ? [] : search(query).slice(0, 6)), [query, search]);
-  const openCategory = categories.find((category) => category.id === rail);
-  const openProducts = openCategory ? productsIn(openCategory.id, products).slice(0, 10) : [];
+  const openAisle = aisles.find((aisle) => aisle.id === rail);
+  const openProducts = openAisle ? productsInAisle(openAisle.id, products).slice(0, 10) : [];
 
   function submitSearch(event: FormEvent) {
     event.preventDefault();
@@ -101,7 +101,7 @@ export function Header() {
             )}
           </form>
           <nav className="shop-links" aria-label="Raccourcis">
-            <a href="/#nouveautes">Nouveautés</a>
+            <a href="/catalogue">Catalogue</a>
             <NavLink to="/guide">Guide</NavLink>
             <NavLink to="/contact">Contact</NavLink>
             <button type="button" className="cart-link" aria-label={`Panier, ${count} article${count > 1 ? "s" : ""}`} onClick={() => setOpen(true)}>
@@ -137,28 +137,28 @@ export function Header() {
       </div>
       <div className="rail-wrap" onMouseLeave={() => setRail(null)}>
         <nav className="wrap rail" aria-label="Familles">
-          {categories.map((category) => {
-            const current = location.pathname === `/catalogue/${category.id}`;
-            const on = rail === category.id || current;
+          {aisles.map((aisle) => {
+            const current = location.pathname === `/catalogue/${aisle.id}`;
+            const on = rail === aisle.id || current;
             return (
               <NavLink
-                key={category.id}
-                to={`/catalogue/${category.id}`}
+                key={aisle.id}
+                to={`/catalogue/${aisle.id}`}
                 className={on ? "on" : undefined}
-                onMouseEnter={() => setRail(category.id)}
-                onFocus={() => setRail(category.id)}
+                onMouseEnter={() => setRail(aisle.id)}
+                onFocus={() => setRail(aisle.id)}
               >
-                <CategoryGlyph id={category.id} />
-                <span>{category.name}</span>
+                <AisleGlyph id={aisle.id} />
+                <span>{aisle.name}</span>
               </NavLink>
             );
           })}
         </nav>
-        {openCategory && (
+        {openAisle && (
           <div className="mega">
             <div className="wrap mega-inner">
               <div>
-                <p className="mega-title">{openCategory.name}</p>
+                <p className="mega-title">{openAisle.name}</p>
                 <div className="mega-cols">
                   {openProducts.map((product) => (
                     <Link key={product.slug} to={`/produit/${product.slug}`}>
@@ -167,8 +167,8 @@ export function Header() {
                   ))}
                 </div>
               </div>
-              <Link className="btn btn-clay" to={`/catalogue/${openCategory.id}`}>
-                Voir la famille
+              <Link className="btn btn-clay" to={`/catalogue/${openAisle.id}`}>
+                Voir le rayon
               </Link>
             </div>
           </div>
@@ -179,13 +179,13 @@ export function Header() {
           <NavLink to="/catalogue" onClick={() => setMenuOpen(false)}>
             Catalogue
           </NavLink>
-          {categories.map((category) => (
-            <NavLink key={category.id} to={`/catalogue/${category.id}`} onClick={() => setMenuOpen(false)}>
-              {category.name}
+          {aisles.map((aisle) => (
+            <NavLink key={aisle.id} to={`/catalogue/${aisle.id}`} onClick={() => setMenuOpen(false)}>
+              {aisle.name}
             </NavLink>
           ))}
-          <a href="/#nouveautes" onClick={() => setMenuOpen(false)}>
-            Nouveautés
+          <a href="/catalogue" onClick={() => setMenuOpen(false)}>
+            Catalogue
           </a>
           <NavLink to="/guide" onClick={() => setMenuOpen(false)}>
             Guide de choix
@@ -199,7 +199,7 @@ export function Header() {
   );
 }
 
-function CategoryGlyph({ id }: { id: CategoryId }) {
+function AisleGlyph({ id }: { id: AisleId }) {
   const common = {
     width: 22,
     height: 22,
@@ -209,29 +209,13 @@ function CategoryGlyph({ id }: { id: CategoryId }) {
     strokeWidth: 1.6,
     "aria-hidden": true as const,
   };
-  if (id === "lorawan") {
+  if (id === "devices") {
     return (
       <svg {...common}>
         <path d="M5 12a7 7 0 0 1 14 0" />
         <path d="M8 12a4 4 0 0 1 8 0" />
         <circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none" />
         <path d="M12 13.5V20" />
-      </svg>
-    );
-  }
-  if (id === "lte-m") {
-    return (
-      <svg {...common}>
-        <rect x="8" y="3" width="8" height="18" rx="2" />
-        <path d="M11 18h2" />
-      </svg>
-    );
-  }
-  if (id === "nb-iot") {
-    return (
-      <svg {...common}>
-        <circle cx="12" cy="12" r="3" />
-        <path d="M12 3v3M12 18v3M3 12h3M18 12h3" />
       </svg>
     );
   }
@@ -243,13 +227,11 @@ function CategoryGlyph({ id }: { id: CategoryId }) {
       </svg>
     );
   }
-  if (id === "passerelles-iot") {
+  if (id === "domotique") {
     return (
       <svg {...common}>
-        <rect x="3" y="9" width="7" height="6" rx="1" />
-        <rect x="14" y="4" width="7" height="6" rx="1" />
-        <rect x="14" y="14" width="7" height="6" rx="1" />
-        <path d="M10 12h4M14 7H12v10h2" />
+        <path d="M4 11.5 12 5l8 6.5" />
+        <path d="M7 10.5V19h10v-8.5" />
       </svg>
     );
   }

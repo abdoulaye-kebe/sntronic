@@ -1,4 +1,4 @@
-import { getCategory, type Product } from "../data/catalog.ts";
+import { aisleOf, getAisle, type Product } from "../data/catalog.ts";
 import { formatEUR, formatXOF, lineTtc, toXof } from "./money.ts";
 
 export function catalogForChat(products: Product[]) {
@@ -8,8 +8,8 @@ export function catalogForChat(products: Product[]) {
       slug: product.slug,
       ref: product.ref,
       name: product.name,
-      category: product.category,
-      categoryName: getCategory(product.category)?.name ?? product.category,
+      category: aisleOf(product),
+      categoryName: getAisle(aisleOf(product))?.name ?? product.category,
       line: product.line,
       connectivity: product.connectivity,
       environment: product.environment,

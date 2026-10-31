@@ -3,23 +3,25 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { Breadcrumb } from "../components/Breadcrumb.tsx";
 import { ProductCard } from "../components/ProductCard.tsx";
 import { useCatalog } from "../context/CatalogContext.tsx";
-import { getCategory, normalize, type Product } from "../data/catalog.ts";
+import { aisleOf, getAisle, getCategory, normalize, type Product } from "../data/catalog.ts";
 import { useTitle } from "../lib/useTitle.ts";
 import { NotFoundPage } from "./NotFoundPage.tsx";
 
 export function CatalogPage() {
   const { category: categoryId } = useParams();
+  const aisle = categoryId ? getAisle(categoryId) : undefined;
   const category = categoryId ? getCategory(categoryId) : undefined;
   const [params, setParams] = useSearchParams();
   const { products: allProducts } = useCatalog();
 
-  const title = category?.name ?? "Catalogue";
-  useTitle(categoryId && !category ? "Page introuvable" : title);
+  const title = aisle?.name ?? category?.name ?? "Catalogue";
+  useTitle(categoryId && !aisle && !category ? "Page introuvable" : title);
 
-  const base = useMemo(
-    () => (category ? allProducts.filter((product) => product.category === category.id) : allProducts),
-    [allProducts, category],
-  );
+  const base = useMemo(() => {
+    if (aisle) return allProducts.filter((product) => aisleOf(product) === aisle.id);
+    if (category) return allProducts.filter((product) => product.category === category.id);
+    return allProducts;
+  }, [allProducts, aisle, category]);
 
   const query = params.get("q") ?? "";
   const network = params.get("reseau") ?? "";
@@ -47,7 +49,7 @@ export function CatalogPage() {
     return sortProducts(filtered, sort);
   }, [availability, base, network, place, query, sort]);
 
-  if (categoryId && !category) return <NotFoundPage />;
+  if (categoryId && !aisle && !category) return <NotFoundPage />;
 
   function setParam(key: string, value: string) {
     const next = new URLSearchParams(params);
@@ -64,7 +66,7 @@ export function CatalogPage() {
         items={[
           { label: "Accueil", to: "/" },
           { label: "Catalogue", to: "/catalogue" },
-          ...(category ? [{ label: category.name }] : []),
+          ...(aisle ? [{ label: aisle.name }] : category ? [{ label: category.name }] : []),
         ]}
       />
       <div className="catalog">
@@ -125,7 +127,7 @@ export function CatalogPage() {
           <header className="section-head">
             <div>
               <h1 className="section-title">{title}</h1>
-              <p>{category?.text ?? "Capteurs, terminaux cellulaires, passerelles et modules."}</p>
+              <p>{aisle?.pitch ?? category?.text ?? "Devices, gateways, modules électroniques et domotique."}</p>
             </div>
             <label className="sort-label">
               <span className="sr-only">Trier</span>

@@ -7,7 +7,7 @@ import { ProductCard } from "../components/ProductCard.tsx";
 import { QtyStepper } from "../components/QtyStepper.tsx";
 import { useCart } from "../context/CartContext.tsx";
 import { useCatalog } from "../context/CatalogContext.tsx";
-import { getCategory, relatedProducts } from "../data/catalog.ts";
+import { aisleOf, getAisle, relatedProducts } from "../data/catalog.ts";
 import { site } from "../data/site.ts";
 import { formatEUR, formatXOF, toXof } from "../lib/money.ts";
 import { useTitle } from "../lib/useTitle.ts";
@@ -28,7 +28,7 @@ export function ProductPage() {
 
   if (!product) return <NotFoundPage />;
 
-  const category = getCategory(product.category);
+  const aisle = getAisle(aisleOf(product));
   const related = relatedProducts(product, 3, products);
   const safeQty = Math.min(Math.max(qty, 1), Math.max(product.stock, 1));
 
@@ -38,7 +38,7 @@ export function ProductPage() {
         items={[
           { label: "Accueil", to: "/" },
           { label: "Catalogue", to: "/catalogue" },
-          { label: category?.name ?? "Catalogue", to: category ? `/catalogue/${category.id}` : "/catalogue" },
+          { label: aisle?.name ?? "Catalogue", to: aisle ? `/catalogue/${aisle.id}` : "/catalogue" },
           { label: product.name },
         ]}
       />

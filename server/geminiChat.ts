@@ -22,7 +22,7 @@ const declarations = [
         category: {
           type: Type.STRING,
           description: "Identifiant de famille, si la question en vise une.",
-          enum: ["lorawan", "lte-m", "nb-iot", "passerelles-lorawan", "passerelles-iot", "modules"],
+          enum: ["devices", "gateways", "modules", "domotique"],
         },
         connectivity: {
           type: Type.STRING,
@@ -62,7 +62,7 @@ Pour un produit, un prix, un stock ou une référence, appelle search_products o
 
 Quand tu cites un produit, ajoute un lien markdown [Nom](/produit/slug) avec le slug renvoyé. Propose au plus trois références.
 
-Les prix sont ceux de la boutique, pas des tarifs officiels de fabricant. Ne parle pas d’administration, de code d’accès, ni de clé API. Si la question sort du catalogue, ramène vers un capteur, une passerelle ou un module.`;
+Le catalogue public a quatre rayons : devices, gateways, modules, domotique. Les prix sont ceux de la boutique, pas des tarifs officiels de fabricant. Ne parle pas d’administration, de code d’accès, ni de clé API. Si la question sort du catalogue, ramène vers un de ces rayons.`;
 
 export async function answerShop(options: {
   apiKey: string | undefined;

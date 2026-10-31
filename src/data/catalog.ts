@@ -1509,8 +1509,64 @@ export const products: Product[] = [
   },
 ];
 
+const DOMOTIQUE = new Set([
+  "tektelic-vivid",
+  "tektelic-aeris",
+  "tektelic-breeze",
+  "tektelic-comfort",
+  "tektelic-harmony",
+  "fieldnode-air",
+  "fieldnode-door",
+  "cellspan-leak",
+]);
+
+export const aisles = [
+  {
+    id: "devices",
+    name: "Devices",
+    pitch: "Capteurs et terminaux, sur site ou en déplacement.",
+    cover: "tektelic-tundra",
+  },
+  {
+    id: "gateways",
+    name: "Gateways",
+    pitch: "Le lien entre les capteurs et Internet.",
+    cover: "sensecap-m2",
+  },
+  {
+    id: "modules",
+    name: "Modules électroniques",
+    pitch: "Radios, interfaces et alimentations à intégrer.",
+    cover: "modulab-rf",
+  },
+  {
+    id: "domotique",
+    name: "Domotique",
+    pitch: "Pièce, air, présence et ouverture.",
+    cover: "tektelic-comfort",
+  },
+] as const;
+
+export type Aisle = (typeof aisles)[number];
+export type AisleId = Aisle["id"];
+
 export function getCategory(id: string | undefined): Category | undefined {
   return categories.find((category) => category.id === id);
+}
+
+export function getAisle(id: string | undefined): Aisle | undefined {
+  return aisles.find((aisle) => aisle.id === id);
+}
+
+export function aisleOf(product: { slug: string; category: string }): AisleId {
+  if (DOMOTIQUE.has(product.slug)) return "domotique";
+  if (product.category === "modules") return "modules";
+  if (product.category === "passerelles-lorawan" || product.category === "passerelles-iot") return "gateways";
+  return "devices";
+}
+
+export function productsInAisle(aisle: AisleId, list: Product[] = products): Product[] {
+  return list.filter((product) => aisleOf(product) === aisle);
 }
 
 export function productImage(product: { slug: string; image?: string }): string {
@@ -1555,7 +1611,6 @@ export function searchProducts(query: string, list: Product[] = products): Produ
 }
 
 export function relatedProducts(product: Product, count = 3, list: Product[] = products): Product[] {
-  return list
-    .filter((item) => item.category === product.category && item.slug !== product.slug)
-    .slice(0, count);
+  const aisle = aisleOf(product);
+  return list.filter((item) => aisleOf(item) === aisle && item.slug !== product.slug).slice(0, count);
 }

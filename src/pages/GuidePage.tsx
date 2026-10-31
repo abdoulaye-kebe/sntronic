@@ -70,7 +70,7 @@ export function GuidePage() {
             Vous avez plusieurs points sur le même lieu et vous pouvez poser une passerelle avec Ethernet, ou un lien
             4G. Les capteurs Fieldnode et une Gatehouse intérieure ou extérieure forment le kit de base. Bande EU868.
           </p>
-          <Link to="/catalogue/lorawan">Voir les capteurs</Link>
+          <Link to="/catalogue/devices">Voir les devices</Link>
         </article>
         <article>
           <h2>Commencer par le cellulaire</h2>
@@ -78,7 +78,7 @@ export function GuidePage() {
             Le point est seul, loin, ou il bouge. LTE-M si l’objet se déplace ou envoie plus souvent. NB-IoT s’il reste
             en place et doit tenir longtemps. La couverture dépend de l’opérateur et de la SIM que vous choisissez.
           </p>
-          <Link to="/catalogue/lte-m">Voir le LTE-M</Link>
+          <Link to="/catalogue/devices">Voir les devices</Link>
         </article>
         <article>
           <h2>Vous construisez la carte</h2>

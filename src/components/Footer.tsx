@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { categories } from "../data/catalog.ts";
+import { aisles } from "../data/catalog.ts";
 import { site } from "../data/site.ts";
 import { Logo } from "./Logo.tsx";
 
@@ -17,9 +17,9 @@ export function Footer() {
         <div>
           <h2>Catalogue</h2>
           <ul>
-            {categories.map((category) => (
-              <li key={category.id}>
-                <Link to={`/catalogue/${category.id}`}>{category.name}</Link>
+            {aisles.map((aisle) => (
+              <li key={aisle.id}>
+                <Link to={`/catalogue/${aisle.id}`}>{aisle.name}</Link>
               </li>
             ))}
           </ul>
