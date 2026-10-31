@@ -70,11 +70,32 @@ export function CatalogPage() {
         ]}
       />
       <div className="catalog">
-        <aside className="filters">
+        <header className="section-head catalog-head">
+          <div>
+            <div className="catalog-title">
+              <h1 className="section-title">{title}</h1>
+              <p className="result-count">
+                {list.length === 0 ? "Aucune référence" : `${list.length} référence${list.length > 1 ? "s" : ""}`}
+                {query ? ` pour « ${query} »` : ""}
+              </p>
+            </div>
+            <p>{aisle?.pitch ?? category?.text ?? "Devices, gateways, modules électroniques et domotique."}</p>
+          </div>
+          <label className="sort-label">
+            <span className="sr-only">Trier</span>
+            <select className="sort" value={sort} onChange={(event) => setParam("tri", event.target.value)}>
+              <option value="">Mise en avant</option>
+              <option value="prix-asc">Prix croissant</option>
+              <option value="prix-desc">Prix décroissant</option>
+              <option value="nom">Nom</option>
+            </select>
+          </label>
+        </header>
+        <div className="catalog-bar">
           <fieldset>
-            <legend>Connectivité</legend>
+            <legend>Réseau</legend>
             <button type="button" className={network === "" ? "pill on" : "pill"} onClick={() => setParam("reseau", "")}>
-              Toutes
+              Tous
             </button>
             {networks.map((item) => (
               <button
@@ -88,7 +109,7 @@ export function CatalogPage() {
             ))}
           </fieldset>
           <fieldset>
-            <legend>Usage</legend>
+            <legend>Lieu</legend>
             <button type="button" className={place === "" ? "pill on" : "pill"} onClick={() => setParam("lieu", "")}>
               Tous
             </button>
@@ -104,7 +125,7 @@ export function CatalogPage() {
             ))}
           </fieldset>
           <fieldset>
-            <legend>Disponibilité</legend>
+            <legend>Stock</legend>
             <button
               type="button"
               className={availability === "stock" ? "pill on" : "pill"}
@@ -114,49 +135,22 @@ export function CatalogPage() {
             </button>
           </fieldset>
           {filtersOn && (
-            <button
-              type="button"
-              className="text-btn"
-              onClick={() => setParams(new URLSearchParams())}
-            >
-              Effacer les filtres
+            <button type="button" className="text-btn" onClick={() => setParams(new URLSearchParams())}>
+              Effacer
             </button>
           )}
-        </aside>
-        <div>
-          <header className="section-head">
-            <div>
-              <h1 className="section-title">{title}</h1>
-              <p>{aisle?.pitch ?? category?.text ?? "Devices, gateways, modules électroniques et domotique."}</p>
-            </div>
-            <label className="sort-label">
-              <span className="sr-only">Trier</span>
-              <select className="sort" value={sort} onChange={(event) => setParam("tri", event.target.value)}>
-                <option value="">Mise en avant</option>
-                <option value="prix-asc">Prix croissant</option>
-                <option value="prix-desc">Prix décroissant</option>
-                <option value="nom">Nom</option>
-              </select>
-            </label>
-          </header>
-          <p className="result-count">
-            {list.length === 0
-              ? "Aucune référence"
-              : `${list.length} référence${list.length > 1 ? "s" : ""}`}
-            {query ? ` pour « ${query} »` : ""}
-          </p>
-          {list.length === 0 ? (
-            <div className="empty">
-              <p>Aucune fiche ne correspond. Élargissez la connectivité ou effacez la recherche.</p>
-            </div>
-          ) : (
-            <div className="grid-products">
-              {list.map((product) => (
-                <ProductCard key={product.slug} product={product} />
-              ))}
-            </div>
-          )}
         </div>
+        {list.length === 0 ? (
+          <div className="empty">
+            <p>Aucune fiche ne correspond. Élargissez le réseau ou effacez la recherche.</p>
+          </div>
+        ) : (
+          <div className="grid-products">
+            {list.map((product) => (
+              <ProductCard key={product.slug} product={product} compact />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

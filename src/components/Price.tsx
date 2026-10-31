@@ -4,10 +4,12 @@ export function Price({
   ht,
   qty = 1,
   large = false,
+  compact = false,
 }: {
   ht: number;
   qty?: number;
   large?: boolean;
+  compact?: boolean;
 }) {
   const ttc = lineTtc(ht, qty);
   const amountHt = round2(ht * qty);
@@ -17,9 +19,11 @@ export function Price({
         {formatEUR(ttc)} <span className="tax">TTC</span>
       </span>
       <span className="price-xof">{formatXOF(toXof(ttc))}</span>
-      <span className="price-ht">
-        {formatEUR(amountHt)} HT · {formatXOF(toXof(amountHt))} HT
-      </span>
+      {compact ? null : (
+        <span className="price-ht">
+          {formatEUR(amountHt)} HT · {formatXOF(toXof(amountHt))} HT
+        </span>
+      )}
     </p>
   );
 }

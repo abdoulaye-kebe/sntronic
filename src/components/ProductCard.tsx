@@ -7,7 +7,15 @@ import { ProductPhoto } from "./ProductPhoto.tsx";
 import { Price, Stock } from "./Price.tsx";
 import { QtyStepper } from "./QtyStepper.tsx";
 
-export function ProductCard({ product, shelf = false }: { product: Product; shelf?: boolean }) {
+export function ProductCard({
+  product,
+  shelf = false,
+  compact = false,
+}: {
+  product: Product;
+  shelf?: boolean;
+  compact?: boolean;
+}) {
   const { add } = useCart();
   const [qty, setQty] = useState(1);
 
@@ -46,7 +54,7 @@ export function ProductCard({ product, shelf = false }: { product: Product; shel
   }
 
   return (
-    <article className="card">
+    <article className={compact ? "card card-compact" : "card"}>
       <Link className="card-main" to={`/produit/${product.slug}`}>
         <div className="art-wrap">
           {product.badge && <span className="badge">{product.badge}</span>}
@@ -57,14 +65,18 @@ export function ProductCard({ product, shelf = false }: { product: Product; shel
             {product.line} · {product.ref}
           </p>
           <h3>{product.name}</h3>
-          <p className="card-summary">{product.summary}</p>
-          <ul className="chips">
-            {product.highlights.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-          <Price ht={product.priceHt} />
-          <Stock stock={product.stock} lead={product.lead} />
+          {compact ? null : (
+            <>
+              <p className="card-summary">{product.summary}</p>
+              <ul className="chips">
+                {product.highlights.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </>
+          )}
+          <Price ht={product.priceHt} compact={compact} />
+          <Stock stock={product.stock} lead={compact ? undefined : product.lead} />
         </div>
       </Link>
       <div className="card-actions">
