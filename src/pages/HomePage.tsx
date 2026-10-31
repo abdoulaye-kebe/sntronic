@@ -102,7 +102,7 @@ export function HomePage() {
         <div className="offer-grid">
           {services.map((service) => (
             <article key={service.title} className="offer-card">
-              <h2>{service.title}</h2>
+              <h2>{service.short}</h2>
               <p>{service.text}</p>
             </article>
           ))}
