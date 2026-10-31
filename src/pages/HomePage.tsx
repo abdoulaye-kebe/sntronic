@@ -93,42 +93,6 @@ export function HomePage() {
 
   return (
     <>
-      <section className="wrap home-lead">
-        <p className="eyebrow">SNTRONIC</p>
-        <h1>Le comptoir des sites qui doivent remonter une mesure.</h1>
-        <p className="lede">
-          Capteurs LoRaWAN, terminaux LTE-M et NB-IoT, passerelles et modules. Chaque fiche indique le réseau, le prix
-          en euros et en francs CFA, et le stock. L’atelier répond avant la commande quand le site est à dimensionner.
-        </p>
-        <div className="home-actions">
-          <Link className="btn btn-primary" to="/catalogue">
-            Voir le catalogue
-          </Link>
-          <Link className="btn btn-clay" to="/contact">
-            Demander un devis
-          </Link>
-        </div>
-      </section>
-
-      <section className="wrap section home-families" id="familles">
-        <div className="shelf-head">
-          <h2>Choisir une famille</h2>
-          <Link to="/catalogue">Tout le catalogue</Link>
-        </div>
-        <div className="family-grid">
-          {categories.map((category) => {
-            const cover = getProduct(familyCovers[category.id]);
-            return (
-              <Link key={category.id} className="family-card" to={`/catalogue/${category.id}`}>
-                {cover ? <ProductPhoto product={cover} alt="" /> : <div className="photo photo-studio" />}
-                <p>{category.pitch}</p>
-                <span>{category.name}</span>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
-
       {slide && (
         <section className={`vitrine ${slideTones[safeIndex] ?? "vitrine-pine"}`} aria-roledescription="carrousel">
           <button
@@ -190,6 +154,42 @@ export function HomePage() {
           </div>
         </section>
       )}
+
+      <section className="wrap home-lead">
+        <p className="eyebrow">SNTRONIC</p>
+        <h1>Le comptoir des sites qui doivent remonter une mesure.</h1>
+        <p className="lede">
+          Capteurs LoRaWAN, terminaux LTE-M et NB-IoT, passerelles et modules. Chaque fiche indique le réseau, le prix
+          en euros et en francs CFA, et le stock. L’atelier répond avant la commande quand le site est à dimensionner.
+        </p>
+        <div className="home-actions">
+          <Link className="btn btn-primary" to="/catalogue">
+            Voir le catalogue
+          </Link>
+          <Link className="btn btn-clay" to="/contact">
+            Demander un devis
+          </Link>
+        </div>
+      </section>
+
+      <section className="wrap section home-families" id="familles">
+        <div className="shelf-head">
+          <h2>Choisir une famille</h2>
+          <Link to="/catalogue">Tout le catalogue</Link>
+        </div>
+        <div className="family-grid">
+          {categories.map((category) => {
+            const cover = getProduct(familyCovers[category.id]);
+            return (
+              <Link key={category.id} className="family-card" to={`/catalogue/${category.id}`}>
+                {cover ? <ProductPhoto product={cover} alt="" /> : <div className="photo photo-studio" />}
+                <p>{category.pitch}</p>
+                <span>{category.name}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
 
       <section className="wrap section" id="nouveautes">
         <div className="shelf-head">
