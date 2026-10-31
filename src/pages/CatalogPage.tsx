@@ -24,30 +24,19 @@ export function CatalogPage() {
   }, [allProducts, aisle, category]);
 
   const query = params.get("q") ?? "";
-  const network = params.get("reseau") ?? "";
-  const place = params.get("lieu") ?? "";
-  const availability = params.get("dispo") ?? "";
   const sort = params.get("tri") ?? "";
-
-  const networks = unique(base.map((product) => product.connectivity));
-  const places = unique(base.map((product) => product.environment));
 
   const list = useMemo(() => {
     const needle = normalize(query);
     const filtered = base.filter((product) => {
-      if (needle) {
-        const haystack = normalize(
-          [product.name, product.ref, product.line, product.summary, product.highlights.join(" ")].join(" "),
-        );
-        if (!haystack.includes(needle)) return false;
-      }
-      if (network && product.connectivity !== network) return false;
-      if (place && product.environment !== place) return false;
-      if (availability === "stock" && product.stock <= 0) return false;
-      return true;
+      if (!needle) return true;
+      const haystack = normalize(
+        [product.name, product.ref, product.line, product.summary, product.highlights.join(" ")].join(" "),
+      );
+      return haystack.includes(needle);
     });
     return sortProducts(filtered, sort);
-  }, [availability, base, network, place, query, sort]);
+  }, [base, query, sort]);
 
   if (categoryId && !aisle && !category) return <NotFoundPage />;
 
@@ -57,8 +46,6 @@ export function CatalogPage() {
     else next.set(key, value);
     setParams(next);
   }
-
-  const filtersOn = Boolean(query || network || place || availability);
 
   return (
     <div className="wrap page">
@@ -91,58 +78,9 @@ export function CatalogPage() {
             </select>
           </label>
         </header>
-        <div className="catalog-bar">
-          <fieldset>
-            <legend>Réseau</legend>
-            <button type="button" className={network === "" ? "pill on" : "pill"} onClick={() => setParam("reseau", "")}>
-              Tous
-            </button>
-            {networks.map((item) => (
-              <button
-                key={item}
-                type="button"
-                className={network === item ? "pill on" : "pill"}
-                onClick={() => setParam("reseau", item)}
-              >
-                {item}
-              </button>
-            ))}
-          </fieldset>
-          <fieldset>
-            <legend>Lieu</legend>
-            <button type="button" className={place === "" ? "pill on" : "pill"} onClick={() => setParam("lieu", "")}>
-              Tous
-            </button>
-            {places.map((item) => (
-              <button
-                key={item}
-                type="button"
-                className={place === item ? "pill on" : "pill"}
-                onClick={() => setParam("lieu", item)}
-              >
-                {item}
-              </button>
-            ))}
-          </fieldset>
-          <fieldset>
-            <legend>Stock</legend>
-            <button
-              type="button"
-              className={availability === "stock" ? "pill on" : "pill"}
-              onClick={() => setParam("dispo", availability === "stock" ? "" : "stock")}
-            >
-              En stock
-            </button>
-          </fieldset>
-          {filtersOn && (
-            <button type="button" className="text-btn" onClick={() => setParams(new URLSearchParams())}>
-              Effacer
-            </button>
-          )}
-        </div>
         {list.length === 0 ? (
           <div className="empty">
-            <p>Aucune fiche ne correspond. Élargissez le réseau ou effacez la recherche.</p>
+            <p>Aucune fiche ne correspond.</p>
           </div>
         ) : (
           <div className="grid-products">
@@ -154,10 +92,6 @@ export function CatalogPage() {
       </div>
     </div>
   );
-}
-
-function unique<T extends string>(values: T[]): T[] {
-  return [...new Set(values)];
 }
 
 function sortProducts(list: Product[], sort: string): Product[] {

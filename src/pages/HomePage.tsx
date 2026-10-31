@@ -4,32 +4,10 @@ import { ProductPhoto } from "../components/ProductPhoto.tsx";
 import { useCatalog } from "../context/CatalogContext.tsx";
 import { aisles } from "../data/catalog.ts";
 import { useTitle } from "../lib/useTitle.ts";
+import { services } from "./ServicesPage.tsx";
 
 const slideSlugs = ["tektelic-vivid", "sensecap-s2120", "tektelic-breeze", "sensecap-m2"];
 const slideTones = ["vitrine-pine", "vitrine-blue", "vitrine-clay", "vitrine-pine"];
-
-const services = [
-  {
-    title: "Vente d’équipements",
-    text: "Capteurs, objets connectés, passerelles, modules de communication et accessoires.",
-  },
-  {
-    title: "Intégration",
-    text: "Conception et mise en place de solutions adaptées à vos besoins métiers.",
-  },
-  {
-    title: "Déploiement",
-    text: "Installation, configuration, connectivité et mise en service des équipements.",
-  },
-  {
-    title: "Conseil",
-    text: "Études de faisabilité, choix techniques, dimensionnement et architecture.",
-  },
-  {
-    title: "Données",
-    text: "Collecte, traitement, visualisation et analyse sur les plateformes IoT.",
-  },
-];
 
 export function HomePage() {
   useTitle("Accueil");

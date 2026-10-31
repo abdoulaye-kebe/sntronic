@@ -31,7 +31,10 @@ export function Footer() {
               <Link to="/guide">Choisir un réseau</Link>
             </li>
             <li>
-              <Link to="/a-propos">À propos</Link>
+              <Link to="/services">Services</Link>
+            </li>
+            <li>
+              <Link to="/a-propos">À propos de nous</Link>
             </li>
             <li>
               <Link to="/livraison">Livraison et retours</Link>

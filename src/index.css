@@ -1311,42 +1311,6 @@ a { color: inherit; }
 
 .catalog-head p { margin-top: 0.15rem; font-size: 0.9rem; }
 
-.catalog-bar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.55rem 1.1rem;
-  padding: 0.55rem 0.7rem;
-  background: white;
-  border: 1px solid #dfe8e3;
-  border-radius: 12px;
-}
-
-.catalog-bar fieldset { align-items: center; gap: 0.3rem; }
-
-.catalog-bar legend {
-  width: auto;
-  margin: 0 0.15rem 0 0;
-  color: #3e6b5a;
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-  text-transform: none;
-}
-
-.catalog .pill {
-  padding: 0.22rem 0.55rem;
-  background: #eef3f0;
-  border-color: transparent;
-  color: #1c3d32;
-  font-size: 0.78rem;
-}
-
-.catalog .pill.on {
-  background: #1d6b54;
-  border-color: #1d6b54;
-  color: white;
-}
-
 .catalog .grid-products {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;

@@ -102,6 +102,8 @@ export function Header() {
           </form>
           <nav className="shop-links" aria-label="Raccourcis">
             <a href="/catalogue">Catalogue</a>
+            <NavLink to="/services">Services</NavLink>
+            <NavLink to="/a-propos">À propos de nous</NavLink>
             <NavLink to="/guide">Guide</NavLink>
             <NavLink to="/contact">Contact</NavLink>
             <button type="button" className="cart-link" aria-label={`Panier, ${count} article${count > 1 ? "s" : ""}`} onClick={() => setOpen(true)}>
@@ -184,9 +186,12 @@ export function Header() {
               {aisle.name}
             </NavLink>
           ))}
-          <a href="/catalogue" onClick={() => setMenuOpen(false)}>
-            Catalogue
-          </a>
+          <NavLink to="/services" onClick={() => setMenuOpen(false)}>
+            Services
+          </NavLink>
+          <NavLink to="/a-propos" onClick={() => setMenuOpen(false)}>
+            À propos de nous
+          </NavLink>
           <NavLink to="/guide" onClick={() => setMenuOpen(false)}>
             Guide de choix
           </NavLink>

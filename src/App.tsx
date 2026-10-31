@@ -3,6 +3,7 @@ import { Layout } from "./components/Layout.tsx";
 import { AdminEditor } from "./pages/AdminEditor.tsx";
 import { AdminPage } from "./pages/AdminPage.tsx";
 import { AboutPage } from "./pages/AboutPage.tsx";
+import { ServicesPage } from "./pages/ServicesPage.tsx";
 import { CartPage } from "./pages/CartPage.tsx";
 import { CatalogPage } from "./pages/CatalogPage.tsx";
 import { CheckoutPage, ConfirmationPage } from "./pages/CheckoutPage.tsx";
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="panier" element={<CartPage />} />
         <Route path="commande" element={<CheckoutPage />} />
         <Route path="commande/confirmation" element={<ConfirmationPage />} />
+        <Route path="services" element={<ServicesPage />} />
         <Route path="a-propos" element={<AboutPage />} />
         <Route path="contact" element={<ContactPage />} />
         <Route path="guide" element={<GuidePage />} />
