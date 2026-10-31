@@ -6,29 +6,43 @@ export function AboutPage() {
   return (
     <div className="wrap page narrow">
       <p className="eyebrow">SNTRONIC</p>
-      <h1 className="section-title">Un comptoir pour le matériel qui reste dehors.</h1>
+      <h1 className="section-title">Votre partenaire pour réussir vos projets IoT.</h1>
       <div className="prose">
         <p>
-          SNTRONIC vend des appareils LoRaWAN, LTE-M et NB-IoT, des passerelles, et les modules pour les intégrer.
-          Les fiches disent ce que l’objet mesure, comment il parle, et comment on l’alimente.
+          Nous sommes une plateforme dédiée à la vente, à l’intégration et à l’accompagnement de projets IoT (Internet
+          des objets).
         </p>
         <p>
-          Le catalogue s’adresse aux intégrateurs, aux exploitants de sites et aux ateliers qui construisent un
-          produit. Une serre, un parc de bennes, une armoire de comptage : le bon réseau n’est pas le même.
+          Nous accompagnons les entreprises à chaque étape de leur transformation connectée, de l’identification des
+          besoins à la mise en œuvre et à l’exploitation des solutions.
         </p>
-        <h2>Quatre gammes</h2>
+        <h2>Vente d’équipements IoT</h2>
+        <p>Capteurs, objets connectés, passerelles, modules de communication et accessoires.</p>
+        <h2>Intégration de solutions IoT</h2>
+        <p>Conception et mise en place de solutions adaptées à vos besoins métiers.</p>
+        <h2>Déploiement de projets</h2>
+        <p>Installation, configuration, connectivité et mise en service des équipements.</p>
+        <h2>Conseil et consultance</h2>
         <p>
-          Fieldnode pour les capteurs LoRaWAN. Cellspan pour le cellulaire. Gatehouse pour les passerelles. Modulab
-          pour les cartes à intégrer.
+          Accompagnement technique, études de faisabilité, choix technologiques, dimensionnement et architecture des
+          solutions IoT.
         </p>
-        <h2>Commander</h2>
+        <h2>Exploitation et valorisation des données</h2>
         <p>
-          Le panier prépare une demande. L’e-mail la transmet, la facture confirme le délai et le règlement. Pour un
-          lot ou un site entier, le formulaire de contact est le bon chemin.
+          Collecte, traitement, visualisation et analyse des données grâce aux plateformes IoT, à l’intelligence
+          artificielle et aux outils d’analyse avancée.
         </p>
         <p>
+          De la fourniture des équipements à l’exploitation intelligente de vos données, nous vous accompagnons tout au
+          long du cycle de vie de vos projets IoT.
+        </p>
+        <p>
+          <Link className="text-link" to="/catalogue">
+            Voir le catalogue
+          </Link>
+          {" · "}
           <Link className="text-link" to="/contact">
-            Écrire à l’atelier
+            Demander un devis
           </Link>
         </p>
       </div>

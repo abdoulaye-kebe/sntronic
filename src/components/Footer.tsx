@@ -10,8 +10,8 @@ export function Footer() {
         <div>
           <Logo light />
           <p>
-            Capteurs LoRaWAN, terminaux LTE-M et NB-IoT, passerelles et modules électroniques. Des fiches lisibles,
-            un stock annoncé, un conseil avant la commande.
+            Vente, intégration et accompagnement de projets IoT : équipements, déploiement, conseil et exploitation
+            des données.
           </p>
         </div>
         <div>
