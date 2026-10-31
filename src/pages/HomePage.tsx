@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ProductCard } from "../components/ProductCard.tsx";
 import { ProductPhoto } from "../components/ProductPhoto.tsx";
 import { useCatalog } from "../context/CatalogContext.tsx";
+import { categories } from "../data/catalog.ts";
 import { useTitle } from "../lib/useTitle.ts";
 
 const slideSlugs = ["tektelic-vivid", "sensecap-s2120", "tektelic-breeze", "sensecap-m2"];
@@ -23,6 +24,22 @@ const pickSlugs = [
   "tektelic-orca",
   "tektelic-seal",
 ];
+const familyCovers: Record<(typeof categories)[number]["id"], string> = {
+  lorawan: "tektelic-vivid",
+  "lte-m": "cellspan-move",
+  "nb-iot": "cellspan-aqua",
+  "passerelles-lorawan": "sensecap-m2",
+  "passerelles-iot": "gatehouse-fusion",
+  modules: "modulab-rf",
+};
+
+const useCases = [
+  { slug: "tektelic-breeze", title: "Air d’un bureau", text: "CO₂, occupation et ventilation d’une salle." },
+  { slug: "tektelic-tundra", title: "Chambre froide", text: "Température suivie sans ouvrir la porte." },
+  { slug: "cellspan-aqua", title: "Compteur d’eau", text: "L’index remonte, même depuis un regard." },
+  { slug: "sensecap-outdoor", title: "Site isolé", text: "Une passerelle extérieure relie les capteurs." },
+];
+
 const sensecapSlugs = [
   "sensecap-s2101",
   "sensecap-s2102",
@@ -69,8 +86,49 @@ export function HomePage() {
     return product ? [product] : [];
   });
 
+  const uses = useCases.flatMap((item) => {
+    const product = getProduct(item.slug);
+    return product ? [{ ...item, product }] : [];
+  });
+
   return (
     <>
+      <section className="wrap home-lead">
+        <p className="eyebrow">SNTRONIC</p>
+        <h1>Le comptoir des sites qui doivent remonter une mesure.</h1>
+        <p className="lede">
+          Capteurs LoRaWAN, terminaux LTE-M et NB-IoT, passerelles et modules. Chaque fiche indique le réseau, le prix
+          en euros et en francs CFA, et le stock. L’atelier répond avant la commande quand le site est à dimensionner.
+        </p>
+        <div className="home-actions">
+          <Link className="btn btn-primary" to="/catalogue">
+            Voir le catalogue
+          </Link>
+          <Link className="btn btn-clay" to="/contact">
+            Demander un devis
+          </Link>
+        </div>
+      </section>
+
+      <section className="wrap section home-families" id="familles">
+        <div className="shelf-head">
+          <h2>Choisir une famille</h2>
+          <Link to="/catalogue">Tout le catalogue</Link>
+        </div>
+        <div className="family-grid">
+          {categories.map((category) => {
+            const cover = getProduct(familyCovers[category.id]);
+            return (
+              <Link key={category.id} className="family-card" to={`/catalogue/${category.id}`}>
+                {cover ? <ProductPhoto product={cover} alt="" /> : <div className="photo photo-studio" />}
+                <p>{category.pitch}</p>
+                <span>{category.name}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
       {slide && (
         <section className={`vitrine ${slideTones[safeIndex] ?? "vitrine-pine"}`} aria-roledescription="carrousel">
           <button
@@ -87,7 +145,7 @@ export function HomePage() {
                 <span>{String(safeIndex + 1).padStart(2, "0")}</span>
                 {slide.line}
               </p>
-              <h1>{slide.name}</h1>
+              <h2>{slide.name}</h2>
               <p className="vitrine-text">{slide.summary}</p>
               <Link className="btn btn-banner" to={`/produit/${slide.slug}`}>
                 Découvrir
@@ -153,6 +211,24 @@ export function HomePage() {
         <div className="shelf">
           {sensecap.map((product) => (
             <ProductCard key={product.slug} product={product} shelf />
+          ))}
+        </div>
+      </section>
+
+      <section className="wrap section" id="usages">
+        <div className="shelf-head">
+          <h2>Quatre déploiements types</h2>
+          <Link to="/guide">Choisir le réseau</Link>
+        </div>
+        <div className="use-grid">
+          {uses.map((item) => (
+            <Link key={item.slug} className="use-card" to={`/produit/${item.slug}`}>
+              <ProductPhoto product={item.product} alt="" />
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </div>
+            </Link>
           ))}
         </div>
       </section>
