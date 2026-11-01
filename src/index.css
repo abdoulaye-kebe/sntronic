@@ -352,32 +352,74 @@ a { color: inherit; }
   font-size: 0.95rem;
 }
 
-.service-intro .lede { max-width: 42ch; }
+.service-intro .lede { max-width: 58ch; }
 
 .service-board {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 0.75rem;
-  margin-top: 1.5rem;
+  gap: 0.9rem;
+  margin-top: 1.6rem;
 }
 
 .service-card {
+  position: relative;
   grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  min-height: 198px;
   padding: 1.15rem 1.15rem 1.2rem;
-  background: white;
-  border: 1px solid #dfe8e3;
-  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f6fbf8 0%, #fff 46%);
+  border: 1px solid #d5e4dc;
+  border-radius: 18px;
+  box-shadow: 0 1px 0 rgba(20, 50, 40, 0.04);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
 
-.service-card:nth-child(n + 4) { grid-column: span 3; }
+.service-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 1.15rem;
+  right: 1.15rem;
+  height: 2px;
+  background: linear-gradient(90deg, #1d6b54, #8fceba);
+  border-radius: 2px;
+}
 
-.service-card span {
-  display: block;
-  margin-bottom: 0.85rem;
+.service-card:nth-child(4) { grid-column: 2 / span 2; }
+.service-card:nth-child(5) { grid-column: 4 / span 2; }
+
+.service-card:hover {
+  transform: translateY(-2px);
+  border-color: #b7d4c8;
+  box-shadow: 0 12px 28px rgba(20, 60, 48, 0.08);
+}
+
+.service-mark {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.05rem;
+}
+
+.service-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
   color: #1d6b54;
+  background: #e7f3ee;
+  border-radius: 13px;
+}
+
+.service-icon svg { width: 22px; height: 22px; }
+
+.service-num {
+  color: #8eaea2;
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
 }
 
 .service-card h2 {
@@ -388,7 +430,7 @@ a { color: inherit; }
 }
 
 .service-card p {
-  margin-top: 0.4rem;
+  margin-top: 0.45rem;
   color: var(--muted);
   font-size: 0.95rem;
 }
@@ -399,11 +441,13 @@ a { color: inherit; }
   align-items: center;
   justify-content: space-between;
   gap: 1rem 1.5rem;
-  margin-top: 0.75rem;
-  padding: 1.15rem 1.25rem;
-  background: #1d6b54;
+  margin-top: 0.9rem;
+  padding: 1.25rem 1.35rem;
+  background:
+    radial-gradient(120% 140% at 100% 0%, rgba(255, 255, 255, 0.14), transparent 42%),
+    #1d6b54;
   color: #f4faf7;
-  border-radius: 14px;
+  border-radius: 18px;
 }
 
 .service-close p { max-width: 62ch; font-size: 0.98rem; }
@@ -411,6 +455,37 @@ a { color: inherit; }
 .service-close .btn { background: white; color: #1d6b54; }
 
 .service-close .btn:hover { background: #eef3f0; }
+
+.usage-list { display: grid; gap: 0.85rem; margin-top: 1.5rem; }
+
+.usage-block {
+  padding: 1.2rem 1.2rem 1.25rem;
+  background: white;
+  border: 1px solid #dfe8e3;
+  border-radius: 14px;
+}
+
+.usage-block h2 {
+  color: #1d6b54;
+  font-size: 1.15rem;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.usage-block p {
+  max-width: 78ch;
+  margin-top: 0.45rem;
+  color: var(--muted);
+}
+
+.usage-products {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.usage-more { margin-top: 1.1rem; }
 
 .home-aisle-title {
   margin-bottom: 0.75rem;
@@ -1878,8 +1953,11 @@ details p { margin-top: 0.45rem; color: var(--muted); }
 
 @media (max-width: 900px) {
   .family-grid, .use-grid, .catalog .grid-products, .offer-grid { grid-template-columns: 1fr 1fr; }
-  .service-board { grid-template-columns: 1fr; }
-  .service-card, .service-card:nth-child(n + 4) { grid-column: auto; }
+  .usage-products { grid-template-columns: 1fr; }
+  .service-board { grid-template-columns: 1fr 1fr; }
+  .service-card,
+  .service-card:nth-child(4),
+  .service-card:nth-child(5) { grid-column: auto; }
   .home-lead h1 { white-space: normal; }
 }
 
@@ -1900,6 +1978,7 @@ details p { margin-top: 0.45rem; color: var(--muted); }
 }
 
 @media (max-width: 720px) {
+  .service-board { grid-template-columns: 1fr; }
   .logo-tag { display: none; }
   .logo-mark { width: 34px; height: 34px; }
   .logo-word { font-size: 0.98rem; }

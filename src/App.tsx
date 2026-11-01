@@ -5,6 +5,7 @@ import { AdminPage } from "./pages/AdminPage.tsx";
 import { AboutPage } from "./pages/AboutPage.tsx";
 import { BlogPage } from "./pages/BlogPage.tsx";
 import { ServicesPage } from "./pages/ServicesPage.tsx";
+import { UseCasesPage } from "./pages/UseCasesPage.tsx";
 import { CartPage } from "./pages/CartPage.tsx";
 import { CatalogPage } from "./pages/CatalogPage.tsx";
 import { CheckoutPage, ConfirmationPage } from "./pages/CheckoutPage.tsx";
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="commande" element={<CheckoutPage />} />
         <Route path="commande/confirmation" element={<ConfirmationPage />} />
         <Route path="services" element={<ServicesPage />} />
+        <Route path="usages" element={<UseCasesPage />} />
         <Route path="blog" element={<BlogPage />} />
         <Route path="a-propos" element={<AboutPage />} />
         <Route path="contact" element={<ContactPage />} />

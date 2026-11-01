@@ -190,6 +190,7 @@ function sectionOf(pathname: string, search: string): string {
   if (query.get("usage")) return "usages";
   if (pathname === "/") return "accueil";
   if (pathname.startsWith("/services")) return "services";
+  if (pathname.startsWith("/usages")) return "usages";
   if (pathname.startsWith("/blog")) return "blog";
   if (pathname.startsWith("/contact") || pathname.startsWith("/a-propos") || pathname.startsWith("/livraison")) return "contact";
   if (pathname.startsWith("/catalogue") || pathname.startsWith("/produit") || pathname.startsWith("/guide")) return "produits";

@@ -29,6 +29,58 @@ export const services = [
   },
 ];
 
+function ServiceIcon({ index }: { index: number }) {
+  const common = {
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.7,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true,
+  };
+  if (index === 0) {
+    return (
+      <svg {...common}>
+        <path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5l-8.5-4z" />
+        <path d="M12 12.2 3.5 7.5M12 12.2V20.5M12 12.2 20.5 7.5" />
+      </svg>
+    );
+  }
+  if (index === 1) {
+    return (
+      <svg {...common}>
+        <circle cx="6" cy="7" r="2.1" />
+        <circle cx="18" cy="7" r="2.1" />
+        <circle cx="12" cy="17.2" r="2.1" />
+        <path d="M8 8.2 10.5 15.2M16 8.2 13.5 15.2M8.1 7h7.8" />
+      </svg>
+    );
+  }
+  if (index === 2) {
+    return (
+      <svg {...common}>
+        <path d="M12 21s6-5.1 6-10a6 6 0 1 0-12 0c0 4.9 6 10 6 10z" />
+        <circle cx="12" cy="11" r="2" />
+      </svg>
+    );
+  }
+  if (index === 3) {
+    return (
+      <svg {...common}>
+        <circle cx="12" cy="12" r="8" />
+        <path d="m14.7 9.3-1.2 4.2-4.2 1.2 1.2-4.2z" />
+      </svg>
+    );
+  }
+  return (
+    <svg {...common}>
+      <path d="M4 19.5h16" />
+      <path d="M7 16.5V11M12 16.5V6.5M17 16.5v-4" />
+    </svg>
+  );
+}
+
 export function ServicesPage() {
   useTitle("Services");
   return (
@@ -43,7 +95,12 @@ export function ServicesPage() {
       <div className="service-board">
         {services.map((service, index) => (
           <article key={service.title} className="service-card">
-            <span>{String(index + 1).padStart(2, "0")}</span>
+            <div className="service-mark">
+              <span className="service-icon">
+                <ServiceIcon index={index} />
+              </span>
+              <span className="service-num">{String(index + 1).padStart(2, "0")}</span>
+            </div>
             <h2>{service.title}</h2>
             <p>{service.text}</p>
           </article>

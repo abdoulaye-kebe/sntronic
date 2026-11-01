@@ -8,28 +8,39 @@ export const accessoryGroups = [
 
 export const usages = [
   {
-    id: "froid",
-    name: "Froid",
-    pitch: "Chambre froide et sonde de température.",
-    slugs: ["tektelic-tundra", "cellspan-temp"],
+    id: "eau-postpaye",
+    name: "Smart water metering — postpayé",
+    pitch: "Relevé d’index sur les compteurs déjà posés, facturation après consommation.",
+    text: "Le compteur d’eau reste en place. Un émetteur compte ses impulsions, garde l’index et l’envoie en LoRaWAN ou en NB-IoT, y compris depuis un regard. Le service d’eau facture ensuite la consommation réelle. Un capteur de niveau complète le relevé sur une cuve ou un réservoir.",
+    slugs: ["cellspan-aqua", "fieldnode-pulse", "fieldnode-level"],
   },
   {
-    id: "meteo",
-    name: "Météo et sol",
-    pitch: "Station, météo compacte et sonde de sol.",
-    slugs: ["sensecap-s2120", "fieldnode-meteo", "fieldnode-soil"],
+    id: "eau-prepaye",
+    name: "Smart water metering — prépayé",
+    pitch: "Le crédit commande l’eau : l’index est suivi, et un relais peut couper l’arrivée.",
+    text: "Le même relevé d’impulsions suit la consommation. Quand le crédit est épuisé, une interface à relais coupe l’arrivée d’eau, puis la rétablit après rechargement. Il n’y a pas de compteur prépayé à jeton dans le catalogue : la coupure se fait avec le relais sur le compteur déjà installé.",
+    slugs: ["fieldnode-pulse", "fieldnode-io", "cellspan-aqua"],
   },
   {
-    id: "suivi",
-    name: "Suivi d’actifs",
-    pitch: "Traceurs pour le matériel qui se déplace.",
-    slugs: ["fieldnode-track", "cellspan-move", "sensecap-t1000"],
+    id: "energie",
+    name: "Smart metering énergie",
+    pitch: "Index, courants et registres des compteurs d’énergie déjà en armoire.",
+    text: "Un compteur d’électricité ou de gaz qui sort des impulsions est relevé à distance, comme un compteur d’eau. En armoire, une passerelle interroge les compteurs Modbus déjà posés. Pour une boucle 4-20 mA ou plusieurs voies de mesure, le conditionneur et l’enregistreur ramènent la valeur vers le réseau.",
+    slugs: ["fieldnode-pulse", "gatehouse-modbus", "cellspan-log", "modulab-420"],
   },
   {
-    id: "eau",
-    name: "Eau et comptage",
-    pitch: "Impulsions, compteur d’eau et niveau.",
-    slugs: ["fieldnode-pulse", "cellspan-aqua", "fieldnode-level"],
+    id: "smart-city",
+    name: "Smart city",
+    pitch: "Air, stationnement, fuites et niveaux, sans tirer un câble à chaque point.",
+    text: "La ville suit quelques points fixes : qualité de l’air, occupation d’une place, fuite dans un local technique, niveau d’un réservoir ou d’un regard. Chaque point remonte tout seul, en NB-IoT ou en LoRaWAN. On pose le capteur, pas un chantier de génie civil.",
+    slugs: ["cellspan-city", "cellspan-park", "cellspan-leak", "fieldnode-level"],
+  },
+  {
+    id: "agriculture",
+    name: "Smart agriculture",
+    pitch: "Sol, météo et irrigation, du champ jusqu’à la passerelle.",
+    text: "Les sondes de sol donnent l’humidité, la température et la conductivité pour décider d’irriguer. Une station météo ajoute le vent, la pluie et la lumière. Le pH suit une solution ou un bassin. La passerelle extérieure relie ces capteurs là où il n’y a pas de local technique.",
+    slugs: ["fieldnode-soil", "sensecap-s2120", "sensecap-s2105", "sensecap-s2106", "sensecap-outdoor"],
   },
 ] as const;
 
@@ -64,12 +75,8 @@ export const menu: MenuItem[] = [
   {
     id: "usages",
     label: "Cas d’usage",
-    to: "/catalogue?usage=froid",
-    children: [
-      ...usages.map((usage) => ({ label: usage.name, to: `/catalogue?usage=${usage.id}` })),
-      { label: "Air et pièce", to: "/catalogue/domotique" },
-      { label: "Passerelles de site", to: "/catalogue/gateways" },
-    ],
+    to: "/usages",
+    children: usages.map((usage) => ({ label: usage.name, to: `/usages#${usage.id}` })),
   },
   {
     id: "contact",
