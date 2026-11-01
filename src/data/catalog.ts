@@ -1,3 +1,5 @@
+import { waterMeterProducts } from "./waterMeters.ts";
+
 export const categories = [
   {
     id: "lorawan",
@@ -74,9 +76,11 @@ export type Product = {
   highlights: string[];
   specs: [string, string][];
   image?: string;
+  quote?: boolean;
 };
 
 export const products: Product[] = [
+  ...waterMeterProducts,
   {
     slug: "tektelic-vivid",
     ref: "VIVID-V2",

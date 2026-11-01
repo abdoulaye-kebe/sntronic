@@ -40,7 +40,12 @@ function readStored(): Product[] | null {
 
 export function CatalogProvider({ children }: { children: ReactNode }) {
   const stored = readStored();
-  const [products, setProducts] = useState<Product[]>(stored ?? seedProducts);
+  const [products, setProducts] = useState<Product[]>(() => {
+    if (!stored) return seedProducts;
+    const known = new Set(stored.map((item) => item.slug));
+    const added = seedProducts.filter((item) => !known.has(item.slug));
+    return added.length ? [...added, ...stored] : stored;
+  });
   const [customized, setCustomized] = useState(stored !== null);
   const [error, setError] = useState<string | null>(null);
 

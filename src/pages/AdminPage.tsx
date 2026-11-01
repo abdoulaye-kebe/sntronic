@@ -86,7 +86,7 @@ export function AdminPage() {
                   </small>
                 </td>
                 <td>
-                  {formatXOF(lineTtcXof(product.priceHt))}
+                  {product.quote ? "Sur devis" : formatXOF(lineTtcXof(product.priceHt))}
                 </td>
                 <td>{product.stock > 0 ? product.stock : "Sur commande"}</td>
                 <td>

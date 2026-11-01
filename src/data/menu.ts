@@ -18,7 +18,7 @@ export const usages = [
     id: "eau-prepaye",
     name: "Smart water metering — prépayé",
     pitch: "Le crédit commande l’eau : l’index est suivi, et un relais peut couper l’arrivée.",
-    text: "Deux montages. Sur un compteur déjà posé, le relevé d’impulsions et un relais coupent l’arrivée quand le crédit est épuisé, puis la rétablissent après rechargement. Les fabricants listés plus bas ont une offre prépayée LoRaWAN documentée : la commande se fait sur devis.",
+    text: "Le crédit commande l’eau. Sur un compteur déjà posé, le relevé d’impulsions et un relais coupent l’arrivée quand le crédit est épuisé, puis la rétablissent après rechargement. Un compteur prépayé LoRaWAN peut aussi intégrer la vanne et accepter un jeton STS.",
     slugs: ["fieldnode-pulse", "fieldnode-io", "cellspan-aqua"],
   },
   {
@@ -39,7 +39,7 @@ export const usages = [
     id: "agriculture",
     name: "Smart agriculture",
     pitch: "Sol, météo et irrigation, du champ jusqu’à la passerelle.",
-    text: "Les sondes de sol donnent l’humidité, la température et la conductivité pour décider d’irriguer. Une station météo ajoute le vent, la pluie et la lumière. Le pH suit une solution ou un bassin. Le débit d’irrigation se mesure avec un nœud LoRaWAN Dragino et un capteur de débit (2–100 L/min, filetage G 1″, DN25). La passerelle extérieure relie ces capteurs là où il n’y a pas de local technique.",
+    text: "Les sondes de sol donnent l’humidité, la température et la conductivité pour décider d’irriguer. Une station météo ajoute le vent, la pluie et la lumière. Le pH suit une solution ou un bassin. Un débitmètre sur la conduite mesure l’eau réellement envoyée. La passerelle extérieure relie ces capteurs là où il n’y a pas de local technique.",
     slugs: ["fieldnode-soil", "sensecap-s2120", "sensecap-s2105", "sensecap-s2106", "sensecap-outdoor"],
   },
 ] as const;

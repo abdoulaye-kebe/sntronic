@@ -54,9 +54,13 @@ export function ProductPage() {
           <ProductPhoto product={product} large alt={product.name} />
         </div>
         <aside className="buybox">
-          <Price ht={product.priceHt} large />
-          <Stock stock={product.stock} lead={product.lead} />
-          {product.stock > 0 ? (
+          <Price ht={product.priceHt} large quote={product.quote} />
+          {product.quote ? <p className="stock stock-out">Sur devis</p> : <Stock stock={product.stock} lead={product.lead} />}
+          {product.quote ? (
+            <Link className="btn btn-clay" to={`/contact?produit=${product.slug}`}>
+              Demander un devis
+            </Link>
+          ) : product.stock > 0 ? (
             <div className="buy-actions">
               <QtyStepper value={safeQty} max={product.stock} onChange={setQty} />
               <button type="button" className="btn btn-clay" onClick={() => add(product.slug, safeQty)}>
@@ -68,7 +72,11 @@ export function ProductPage() {
               Demander le délai
             </Link>
           )}
-          <p className="fine">Prix TTC en francs CFA, transport et TVA 18 % compris.</p>
+          <p className="fine">
+            {product.quote
+              ? "Le montant est confirmé sur devis, avant commande."
+              : "Prix TTC en francs CFA, transport et TVA 18 % compris."}
+          </p>
           <Link className="text-link" to={`/contact?produit=${product.slug}`}>
             Demander la fiche technique
           </Link>

@@ -1471,6 +1471,10 @@ a { color: inherit; }
   padding: 0.35rem;
 }
 
+.photo-meter { background: #1b2740; }
+
+.photo-meter img { object-fit: contain; }
+
 .shelf-card .photo.photo-studio {
   background: #f4f2ec;
 }
@@ -1675,10 +1679,13 @@ a { color: inherit; }
 
 .card-compact .photo,
 .card-compact .photo.photo-cutout,
-.card-compact .photo.photo-studio {
+.card-compact .photo.photo-studio,
+.card-compact .photo.photo-meter {
   height: 128px;
   background: #eef3f0;
 }
+
+.card-compact .photo.photo-meter { background: #1b2740; }
 
 .card-compact .photo img,
 .card-compact .photo.photo-cutout img,

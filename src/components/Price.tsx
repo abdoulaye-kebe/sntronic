@@ -4,15 +4,17 @@ export function Price({
   ht,
   qty = 1,
   large = false,
+  quote = false,
 }: {
   ht: number;
   qty?: number;
   large?: boolean;
   compact?: boolean;
+  quote?: boolean;
 }) {
   return (
     <p className={large ? "price price-lg" : "price"}>
-      <span className="price-ttc">{formatXOF(lineTtcXof(ht, qty))}</span>
+      <span className="price-ttc">{quote ? "Sur devis" : formatXOF(lineTtcXof(ht, qty))}</span>
     </p>
   );
 }

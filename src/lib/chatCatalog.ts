@@ -17,7 +17,7 @@ export function catalogForChat(products: Product[]) {
       highlights: product.highlights,
       description: product.description,
       specs: product.specs,
-      priceTtc: formatXOF(ttc),
+      priceTtc: product.quote ? "Sur devis" : formatXOF(ttc),
       stock: product.stock,
     };
   });

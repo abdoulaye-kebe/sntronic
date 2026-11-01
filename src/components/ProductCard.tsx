@@ -20,7 +20,7 @@ export function ProductCard({
   const [qty, setQty] = useState(1);
 
   if (shelf) {
-    const ttc = lineTtcXof(product.priceHt);
+    const ttcLabel = product.quote ? "Sur devis" : formatXOF(lineTtcXof(product.priceHt));
     const safeQty = Math.min(Math.max(qty, 1), Math.max(product.stock, 1));
     return (
       <article className="shelf-card">
@@ -28,10 +28,14 @@ export function ProductCard({
           {product.badge && <span className="shelf-badge">{product.badge === "Nouveau" ? "New" : product.badge}</span>}
           <ProductPhoto product={product} alt="" />
           <h3>{product.name}</h3>
-          <p className="shelf-price">{formatXOF(ttc)}</p>
+          <p className="shelf-price">{ttcLabel}</p>
           <p className="shelf-code">Code : {product.ref}</p>
         </Link>
-        {product.stock > 0 ? (
+        {product.quote ? (
+          <Link className="shelf-buy shelf-wait" to={`/contact?produit=${product.slug}`}>
+            Sur devis
+          </Link>
+        ) : product.stock > 0 ? (
           <div className="shelf-buy">
             <span>{product.stock <= 5 ? `${product.stock} en stock` : "En stock"}</span>
             <QtyStepper value={safeQty} max={product.stock} onChange={setQty} />
@@ -70,12 +74,16 @@ export function ProductCard({
               </ul>
             </>
           )}
-          <Price ht={product.priceHt} compact={compact} />
-          <Stock stock={product.stock} lead={compact ? undefined : product.lead} />
+          <Price ht={product.priceHt} compact={compact} quote={product.quote} />
+          {product.quote ? <p className="stock stock-out">Sur devis</p> : <Stock stock={product.stock} lead={compact ? undefined : product.lead} />}
         </div>
       </Link>
       <div className="card-actions">
-        {product.stock > 0 ? (
+        {product.quote ? (
+          <Link className="btn btn-clay btn-small" to={`/contact?produit=${product.slug}`}>
+            Demander un devis
+          </Link>
+        ) : product.stock > 0 ? (
           <button type="button" className="btn btn-clay btn-small" onClick={() => add(product.slug, 1)}>
             Ajouter
           </button>

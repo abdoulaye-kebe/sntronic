@@ -116,8 +116,9 @@ export function CatalogPage() {
 
 function sortProducts(list: Product[], sort: string): Product[] {
   const copy = [...list];
-  if (sort === "prix-asc") copy.sort((a, b) => a.priceHt - b.priceHt);
-  else if (sort === "prix-desc") copy.sort((a, b) => b.priceHt - a.priceHt);
+  const quoteRank = (item: Product) => (item.quote ? 1 : 0);
+  if (sort === "prix-asc") copy.sort((a, b) => quoteRank(a) - quoteRank(b) || a.priceHt - b.priceHt);
+  else if (sort === "prix-desc") copy.sort((a, b) => quoteRank(a) - quoteRank(b) || b.priceHt - a.priceHt);
   else if (sort === "nom") copy.sort((a, b) => a.name.localeCompare(b.name, "fr"));
   else {
     copy.sort(

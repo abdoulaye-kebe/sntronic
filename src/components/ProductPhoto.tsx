@@ -18,7 +18,9 @@ export function ProductPhoto({
     ? " photo-cutout"
     : product.image?.includes("/sensecap-")
       ? " photo-studio"
-      : "";
+      : product.image?.includes("/compteurs/")
+        ? " photo-meter"
+        : "";
   const size = `${large ? "photo photo-lg" : small ? "photo photo-sm" : "photo"}${tone}`;
 
   if (failed) {

@@ -89,7 +89,7 @@ export function Header() {
                         {product.name}
                         <small>{product.ref}</small>
                       </span>
-                      <strong>{formatXOF(lineTtcXof(product.priceHt))}</strong>
+                      <strong>{product.quote ? "Sur devis" : formatXOF(lineTtcXof(product.priceHt))}</strong>
                     </Link>
                   </li>
                 ))}
