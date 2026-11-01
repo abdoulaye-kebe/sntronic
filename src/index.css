@@ -532,6 +532,70 @@ a { color: inherit; }
   font-size: 0.92rem;
 }
 
+.meter-board { margin-top: 1.05rem; }
+
+.meter-kicker {
+  margin: 0;
+  color: #1d6b54;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.usage-block .meter-note {
+  max-width: 72ch;
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.meter-board > ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.meter-board > ul > li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+.meter-board > ul > li {
+  padding: 0.95rem 1rem 1rem;
+  background: linear-gradient(180deg, #f6fbf8 0%, #fff 46%);
+  border: 1px solid #d5e4dc;
+  border-radius: 14px;
+}
+
+.meter-board > ul > li > span {
+  display: inline-block;
+  margin-bottom: 0.45rem;
+  padding: 0.12rem 0.45rem;
+  color: #1d6b54;
+  background: #e7f3ee;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.meter-board h3 {
+  color: #1c3d32;
+  font-size: 1.02rem;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.meter-board li ul {
+  margin: 0.4rem 0 0;
+  padding-left: 1.05rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+  list-style: disc;
+}
+
+.meter-board li li + li { margin-top: 0.18rem; }
+
 .arch-field { background: #163528; }
 .arch-lora { background: #152238; }
 .arch-stack { background: #10192c; }
@@ -2038,7 +2102,7 @@ details p { margin-top: 0.45rem; color: var(--muted); }
 }
 
 @media (max-width: 720px) {
-  .service-board { grid-template-columns: 1fr; }
+  .service-board, .meter-board > ul { grid-template-columns: 1fr; }
   .logo-tag { display: none; }
   .logo-mark { width: 34px; height: 34px; }
   .logo-word { font-size: 0.98rem; }

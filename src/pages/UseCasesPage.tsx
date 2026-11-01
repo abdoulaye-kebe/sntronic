@@ -32,6 +32,117 @@ const agricultureStack = [
   },
 ];
 
+const waterMeters: Record<string, { note: string; items: { name: string; tag: string; points: string[] }[] }> = {
+  "eau-postpaye": {
+    note: "Ces compteurs se télérelèvent. Ils se commandent sur devis, hors tarif affiché du catalogue.",
+    items: [
+      {
+        name: "Shengda — Chine",
+        tag: "À consulter en priorité",
+        points: [
+          "Postpayé : LXSG.",
+          "LoRaWAN : LXSY / LXSC. NB-IoT et 4G : LXSY.",
+          "DN15 à DN300 selon les gammes.",
+          "Télérelève, alertes, et option de commande de vanne.",
+        ],
+      },
+      {
+        name: "Diehl Metering — Allemagne",
+        tag: "Premium industriel",
+        points: [
+          "HYDRUS 2.0, mesure ultrasonique.",
+          "LoRaWAN 868 MHz. Variantes OMS et mioty.",
+          "IP68. Batterie jusqu’à 16 ans.",
+          "DN15 à DN50 pour la gamme domestique.",
+          "Télérelève et détection de fuites. La coupure prépayée n’est pas à présumer sur ce modèle.",
+        ],
+      },
+      {
+        name: "Quill Energy",
+        tag: "Prépayé et postpayé",
+        points: [
+          "Modèle QE-WL-XX.",
+          "LoRaWAN bidirectionnel.",
+          "Le même compteur couvre le prépayé et le postpayé, avec STS.",
+          "Vanne à commande distante et carte IC de secours.",
+          "IP68. Certification MID annoncée.",
+        ],
+      },
+    ],
+  },
+  "eau-prepaye": {
+    note: "Ces compteurs intègrent la vanne. Ils se commandent sur devis, hors tarif affiché du catalogue.",
+    items: [
+      {
+        name: "Shengda — Chine",
+        tag: "À consulter en priorité",
+        points: [
+          "Prépayé : LXSK / LXS-S.",
+          "LoRaWAN : LXSY / LXSC. NB-IoT et 4G : LXSY.",
+          "DN15 à DN300 selon les gammes.",
+          "Commande de vanne, télérelève et alertes.",
+        ],
+      },
+      {
+        name: "Sindcon — Singapour",
+        tag: "Prépayé LoRaWAN",
+        points: [
+          "Compteur prépayé LoRaWAN.",
+          "DN15 à DN25.",
+          "Vanne électrique intégrée.",
+          "Communication LoRa et Bluetooth.",
+          "Mesure mécanique à turbine.",
+        ],
+      },
+      {
+        name: "Bove — Chine",
+        tag: "À qualifier en priorité",
+        points: [
+          "Modèle B97 VPW, compteur ultrasonique.",
+          "Contrôle de vanne. Fonction prépayée annoncée.",
+          "Module présent parmi les équipements LoRaWAN certifiés.",
+          "La référence citée est en AU915-928 : demander une version EU868 pour le Sénégal.",
+        ],
+      },
+      {
+        name: "Quill Energy",
+        tag: "Prépayé et postpayé",
+        points: [
+          "Modèle QE-WL-XX.",
+          "LoRaWAN bidirectionnel.",
+          "Prépayé ou postpayé, avec STS.",
+          "Vanne à commande distante et carte IC de secours.",
+          "IP68. Certification MID annoncée.",
+        ],
+      },
+    ],
+  },
+};
+
+function MeterBoard({ usageId }: { usageId: string }) {
+  const board = waterMeters[usageId];
+  if (!board) return null;
+  return (
+    <div className="meter-board">
+      <p className="meter-kicker">Compteurs</p>
+      <p className="meter-note">{board.note}</p>
+      <ul>
+        {board.items.map((meter) => (
+          <li key={meter.name}>
+            <span>{meter.tag}</span>
+            <h3>{meter.name}</h3>
+            <ul>
+              {meter.points.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function AgricultureArchitecture() {
   return (
     <div className="arch">
@@ -73,6 +184,7 @@ export function UseCasesPage() {
             <article key={usage.id} id={usage.id} className="usage-block">
               <h2>{usage.name}</h2>
               <p>{usage.text}</p>
+              <MeterBoard usageId={usage.id} />
               {usage.id === "agriculture" ? <AgricultureArchitecture /> : null}
               <div className="usage-products">
                 {products.map((product) => (
