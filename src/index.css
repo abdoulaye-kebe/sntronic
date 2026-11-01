@@ -478,6 +478,66 @@ a { color: inherit; }
   color: var(--muted);
 }
 
+.arch {
+  margin-top: 1.1rem;
+  padding: 0.85rem;
+  background: #101410;
+  border-radius: 16px;
+}
+
+.arch-kicker {
+  margin: 0.2rem 0.35rem 0.75rem;
+  color: #b7e0d2;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.arch ol {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.arch li { display: grid; gap: 0.4rem; }
+
+.arch li + li::before {
+  content: "↓";
+  justify-self: center;
+  color: #d9d4c8;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.arch-step {
+  padding: 0.95rem 1rem 1rem;
+  text-align: center;
+  border-radius: 14px;
+}
+
+.arch-step h3 {
+  color: white;
+  font-size: 1.05rem;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.usage-block .arch-step p {
+  max-width: none;
+  margin-top: 0.22rem;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.92rem;
+}
+
+.arch-field { background: #163528; }
+.arch-lora { background: #152238; }
+.arch-stack { background: #10192c; }
+.arch-platform { background: #1a3a2c; }
+.arch-irrig { background: #3c3420; }
+
 .usage-products {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

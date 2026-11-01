@@ -4,6 +4,52 @@ import { useCatalog } from "../context/CatalogContext.tsx";
 import { usages } from "../data/menu.ts";
 import { useTitle } from "../lib/useTitle.ts";
 
+const agricultureStack = [
+  {
+    title: "Terrain agricole",
+    detail: "Capteurs d’humidité · Station météo · Débitmètre",
+    tone: "field",
+  },
+  {
+    title: "Réseau LoRaWAN",
+    detail: "Passerelle Milesight / Kerlink / autre",
+    tone: "lora",
+  },
+  {
+    title: "ChirpStack + MQTT",
+    detail: "Réception, décodage et traitement des données",
+    tone: "stack",
+  },
+  {
+    title: "Plateforme SNTRONIC",
+    detail: "Dashboard · Alertes · Historique · Règles d’automatisation",
+    tone: "platform",
+  },
+  {
+    title: "Smart Irrigation",
+    detail: "Commande des vannes · Pilotage des pompes · Arrosage automatique",
+    tone: "irrig",
+  },
+];
+
+function AgricultureArchitecture() {
+  return (
+    <div className="arch">
+      <p className="arch-kicker">Architecture d’intégration</p>
+      <ol>
+        {agricultureStack.map((step) => (
+          <li key={step.title}>
+            <div className={`arch-step arch-${step.tone}`}>
+              <h3>{step.title}</h3>
+              <p>{step.detail}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 export function UseCasesPage() {
   useTitle("Cas d’usage");
   const { getProduct } = useCatalog();
@@ -27,6 +73,7 @@ export function UseCasesPage() {
             <article key={usage.id} id={usage.id} className="usage-block">
               <h2>{usage.name}</h2>
               <p>{usage.text}</p>
+              {usage.id === "agriculture" ? <AgricultureArchitecture /> : null}
               <div className="usage-products">
                 {products.map((product) => (
                   <ProductCard key={product.slug} product={product} compact />
