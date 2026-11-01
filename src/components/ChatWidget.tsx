@@ -83,9 +83,7 @@ export function ChatWidget() {
       {open && (
         <section className={`advisor-panel${turns.length ? "" : " is-empty"}`} role="dialog" aria-labelledby={titleId}>
           <header className="advisor-head">
-            <h2 id={titleId} className="sr-only">
-              Conseiller
-            </h2>
+            <h2 id={titleId}>SNTRONIC AI</h2>
             <button type="button" className="advisor-close" onClick={() => setOpen(false)} aria-label="Fermer le conseiller">
               ×
             </button>

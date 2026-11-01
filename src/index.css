@@ -518,6 +518,15 @@ a { color: inherit; }
   border-radius: 14px;
 }
 
+.arch-step span {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
 .arch-step h3 {
   color: white;
   font-size: 1.05rem;
@@ -2126,6 +2135,36 @@ details p { margin-top: 0.45rem; color: var(--muted); }
 }
 
 @media (min-width: 901px) {
+  .arch ol {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.85rem;
+    align-items: stretch;
+  }
+
+  .arch li {
+    position: relative;
+    display: flex;
+  }
+
+  .arch li + li::before {
+    content: "";
+    position: absolute;
+    left: -0.58rem;
+    top: 50%;
+    width: 0.42rem;
+    height: 0.42rem;
+    border-top: 2px solid #c8d4cc;
+    border-right: 2px solid #c8d4cc;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .arch-step {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }
+
   .product-intro { grid-column: 1; grid-row: 1; }
   .product-story { grid-column: 1; grid-row: 2; }
   .buybox { grid-column: 2; grid-row: 1 / span 2; }
@@ -2330,13 +2369,22 @@ details p { margin-top: 0.45rem; color: var(--muted); }
   overflow: hidden;
 }
 
-.advisor-panel.is-empty { justify-content: center; }
+.advisor-panel.is-empty { justify-content: flex-start; }
 
 .advisor-head {
-  position: absolute;
-  top: 0.35rem;
-  right: 0.35rem;
-  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex: none;
+  padding: 0.85rem 0.45rem 0.15rem 1.15rem;
+}
+
+.advisor-head h2 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
 }
 
 .advisor-close {
@@ -2363,11 +2411,12 @@ details p { margin-top: 0.45rem; color: var(--muted); }
 
 .advisor-log.has-turns {
   justify-content: flex-start;
-  padding-top: 2.4rem;
+  padding-top: 0.7rem;
 }
 
 .advisor-panel.is-empty .advisor-log {
-  flex: 0 0 auto;
+  flex: 1;
+  justify-content: center;
   overflow: visible;
 }
 
