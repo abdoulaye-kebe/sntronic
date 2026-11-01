@@ -4,6 +4,7 @@ import { Breadcrumb } from "../components/Breadcrumb.tsx";
 import { ProductCard } from "../components/ProductCard.tsx";
 import { useCatalog } from "../context/CatalogContext.tsx";
 import { aisleOf, getAisle, getCategory, normalize, type Product } from "../data/catalog.ts";
+import { getAccessory, getUsage } from "../data/menu.ts";
 import { useTitle } from "../lib/useTitle.ts";
 import { NotFoundPage } from "./NotFoundPage.tsx";
 
@@ -14,14 +15,19 @@ export function CatalogPage() {
   const [params, setParams] = useSearchParams();
   const { products: allProducts } = useCatalog();
 
-  const title = aisle?.name ?? category?.name ?? "Catalogue";
+  const usage = getUsage(params.get("usage"));
+  const accessory = getAccessory(params.get("accessoire"));
+  const title = accessory?.name ?? usage?.name ?? aisle?.name ?? category?.name ?? "Catalogue";
   useTitle(categoryId && !aisle && !category ? "Page introuvable" : title);
 
   const base = useMemo(() => {
-    if (aisle) return allProducts.filter((product) => aisleOf(product) === aisle.id);
-    if (category) return allProducts.filter((product) => product.category === category.id);
-    return allProducts;
-  }, [allProducts, aisle, category]);
+    let list = allProducts;
+    if (aisle) list = list.filter((product) => aisleOf(product) === aisle.id);
+    else if (category) list = list.filter((product) => product.category === category.id);
+    if (usage) list = list.filter((product) => (usage.slugs as readonly string[]).includes(product.slug));
+    if (accessory) list = list.filter((product) => (accessory.slugs as readonly string[]).includes(product.slug));
+    return list;
+  }, [accessory, aisle, allProducts, category, usage]);
 
   const query = params.get("q") ?? "";
   const sort = params.get("tri") ?? "";
@@ -53,7 +59,15 @@ export function CatalogPage() {
         items={[
           { label: "Accueil", to: "/" },
           { label: "Catalogue", to: "/catalogue" },
-          ...(aisle ? [{ label: aisle.name }] : category ? [{ label: category.name }] : []),
+          ...(accessory
+            ? [{ label: accessory.name }]
+            : usage
+              ? [{ label: usage.name }]
+              : aisle
+                  ? [{ label: aisle.name }]
+                  : category
+                    ? [{ label: category.name }]
+                    : []),
         ]}
       />
       <div className="catalog">
@@ -66,7 +80,13 @@ export function CatalogPage() {
                 {query ? ` pour « ${query} »` : ""}
               </p>
             </div>
-            <p>{aisle?.pitch ?? category?.text ?? "Devices, gateways, modules électroniques et domotique."}</p>
+            <p>
+              {accessory?.pitch ??
+                usage?.pitch ??
+                aisle?.pitch ??
+                category?.text ??
+                "Devices, gateways, modules électroniques et domotique."}
+            </p>
           </div>
           <label className="sort-label">
             <span className="sr-only">Trier</span>

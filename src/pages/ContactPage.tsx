@@ -43,7 +43,12 @@ export function ContactPage() {
         Dimensionnement d’un site, fiche technique, délai ou lot. Le message s’ouvre dans votre logiciel de messagerie,
         adressé à {site.email}.
       </p>
-      {site.phone && <p>{site.phone}</p>}
+      <p>
+        <a href={`tel:${site.phoneTel}`}>{site.phone}</a>
+      </p>
+      <p>
+        {site.address}, {site.city}
+      </p>
       <p className="muted">{site.hours}</p>
       {ready && (
         <p className="banner">Si la messagerie ne s’est pas ouverte, copiez le texte et envoyez-le à {site.email}.</p>

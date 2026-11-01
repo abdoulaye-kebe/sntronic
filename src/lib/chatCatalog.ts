@@ -1,9 +1,9 @@
 import { aisleOf, getAisle, type Product } from "../data/catalog.ts";
-import { formatEUR, formatXOF, lineTtc, toXof } from "./money.ts";
+import { formatXOF, lineTtcXof } from "./money.ts";
 
 export function catalogForChat(products: Product[]) {
   return products.map((product) => {
-    const ttc = lineTtc(product.priceHt);
+    const ttc = lineTtcXof(product.priceHt);
     return {
       slug: product.slug,
       ref: product.ref,
@@ -17,10 +17,7 @@ export function catalogForChat(products: Product[]) {
       highlights: product.highlights,
       description: product.description,
       specs: product.specs,
-      priceTtc: formatEUR(ttc),
-      priceHt: formatEUR(product.priceHt),
-      priceXof: formatXOF(toXof(ttc)),
-      priceHtXof: formatXOF(toXof(product.priceHt)),
+      priceTtc: formatXOF(ttc),
       stock: product.stock,
     };
   });

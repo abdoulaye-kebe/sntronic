@@ -66,7 +66,7 @@ export function ChatWidget() {
         <section className="advisor-panel" role="dialog" aria-labelledby={titleId}>
           <header className="advisor-head">
             <div>
-              <p className="advisor-kicker">Gemini</p>
+              <p className="advisor-kicker">SNTRONIC</p>
               <h2 id={titleId}>Conseiller</h2>
             </div>
             <button type="button" className="advisor-close" onClick={() => setOpen(false)} aria-label="Fermer le conseiller">

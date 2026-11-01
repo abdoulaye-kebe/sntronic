@@ -1,5 +1,4 @@
 import { site } from "../data/site.ts";
-import { formatEUR, formatXOF, toXof } from "../lib/money.ts";
 import { useTitle } from "../lib/useTitle.ts";
 
 export function ShippingPage() {
@@ -12,16 +11,15 @@ export function ShippingPage() {
         <details open>
           <summary>Délais</summary>
           <p>
-            Les références en stock partent sous 24 à 48 heures ouvrées, vers la France métropolitaine. Une fiche « sur
-            commande » indique son délai. La confirmation d’e-mail fige la date.
+            Les références en stock partent de la boutique à Dakar, Golf sud, villa 610, sous 24 à 48 heures ouvrées.
+            Une fiche « sur commande » indique son délai. La confirmation d’e-mail fige la date.
           </p>
         </details>
         <details>
           <summary>Frais</summary>
           <p>
-            {formatEUR(site.shippingTtc)} TTC ({formatXOF(toXof(site.shippingTtc))}) en France métropolitaine, offerts à
-            partir de {formatEUR(site.freeShippingFromTtc)} TTC ({formatXOF(toXof(site.freeShippingFromTtc))}). Hors
-            France, y compris en zone franc CFA, les frais sont confirmés avec la demande.
+            Le transport est déjà compris dans le prix affiché, en francs CFA. Il n’y a pas de frais de livraison à
+            ajouter à la commande. La TVA est de {Math.round(site.vatRate * 100)} %.
           </p>
         </details>
         <details>
@@ -35,8 +33,7 @@ export function ShippingPage() {
         <details>
           <summary>Facture et garantie</summary>
           <p>
-            La facture part avec l’expédition. Les particuliers bénéficient de la garantie légale de conformité. Pour
-            un lot professionnel, la garantie est celle indiquée sur la facture.
+            La facture part avec l’expédition. La garantie est celle indiquée sur la facture.
           </p>
         </details>
       </div>

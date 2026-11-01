@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext.tsx";
-import { site } from "../data/site.ts";
-import { cartTotals, formatEUR, formatXOF, toXof } from "../lib/money.ts";
+import { cartTotals, formatXOF } from "../lib/money.ts";
 import { ProductPhoto } from "./ProductPhoto.tsx";
 import { Price } from "./Price.tsx";
 import { QtyStepper } from "./QtyStepper.tsx";
@@ -23,8 +22,6 @@ export function CartDrawer() {
       document.body.style.overflow = "";
     };
   }, [open, setOpen]);
-
-  const remain = site.freeShippingFromTtc - totals.productsTtc;
 
   return (
     <>
@@ -72,17 +69,10 @@ export function CartDrawer() {
               </ul>
             </div>
             <div className="drawer-foot">
-              <p className="ship-note">
-                {remain > 0
-                  ? `Plus que ${formatEUR(remain)} (${formatXOF(toXof(remain))}) pour la livraison offerte en France.`
-                  : "Livraison offerte en France métropolitaine."}
-              </p>
+              <p className="ship-note">Transport inclus. TVA 18 %.</p>
               <p className="total-row">
                 <span>Total</span>
-                <strong>
-                  {formatEUR(totals.totalTtc)}
-                  <span className="price-xof">{formatXOF(toXof(totals.totalTtc))}</span>
-                </strong>
+                <strong>{formatXOF(totals.totalTtc)}</strong>
               </p>
               <Link className="btn btn-clay" to="/commande" onClick={() => setOpen(false)}>
                 Passer commande

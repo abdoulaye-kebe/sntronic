@@ -7,14 +7,13 @@ export function LegalPage() {
     <div className="wrap page narrow prose">
       <h1 className="section-title">Mentions légales</h1>
       <p>
-        Le site {site.name} présente le catalogue et prépare des demandes de commande. Éditeur : {site.name}. Contact :{" "}
-        <a href={`mailto:${site.email}`}>{site.email}</a>. {site.hours}.
+        Le site {site.name} présente le catalogue et prépare des demandes de commande. Éditeur : {site.name},{" "}
+        {site.address}, {site.city}, Sénégal. Contact : <a href={`mailto:${site.email}`}>{site.email}</a>,{" "}
+        <a href={`tel:${site.phoneTel}`}>{site.phone}</a>. {site.hours}.
       </p>
       <p>
-        Les prix sont indiqués en euros hors taxes et toutes taxes comprises, avec une TVA à{" "}
-        {Math.round(site.vatRate * 100)} %. Le franc CFA est affiché en parallèle, au taux fixe 1 € = 655,957 F CFA. Le
-        montant enregistré reste le prix en euros hors taxes. L’hébergeur du site sera indiqué ici au moment de la mise
-        en ligne.
+        Les prix sont indiqués en francs CFA, toutes taxes comprises. La TVA est de {Math.round(site.vatRate * 100)} %
+        et le transport est compris dans le prix. L’hébergeur du site sera indiqué ici au moment de la mise en ligne.
       </p>
       <p>
         Le panier est enregistré dans votre navigateur. Aucun compte n’est créé. Le formulaire de contact et la demande

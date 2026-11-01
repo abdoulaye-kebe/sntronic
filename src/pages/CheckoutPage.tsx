@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { TotalsBlock } from "./CartPage.tsx";
 import { useCart } from "../context/CartContext.tsx";
 import { site } from "../data/site.ts";
-import { cartTotals, formatEUR, formatXOF, lineTtc, toXof, type Totals } from "../lib/money.ts";
+import { cartTotals, formatXOF, lineTtcXof, type Totals } from "../lib/money.ts";
 import { useTitle } from "../lib/useTitle.ts";
 
 const ORDER_KEY = "sntronic-last-order";
@@ -36,7 +36,7 @@ const emptyCustomer: Customer = {
   address: "",
   postcode: "",
   city: "",
-  country: "France",
+  country: "Sénégal",
   note: "",
 };
 
@@ -46,10 +46,7 @@ export function CheckoutPage() {
   const { lines, clear } = useCart();
   const [customer, setCustomer] = useState<Customer>(emptyCustomer);
 
-  const totals = cartTotals(
-    lines.map((line) => ({ priceHt: line.product.priceHt, qty: line.qty })),
-    customer.country,
-  );
+  const totals = cartTotals(lines.map((line) => ({ priceHt: line.product.priceHt, qty: line.qty })));
 
   function update<K extends keyof Customer>(key: K, value: Customer[K]) {
     setCustomer((current) => ({ ...current, [key]: value }));
@@ -182,22 +179,12 @@ export function CheckoutPage() {
                     {line.qty} × {line.product.ref}
                   </small>
                 </span>
-                <strong>
-                  {formatEUR(lineTtc(line.product.priceHt, line.qty))}
-                  <span className="price-xof">{formatXOF(toXof(lineTtc(line.product.priceHt, line.qty)))}</span>
-                </strong>
+                <strong>{formatXOF(lineTtcXof(line.product.priceHt, line.qty))}</strong>
               </li>
             ))}
           </ul>
-          <TotalsBlock
-            ht={totals.ht}
-            vat={totals.vat}
-            shippingTtc={totals.shippingTtc}
-            totalTtc={totals.totalTtc}
-          />
-          {customer.country !== "France" && (
-            <p className="fine">Hors France, la livraison est chiffrée avec la confirmation.</p>
-          )}
+          <TotalsBlock ht={totals.ht} vat={totals.vat} totalTtc={totals.totalTtc} />
+          <p className="fine">Transport inclus. TVA {Math.round(site.vatRate * 100)} %.</p>
         </aside>
       </form>
     </div>
@@ -249,19 +236,11 @@ export function ConfirmationPage() {
                   {line.qty} × {line.refCode}
                 </small>
               </span>
-              <strong>
-                {formatEUR(lineTtc(line.priceHt, line.qty))}
-                <span className="price-xof">{formatXOF(toXof(lineTtc(line.priceHt, line.qty)))}</span>
-              </strong>
+              <strong>{formatXOF(lineTtcXof(line.priceHt, line.qty))}</strong>
             </li>
           ))}
         </ul>
-        <TotalsBlock
-          ht={order.totals.ht}
-          vat={order.totals.vat}
-          shippingTtc={order.totals.shippingTtc}
-          totalTtc={order.totals.totalTtc}
-        />
+        <TotalsBlock ht={order.totals.ht} vat={order.totals.vat} totalTtc={order.totals.totalTtc} />
       </div>
       <div className="hero-actions">
         <a className="btn btn-clay" href={mailtoHref(order)}>
@@ -332,15 +311,9 @@ function mailtoHref(order: StoredOrder) {
   const lines = order.lines
     .map(
       (line) =>
-        `- ${line.qty} × ${line.name} (${line.refCode}) — ${formatEUR(lineTtc(line.priceHt, line.qty))} TTC / ${formatXOF(toXof(lineTtc(line.priceHt, line.qty)))}`,
+        `- ${line.qty} × ${line.name} (${line.refCode}) — ${formatXOF(lineTtcXof(line.priceHt, line.qty))} TTC`,
     )
     .join("\n");
-  const shipping =
-    order.totals.shippingTtc === null
-      ? "sur devis"
-      : order.totals.shippingTtc === 0
-        ? "offerte"
-        : formatEUR(order.totals.shippingTtc);
   const body = [
     `Demande ${order.ref}`,
     "",
@@ -355,10 +328,10 @@ function mailtoHref(order: StoredOrder) {
     "",
     lines,
     "",
-    `Total HT : ${formatEUR(order.totals.ht)} / ${formatXOF(toXof(order.totals.ht))}`,
-    `TVA : ${formatEUR(order.totals.vat)} / ${formatXOF(toXof(order.totals.vat))}`,
-    `Livraison : ${shipping}`,
-    `Total TTC : ${formatEUR(order.totals.totalTtc)} / ${formatXOF(toXof(order.totals.totalTtc))}`,
+    `Total HT : ${formatXOF(order.totals.ht)}`,
+    `TVA ${Math.round(site.vatRate * 100)} % : ${formatXOF(order.totals.vat)}`,
+    "Transport : inclus",
+    `Total TTC : ${formatXOF(order.totals.totalTtc)}`,
   ]
     .filter((line) => line !== "")
     .join("\n");

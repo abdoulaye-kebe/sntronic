@@ -1,29 +1,18 @@
-import { formatEUR, formatXOF, lineTtc, round2, toXof } from "../lib/money.ts";
+import { formatXOF, lineTtcXof } from "../lib/money.ts";
 
 export function Price({
   ht,
   qty = 1,
   large = false,
-  compact = false,
 }: {
   ht: number;
   qty?: number;
   large?: boolean;
   compact?: boolean;
 }) {
-  const ttc = lineTtc(ht, qty);
-  const amountHt = round2(ht * qty);
   return (
     <p className={large ? "price price-lg" : "price"}>
-      <span className="price-ttc">
-        {formatEUR(ttc)} <span className="tax">TTC</span>
-      </span>
-      <span className="price-xof">{formatXOF(toXof(ttc))}</span>
-      {compact ? null : (
-        <span className="price-ht">
-          {formatEUR(amountHt)} HT · {formatXOF(toXof(amountHt))} HT
-        </span>
-      )}
+      <span className="price-ttc">{formatXOF(lineTtcXof(ht, qty))}</span>
     </p>
   );
 }

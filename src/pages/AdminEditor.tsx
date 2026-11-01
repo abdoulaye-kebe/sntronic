@@ -11,8 +11,9 @@ import {
   type Environment,
   type Product,
 } from "../data/catalog.ts";
+import { site } from "../data/site.ts";
 import { readImageFile } from "../lib/imageFile.ts";
-import { formatXOF, lineTtc, toXof } from "../lib/money.ts";
+import { formatXOF, lineTtcXof } from "../lib/money.ts";
 import { useTitle } from "../lib/useTitle.ts";
 import { AdminLogin, useAdminAuth } from "./AdminPage.tsx";
 
@@ -192,7 +193,7 @@ export function AdminEditor() {
           </div>
           <div className="fields-2">
             <label className="field">
-              <span>Prix HT en euros</span>
+              <span>Prix d’achat HT (€)</span>
               <input
                 type="number"
                 min="0"
@@ -213,7 +214,9 @@ export function AdminEditor() {
             </label>
           </div>
           <p className="fine">
-            Soit {formatXOF(toXof(lineTtc(Number(product.priceHt) || 0)))} TTC, au taux fixe 1 € = 655,957 F CFA, TVA française comprise.
+            Prix affiché : {formatXOF(lineTtcXof(Number(product.priceHt) || 0))} TTC, marge{" "}
+            {Math.round(site.marginRate * 100)} %, transport {Math.round(site.transportRate * 100)} % et TVA{" "}
+            {Math.round(site.vatRate * 100)} % compris.
           </p>
           <Field
             label="Délai si stock à zéro"

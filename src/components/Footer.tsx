@@ -55,7 +55,9 @@ export function Footer() {
           <p>
             <a href={`mailto:${site.email}`}>{site.email}</a>
           </p>
-          {site.phone && <p>{site.phone}</p>}
+          <p>
+            <a href={`tel:${site.phoneTel}`}>{site.phone}</a>
+          </p>
           <p>{site.hours}</p>
           <p>{site.cityLine}</p>
         </div>
@@ -63,7 +65,7 @@ export function Footer() {
       <div className="wrap footer-base">
         <p>© {new Date().getFullYear()} {site.name}</p>
         <p>
-          Prix TTC, TVA {Math.round(site.vatRate * 100)} %. Franc CFA au taux fixe 1 € = 655,957 F CFA.
+          Prix TTC en francs CFA, transport inclus, TVA {Math.round(site.vatRate * 100)} %.
         </p>
       </div>
     </footer>

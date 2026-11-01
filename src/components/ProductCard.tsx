@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import type { Product } from "../data/catalog.ts";
 import { useCart } from "../context/CartContext.tsx";
-import { formatEUR, formatXOF, lineTtc, round2, toXof } from "../lib/money.ts";
+import { formatXOF, lineTtcXof } from "../lib/money.ts";
 import { ProductPhoto } from "./ProductPhoto.tsx";
 import { Price, Stock } from "./Price.tsx";
 import { QtyStepper } from "./QtyStepper.tsx";
@@ -20,7 +20,7 @@ export function ProductCard({
   const [qty, setQty] = useState(1);
 
   if (shelf) {
-    const ttc = lineTtc(product.priceHt);
+    const ttc = lineTtcXof(product.priceHt);
     const safeQty = Math.min(Math.max(qty, 1), Math.max(product.stock, 1));
     return (
       <article className="shelf-card">
@@ -28,12 +28,7 @@ export function ProductCard({
           {product.badge && <span className="shelf-badge">{product.badge === "Nouveau" ? "New" : product.badge}</span>}
           <ProductPhoto product={product} alt="" />
           <h3>{product.name}</h3>
-          <p className="shelf-price">
-            {formatEUR(ttc)} <span>TTC</span>
-          </p>
-          <p className="shelf-meta">
-            {formatEUR(round2(product.priceHt))} HT · {formatXOF(toXof(ttc))}
-          </p>
+          <p className="shelf-price">{formatXOF(ttc)}</p>
           <p className="shelf-code">Code : {product.ref}</p>
         </Link>
         {product.stock > 0 ? (

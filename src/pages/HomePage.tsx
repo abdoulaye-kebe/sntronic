@@ -7,7 +7,7 @@ import { useTitle } from "../lib/useTitle.ts";
 import { services } from "./ServicesPage.tsx";
 
 const slideSlugs = ["tektelic-vivid", "sensecap-s2120", "tektelic-breeze", "sensecap-m2"];
-const slideTones = ["vitrine-pine", "vitrine-blue", "vitrine-clay", "vitrine-pine"];
+const slideTones = ["vitrine-pine", "vitrine-blue", "vitrine-pine", "vitrine-pine"];
 
 export function HomePage() {
   useTitle("Accueil");
@@ -61,7 +61,7 @@ export function HomePage() {
                   <span>LoRaWAN</span>
                 </li>
                 <li>
-                  <strong>€ / F CFA</strong>
+                  <strong>F CFA</strong>
                   <span>prix affichés</span>
                 </li>
               </ul>

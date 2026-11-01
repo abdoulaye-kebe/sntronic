@@ -8,8 +8,6 @@ import { QtyStepper } from "../components/QtyStepper.tsx";
 import { useCart } from "../context/CartContext.tsx";
 import { useCatalog } from "../context/CatalogContext.tsx";
 import { aisleOf, getAisle, relatedProducts } from "../data/catalog.ts";
-import { site } from "../data/site.ts";
-import { formatEUR, formatXOF, toXof } from "../lib/money.ts";
 import { useTitle } from "../lib/useTitle.ts";
 import { NotFoundPage } from "./NotFoundPage.tsx";
 
@@ -70,10 +68,7 @@ export function ProductPage() {
               Demander le délai
             </Link>
           )}
-          <p className="fine">
-            Livraison {formatEUR(site.shippingTtc)} TTC ({formatXOF(toXof(site.shippingTtc))}) en France, offerte dès{" "}
-            {formatEUR(site.freeShippingFromTtc)}. Autres destinations confirmées avec la commande.
-          </p>
+          <p className="fine">Prix TTC en francs CFA, transport et TVA 18 % compris.</p>
           <Link className="text-link" to={`/contact?produit=${product.slug}`}>
             Demander la fiche technique
           </Link>

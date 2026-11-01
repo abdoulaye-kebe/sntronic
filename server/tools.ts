@@ -165,15 +165,13 @@ function listCategories(catalog: ShopCard[]) {
 
 function shopTerms() {
   return {
-    tva: "20 %",
-    livraisonFrance: "8,90 € TTC (5 838 F CFA), offerte dès 150,00 € TTC",
-    autresDestinations: "confirmées avec la commande",
+    tva: "18 %",
+    transport: "inclus dans le prix affiché",
     retours: "14 jours",
     horaires: "Du lundi au vendredi, 9h–18h",
     email: "contact@sntronic.fr",
-    parite: "1 € = 655,957 F CFA",
     paiement: "La commande part par e-mail. Il n’y a pas de paiement en ligne.",
-    prix: "Les prix affichés sont les prix boutique, modifiables dans l’atelier.",
+    prix: "Les prix sont en francs CFA, transport et TVA 18 % compris.",
   };
 }
 
