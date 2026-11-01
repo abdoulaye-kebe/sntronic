@@ -33,8 +33,16 @@ const agricultureStack = [
 ];
 
 type MeterCard = { name: string; tag: string; points: string[]; caution?: string };
+type MeterPhoto = { src: string; label: string };
 
-const waterMeters: Record<string, { kicker: string; note: string; items: MeterCard[] }> = {
+const shengdaPhotos: MeterPhoto[] = [
+  { src: "/compteurs/shengda-ultrasonic.jpg", label: "Compteur à ultrasons" },
+  { src: "/compteurs/shengda-lorawan.jpg", label: "Compteur LoRaWAN" },
+  { src: "/compteurs/shengda-smart-card.jpg", label: "Prépayé à carte" },
+  { src: "/compteurs/shengda-sts.jpg", label: "Prépayé STS" },
+];
+
+const waterMeters: Record<string, { kicker: string; note: string; items: MeterCard[]; photoLabel?: string; photos?: MeterPhoto[] }> = {
   "eau-postpaye": {
     kicker: "Compteurs",
     note: "Ces compteurs se télérelèvent. Ils se commandent sur devis, hors tarif affiché du catalogue.",
@@ -76,6 +84,8 @@ const waterMeters: Record<string, { kicker: string; note: string; items: MeterCa
   "eau-prepaye": {
     kicker: "Offre prépayée LoRaWAN",
     note: "Fabricants avec une offre prépayée LoRaWAN documentée. Commande sur devis, hors tarif affiché du catalogue.",
+    photoLabel: "Photos Kaifeng Shengda",
+    photos: shengdaPhotos,
     items: [
       {
         name: "Kaifeng Shengda — Chine",
@@ -204,6 +214,19 @@ function MeterBoard({ usageId }: { usageId: string }) {
     <div className="meter-board">
       <p className="meter-kicker">{board.kicker}</p>
       <p className="meter-note">{board.note}</p>
+      {board.photos ? (
+        <>
+          {board.photoLabel ? <p className="meter-photos-label">{board.photoLabel}</p> : null}
+          <ul className="meter-gallery">
+          {board.photos.map((photo) => (
+            <li key={photo.src}>
+              <img src={photo.src} alt={photo.label} />
+              <p>{photo.label}</p>
+            </li>
+          ))}
+          </ul>
+        </>
+      ) : null}
       <ul>
         {board.items.map((meter) => (
           <li key={meter.name}>
