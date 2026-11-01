@@ -596,6 +596,13 @@ a { color: inherit; }
 
 .meter-board li li + li { margin-top: 0.18rem; }
 
+.usage-block .meter-caution {
+  max-width: none;
+  margin-top: 0.55rem;
+  color: #6a5340;
+  font-size: 0.88rem;
+}
+
 .arch-field { background: #163528; }
 .arch-lora { background: #152238; }
 .arch-stack { background: #10192c; }

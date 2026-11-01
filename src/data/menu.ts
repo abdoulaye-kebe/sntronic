@@ -18,7 +18,7 @@ export const usages = [
     id: "eau-prepaye",
     name: "Smart water metering — prépayé",
     pitch: "Le crédit commande l’eau : l’index est suivi, et un relais peut couper l’arrivée.",
-    text: "Deux montages. Sur un compteur déjà posé, le relevé d’impulsions et un relais coupent l’arrivée quand le crédit est épuisé, puis la rétablissent après rechargement. Les compteurs prépayés listés plus bas intègrent la vanne : ils se commandent sur devis.",
+    text: "Deux montages. Sur un compteur déjà posé, le relevé d’impulsions et un relais coupent l’arrivée quand le crédit est épuisé, puis la rétablissent après rechargement. Les fabricants listés plus bas ont une offre prépayée LoRaWAN documentée : la commande se fait sur devis.",
     slugs: ["fieldnode-pulse", "fieldnode-io", "cellspan-aqua"],
   },
   {
