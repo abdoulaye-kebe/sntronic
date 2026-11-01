@@ -14,6 +14,21 @@ import {
 
 const STORAGE_KEY = "sntronic-catalog-v2";
 
+const droppedSlugs = new Set([
+  "laison-parise",
+  "seck-ca568",
+  "bove-vpw",
+  "sindcon-prepaid",
+  "quill-qe-wl",
+  "addra-wmp",
+  "ismart-isw1598",
+  "xizhe-xz588",
+  "xintai-r250",
+  "luna-newstar",
+  "diehl-hydrus",
+  "dragino-debit",
+]);
+
 type CatalogContextValue = {
   products: Product[];
   customized: boolean;
@@ -41,10 +56,11 @@ function readStored(): Product[] | null {
 export function CatalogProvider({ children }: { children: ReactNode }) {
   const stored = readStored();
   const [products, setProducts] = useState<Product[]>(() => {
-    if (!stored) return seedProducts;
-    const known = new Set(stored.map((item) => item.slug));
-    const added = seedProducts.filter((item) => !known.has(item.slug));
-    return added.length ? [...added, ...stored] : stored;
+    const base = (stored ?? seedProducts).filter((item) => !droppedSlugs.has(item.slug));
+    if (!stored) return base;
+    const known = new Set(base.map((item) => item.slug));
+    const added = seedProducts.filter((item) => !known.has(item.slug) && !droppedSlugs.has(item.slug));
+    return added.length ? [...added, ...base] : base;
   });
   const [customized, setCustomized] = useState(stored !== null);
   const [error, setError] = useState<string | null>(null);

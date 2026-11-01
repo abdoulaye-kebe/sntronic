@@ -2303,87 +2303,104 @@ details p { margin-top: 0.45rem; color: var(--muted); }
 }
 
 .advisor-toggle {
-  border: 0;
+  border: 1px solid #3a3a3a;
   border-radius: 999px;
   padding: 0.85rem 1.15rem;
-  background: var(--pine);
+  background: #1c1c1c;
   color: white;
   font-weight: 650;
-  box-shadow: 0 10px 30px rgba(20, 98, 76, 0.28);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
 }
 
-.advisor-toggle:hover { background: var(--pine-deep); }
+.advisor-toggle:hover { background: #2a2a2a; }
+
+.advisor.open .advisor-toggle { display: none; }
 
 .advisor-panel {
+  position: relative;
   display: flex;
   flex-direction: column;
-  width: min(24rem, calc(100vw - 2.2rem));
+  width: min(28rem, calc(100vw - 1.5rem));
   height: min(34rem, calc(100vh - 6.5rem));
-  border: 1px solid var(--line);
+  border: 1px solid #2a2a2a;
   border-radius: 22px;
-  background: var(--card);
-  box-shadow: 0 18px 50px rgba(18, 22, 20, 0.16);
+  background: #0e0e0e;
+  color: #f4f4f4;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
   overflow: hidden;
 }
 
+.advisor-panel.is-empty { justify-content: center; }
+
 .advisor-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.9rem 1rem 0.7rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.advisor-kicker {
-  margin: 0;
-  color: var(--pine);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.advisor-head h2 {
-  margin: 0;
-  font-family: var(--serif);
-  font-size: 1.7rem;
-  font-weight: 600;
+  position: absolute;
+  top: 0.35rem;
+  right: 0.35rem;
+  z-index: 1;
 }
 
 .advisor-close {
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2.1rem;
+  height: 2.1rem;
   border: 0;
   border-radius: 999px;
-  background: var(--sand);
-  font-size: 1.3rem;
+  background: transparent;
+  color: #d0d0d0;
+  font-size: 1.35rem;
   line-height: 1;
 }
 
+.advisor-close:hover { background: #242424; }
+
 .advisor-log {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   overflow: auto;
-  padding: 0.9rem 1rem;
+  padding: 0.4rem 1.15rem 0.6rem;
 }
 
-.advisor-hello p { margin: 0 0 0.8rem; color: var(--muted); }
+.advisor-log.has-turns {
+  justify-content: flex-start;
+  padding-top: 2.4rem;
+}
+
+.advisor-panel.is-empty .advisor-log {
+  flex: 0 0 auto;
+  overflow: visible;
+}
+
+.advisor-hello {
+  text-align: center;
+  padding: 0 0.5rem 1.2rem;
+}
+
+.advisor-hello p {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 560;
+  letter-spacing: -0.02em;
+  color: #f7f7f7;
+}
 
 .advisor-suggestions {
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  gap: 0.35rem;
+  margin: 0 0.15rem 0.55rem;
 }
 
 .advisor-suggestions button {
   text-align: left;
-  border: 1px solid var(--line);
+  border: 1px solid #3a3a3a;
   border-radius: 12px;
-  background: white;
+  background: #1c1c1c;
+  color: #f2f2f2;
   padding: 0.65rem 0.75rem;
 }
 
-.advisor-suggestions button:hover { border-color: var(--pine); }
+.advisor-suggestions button:hover { background: #262626; }
 
 .advisor-user,
 .advisor-bot {
@@ -2392,56 +2409,113 @@ details p { margin-top: 0.45rem; color: var(--muted); }
 }
 
 .advisor-user {
-  margin-left: 2rem;
-  padding: 0.65rem 0.75rem;
-  border-radius: 14px 14px 4px 14px;
-  background: #1d6b54;
-  color: #f4faf7;
+  margin-left: 2.4rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 16px;
+  background: #2a2a2a;
+  color: #f7f7f7;
 }
 
 .advisor-bot {
-  margin-right: 1.2rem;
-  padding: 0.65rem 0.75rem;
-  border-radius: 14px 14px 14px 4px;
-  background: #eef3f0;
-  color: #1c3d32;
+  margin-right: 0.4rem;
+  color: #ececec;
 }
 
-.advisor-bot a { color: #1d6b54; font-weight: 650; }
+.advisor-bot a { color: #8eb6ff; font-weight: 650; }
 
-.advisor-form {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 0.5rem;
-  padding: 0.75rem;
-  border-top: 1px solid var(--line);
+.advisor-form { padding: 0.35rem 0.7rem 0.8rem; }
+
+.advisor-composer {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  min-height: 3.15rem;
+  padding: 0.3rem 0.35rem 0.3rem 0.35rem;
+  border: 1px solid #3d3d3d;
+  border-radius: 999px;
+  background: #2a2a2a;
 }
 
-.advisor-form textarea {
-  resize: none;
-  border: 1px solid #d5e4dc;
-  border-radius: 12px;
-  padding: 0.65rem 0.75rem;
-  font: inherit;
-  background: white;
-}
-
-.advisor-form button {
+.advisor-plus,
+.advisor-analyse,
+.advisor-mic,
+.advisor-send {
   border: 0;
-  border-radius: 12px;
-  padding: 0 0.9rem;
-  background: #1d6b54;
+  background: transparent;
+  color: #e8e8e8;
+  font: inherit;
+}
+
+.advisor-plus {
+  flex: none;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 999px;
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.advisor-plus:hover,
+.advisor-analyse:hover,
+.advisor-mic:hover { background: #3a3a3a; }
+
+.advisor-composer input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: #f7f7f7;
+  font: inherit;
+  padding: 0.35rem 0.2rem;
+}
+
+.advisor-composer input::placeholder { color: #9a9a9a; }
+.advisor-composer input:focus { outline: none; }
+
+.advisor-analyse,
+.advisor-mic {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex: none;
+  border-radius: 999px;
+  padding: 0.4rem 0.55rem;
+  color: #d8d8d8;
+  font-size: 0.92rem;
+}
+
+.advisor-mic {
+  width: 2.15rem;
+  height: 2.15rem;
+  justify-content: center;
+  padding: 0;
+  color: #e8e8e8;
+}
+
+.advisor-send {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 999px;
+  background: #2f6bff;
   color: white;
-  font-weight: 650;
 }
 
-.advisor-form button:hover { background: #165743; }
+.advisor-send:hover { background: #2457d6; }
 
-.advisor-form button:disabled {
-  background: #d5e6df;
-  color: #5d746a;
-  opacity: 1;
+.advisor-analyse:disabled,
+.advisor-send:disabled {
+  opacity: 0.45;
+  cursor: default;
 }
+
+.advisor-send:disabled { background: #3a3a3a; color: #8d8d8d; }
+.advisor-analyse:disabled:hover,
+.advisor-send:disabled:hover,
+.advisor-plus:disabled:hover { background: transparent; }
+.advisor-send:disabled:hover { background: #3a3a3a; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
