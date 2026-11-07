@@ -1,6 +1,13 @@
 import type { Product } from "./catalog.ts";
 
-const quote = { priceHt: 0, stock: 0, quote: true as const, environment: "Extérieur" as const, art: "node" as const };
+const quote = {
+  priceHt: 0,
+  stock: 0,
+  quote: true as const,
+  featured: true,
+  environment: "Extérieur" as const,
+  art: "node" as const,
+};
 
 export const waterMeterProducts: Product[] = [
   {

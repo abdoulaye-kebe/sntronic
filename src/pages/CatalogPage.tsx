@@ -41,8 +41,8 @@ export function CatalogPage() {
       );
       return haystack.includes(needle);
     });
-    return sortProducts(filtered, sort);
-  }, [base, query, sort]);
+    return sortProducts(filtered, sort, aisle?.id);
+  }, [aisle, base, query, sort]);
 
   if (categoryId && !aisle && !category) return <NotFoundPage />;
 
@@ -114,19 +114,25 @@ export function CatalogPage() {
   );
 }
 
-function sortProducts(list: Product[], sort: string): Product[] {
+function sortProducts(list: Product[], sort: string, aisleId?: string): Product[] {
   const copy = [...list];
   const quoteRank = (item: Product) => (item.quote ? 1 : 0);
   if (sort === "prix-asc") copy.sort((a, b) => quoteRank(a) - quoteRank(b) || a.priceHt - b.priceHt);
   else if (sort === "prix-desc") copy.sort((a, b) => quoteRank(a) - quoteRank(b) || b.priceHt - a.priceHt);
   else if (sort === "nom") copy.sort((a, b) => a.name.localeCompare(b.name, "fr"));
   else {
-    copy.sort(
-      (a, b) =>
+    const metersFirst = aisleId === "devices";
+    copy.sort((a, b) => {
+      if (metersFirst) {
+        const meters = Number(b.line === "Shengda") - Number(a.line === "Shengda");
+        if (meters) return meters;
+      }
+      return (
         Number(Boolean(b.featured)) - Number(Boolean(a.featured)) ||
         Number(b.stock > 0) - Number(a.stock > 0) ||
-        a.name.localeCompare(b.name, "fr"),
-    );
+        a.name.localeCompare(b.name, "fr")
+      );
+    });
   }
   return copy;
 }
