@@ -79,7 +79,7 @@ a { color: inherit; }
   margin-inline: auto;
 }
 
-.narrow { max-width: 760px; }
+.narrow { max-width: none; }
 
 .page { padding: 1.6rem 0 1rem; }
 
@@ -110,7 +110,7 @@ a { color: inherit; }
 .section-title { font-size: clamp(1.45rem, 2.2vw, 1.9rem); line-height: 1.15; }
 
 .lede {
-  max-width: 46ch;
+  max-width: none;
   margin-top: 1rem;
   color: var(--muted);
   font-size: 1.08rem;
@@ -353,7 +353,7 @@ a { color: inherit; }
 .home-lead { padding-top: 2.6rem; }
 
 .home-lead h1 {
-  max-width: 18ch;
+  max-width: none;
   font-family: var(--serif);
   font-size: clamp(1.85rem, 4vw, 2.7rem);
   font-weight: 560;
@@ -408,14 +408,11 @@ a { color: inherit; }
 }
 
 .home-close {
-  max-width: 62ch;
+  max-width: none;
   margin-top: 1rem;
   color: var(--muted);
   font-size: 0.95rem;
 }
-
-.service-intro .lede { max-width: 58ch; }
-.service-intro .lede-wide { max-width: none; }
 
 .service-board {
   display: grid;
@@ -513,7 +510,7 @@ a { color: inherit; }
   border-radius: 18px;
 }
 
-.service-close p { max-width: 62ch; font-size: 0.98rem; }
+.service-close p { flex: 1; min-width: min(100%, 16rem); max-width: none; font-size: 0.98rem; }
 
 .service-close .btn { background: white; color: #1d6b54; }
 
@@ -536,7 +533,7 @@ a { color: inherit; }
 }
 
 .usage-block p {
-  max-width: 78ch;
+  max-width: none;
   margin-top: 0.45rem;
   color: var(--muted);
 }
@@ -684,7 +681,7 @@ a { color: inherit; }
 }
 
 .usage-block .meter-note {
-  max-width: 72ch;
+  max-width: none;
   margin-top: 0.3rem;
   color: var(--muted);
   font-size: 0.92rem;
@@ -985,11 +982,11 @@ a { color: inherit; }
   font-size: clamp(1.85rem, 2.8vw, 2.55rem);
   letter-spacing: -0.02em;
   line-height: 1.05;
-  max-width: 14ch;
+  max-width: none;
 }
 
 .vitrine-text {
-  max-width: 34ch;
+  max-width: none;
   margin: 0.65rem 0 1.05rem;
   font-size: 0.95rem;
   line-height: 1.5;
@@ -1014,7 +1011,7 @@ a { color: inherit; }
   padding: 0.85rem 0 0;
   list-style: none;
   border-top: 1px solid rgba(255, 255, 255, 0.22);
-  max-width: 28rem;
+  max-width: none;
 }
 
 .vitrine-facts li + li {
@@ -1513,7 +1510,9 @@ a { color: inherit; }
   margin-bottom: 1rem;
 }
 
-.section-head p { max-width: 48ch; margin-top: 0.4rem; color: var(--muted); }
+.section-head > div { flex: 1; min-width: 0; }
+
+.section-head p { max-width: none; margin-top: 0.4rem; color: var(--muted); }
 
 .section-head > a { color: var(--pine); font-weight: 650; text-decoration: none; white-space: nowrap; }
 
@@ -1765,7 +1764,7 @@ a { color: inherit; }
 
 .band .eyebrow { color: #9fe1cb; }
 
-.band .section-title { max-width: 16ch; }
+.band .section-title { max-width: none; }
 
 .trio {
   display: grid;
@@ -1825,9 +1824,9 @@ a { color: inherit; }
   border-radius: 24px;
 }
 
-.cta-panel .section-title { max-width: 16ch; }
+.cta-panel .section-title { max-width: none; }
 
-.cta-panel p { margin-top: 0.45rem; color: var(--muted); max-width: 46ch; }
+.cta-panel p { flex: 1; min-width: 0; margin-top: 0.45rem; color: var(--muted); max-width: none; }
 
 .catalog {
   display: grid;
