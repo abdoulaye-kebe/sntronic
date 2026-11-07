@@ -89,7 +89,7 @@ export function UseCasesPage() {
       <header className="service-intro">
         <p className="eyebrow">SNTRONIC</p>
         <h1 className="section-title">Cas d’usage</h1>
-        <p className="lede">
+        <p className="lede lede-wide">
           Cinq façons d’utiliser les équipements : l’eau, l’énergie, la ville et l’agriculture. L’architecture
           d’intégration reste la même.
         </p>

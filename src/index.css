@@ -415,6 +415,7 @@ a { color: inherit; }
 }
 
 .service-intro .lede { max-width: 58ch; }
+.service-intro .lede-wide { max-width: none; }
 
 .service-board {
   display: grid;
