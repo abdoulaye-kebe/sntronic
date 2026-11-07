@@ -18,6 +18,7 @@ export function HomePage() {
     const product = getProduct(slug);
     return product ? [product] : [];
   });
+  const tester = getProduct("adeunis-ftd");
   const [index, setIndex] = useState(0);
   const count = slides.length;
   const safeIndex = count ? index % count : 0;
@@ -138,6 +139,23 @@ export function HomePage() {
             })}
           </div>
         </div>
+        {tester && (
+          <article className="home-tester">
+            <ProductPhoto product={tester} alt={tester.name} />
+            <div>
+              <p className="eyebrow">Adeunis</p>
+              <h2>Testeur de réseau</h2>
+              <p>
+                On le promène sur le site pour savoir si le réseau LoRaWAN ou Sigfox couvre l’endroit où les capteurs
+                seront posés. L’écran affiche tout de suite la puissance et la qualité du signal, et le GPS retient
+                chaque point de mesure.
+              </p>
+              <Link className="text-link" to={`/produit/${tester.slug}`}>
+                Voir la fiche
+              </Link>
+            </div>
+          </article>
+        )}
         <h2 className="home-aisle-title">Les équipements</h2>
         <div className="family-grid">
           {aisles.map((aisle) => {

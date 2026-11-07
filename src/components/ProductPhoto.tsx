@@ -16,7 +16,7 @@ export function ProductPhoto({
   const [failed, setFailed] = useState(false);
   const tone = product.image?.includes("/tektelic-")
     ? " photo-cutout"
-    : product.image?.includes("/sensecap-")
+    : product.image?.includes("/sensecap-") || product.image?.includes("/adeunis-")
       ? " photo-studio"
       : product.image?.includes("/compteurs/")
         ? " photo-meter"
