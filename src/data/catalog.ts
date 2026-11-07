@@ -1528,8 +1528,8 @@ export const aisles = [
   {
     id: "devices",
     name: "Devices",
-    pitch: "Capteurs et terminaux, sur site ou en déplacement.",
-    cover: "tektelic-tundra",
+    pitch: "Compteurs d’eau, capteurs et terminaux.",
+    cover: "shengda-lorawan",
   },
   {
     id: "gateways",

@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ProductCard } from "../components/ProductCard.tsx";
 import { ProductPhoto } from "../components/ProductPhoto.tsx";
 import { useCatalog } from "../context/CatalogContext.tsx";
 import { aisles } from "../data/catalog.ts";
 import { useTitle } from "../lib/useTitle.ts";
 import { services } from "./ServicesPage.tsx";
 
-const slideSlugs = ["tektelic-vivid", "sensecap-s2120", "tektelic-breeze", "sensecap-m2"];
+const slideSlugs = ["shengda-lorawan", "tektelic-vivid", "sensecap-s2120", "tektelic-breeze"];
+const meterSlugs = ["shengda-ultrasonic", "shengda-lorawan", "shengda-smart-card", "shengda-sts"];
 const slideTones = ["vitrine-pine", "vitrine-blue", "vitrine-pine", "vitrine-pine"];
 
 export function HomePage() {
@@ -124,6 +126,18 @@ export function HomePage() {
       </section>
 
       <section className="wrap section home-families" id="familles">
+        <div className="shelf-head">
+          <h2>Compteurs d’eau</h2>
+          <Link to="/catalogue/devices">Voir les devices</Link>
+        </div>
+        <div className="catalog home-meters">
+          <div className="grid-products">
+            {meterSlugs.flatMap((slug) => {
+              const product = getProduct(slug);
+              return product ? [<ProductCard key={slug} product={product} compact />] : [];
+            })}
+          </div>
+        </div>
         <h2 className="home-aisle-title">Les équipements</h2>
         <div className="family-grid">
           {aisles.map((aisle) => {
