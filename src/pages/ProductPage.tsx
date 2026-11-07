@@ -8,6 +8,7 @@ import { QtyStepper } from "../components/QtyStepper.tsx";
 import { useCart } from "../context/CartContext.tsx";
 import { useCatalog } from "../context/CatalogContext.tsx";
 import { aisleOf, getAisle, relatedProducts } from "../data/catalog.ts";
+import { site } from "../data/site.ts";
 import { useTitle } from "../lib/useTitle.ts";
 import { NotFoundPage } from "./NotFoundPage.tsx";
 
@@ -51,8 +52,8 @@ export function ProductPage() {
               <li key={item}>{item}</li>
             ))}
           </ul>
-          <ProductPhoto product={product} large alt={product.name} />
         </div>
+        <ProductPhoto product={product} large alt={product.name} />
         <aside className="buybox">
           <Price ht={product.priceHt} large quote={product.quote} />
           {product.quote ? <p className="stock stock-out">Sur devis</p> : <Stock stock={product.stock} lead={product.lead} />}
@@ -75,7 +76,8 @@ export function ProductPage() {
           <p className="fine">
             {product.quote
               ? "Le montant est confirmé sur devis, avant commande."
-              : "Prix TTC en francs CFA, transport et TVA 18 % compris."}
+              : "Prix TTC en francs CFA, transport et TVA 18 % compris."}{" "}
+            {site.delivery}
           </p>
           <Link className="text-link" to={`/contact?produit=${product.slug}`}>
             Demander la fiche technique

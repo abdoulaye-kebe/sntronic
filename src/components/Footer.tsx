@@ -65,7 +65,8 @@ export function Footer() {
       <div className="wrap footer-base">
         <p>© {new Date().getFullYear()} {site.name}</p>
         <p>
-          Prix TTC en francs CFA, transport inclus, TVA {Math.round(site.vatRate * 100)} %.
+          Prix TTC en francs CFA, transport inclus, TVA {Math.round(site.vatRate * 100)} %. Livraison entre 3 jours
+          et 1 semaine. Le délai d’une quantité importante est indiqué dans le devis.
         </p>
       </div>
     </footer>

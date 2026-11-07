@@ -13,7 +13,8 @@ export function LegalPage() {
       </p>
       <p>
         Les prix sont indiqués en francs CFA, toutes taxes comprises. La TVA est de {Math.round(site.vatRate * 100)} %
-        et le transport est compris dans le prix. L’hébergeur du site sera indiqué ici au moment de la mise en ligne.
+        et le transport est compris dans le prix. {site.delivery} L’hébergeur du site sera indiqué ici au moment de la
+        mise en ligne.
       </p>
       <p>
         Le panier est enregistré dans votre navigateur. Aucun compte n’est créé. Le formulaire de contact et la demande

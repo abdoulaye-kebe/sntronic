@@ -17,6 +17,9 @@ export const site = {
   /** Parité fixe du franc CFA (BCEAO) : 1 € = 655,957 F CFA. */
   eurToXof: 655.957,
   returnsDays: 14,
+  /** Délai annoncé au client. Les quantités importantes sont chiffrées au devis. */
+  delivery:
+    "Une commande est livrée entre 3 jours et 1 semaine. Pour une quantité importante, le délai est indiqué dans le devis.",
   adminPin: "atelier",
   countries: [
     "Sénégal",

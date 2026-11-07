@@ -11,8 +11,7 @@ export function ShippingPage() {
         <details open>
           <summary>Délais</summary>
           <p>
-            Les références en stock partent de la boutique à Dakar, Golf sud, villa 610, sous 24 à 48 heures ouvrées.
-            Une fiche « sur commande » indique son délai. La confirmation d’e-mail fige la date.
+            {site.delivery} Une fiche « sur commande » précise son propre délai. La confirmation d’e-mail fige la date.
           </p>
         </details>
         <details>

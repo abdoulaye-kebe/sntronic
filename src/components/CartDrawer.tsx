@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext.tsx";
+import { site } from "../data/site.ts";
 import { cartTotals, formatXOF } from "../lib/money.ts";
 import { ProductPhoto } from "./ProductPhoto.tsx";
 import { Price } from "./Price.tsx";
@@ -69,7 +70,7 @@ export function CartDrawer() {
               </ul>
             </div>
             <div className="drawer-foot">
-              <p className="ship-note">Transport inclus. TVA 18 %.</p>
+              <p className="ship-note">Transport inclus. TVA 18 %. {site.delivery}</p>
               <p className="total-row">
                 <span>Total</span>
                 <strong>{formatXOF(totals.totalTtc)}</strong>

@@ -91,7 +91,7 @@ export function CheckoutPage() {
       <h1 className="section-title">Demande de commande</h1>
       <p className="lede">
         Le paiement en ligne n’est pas ouvert. La demande prépare la facture : vous l’envoyez par e-mail, l’atelier
-        confirme le délai et le règlement.
+        confirme le règlement. {site.delivery}
       </p>
       <form className="checkout" onSubmit={submit}>
         <div className="fields">
@@ -184,7 +184,7 @@ export function CheckoutPage() {
             ))}
           </ul>
           <TotalsBlock ht={totals.ht} vat={totals.vat} totalTtc={totals.totalTtc} />
-          <p className="fine">Transport inclus. TVA {Math.round(site.vatRate * 100)} %.</p>
+          <p className="fine">Transport inclus. TVA {Math.round(site.vatRate * 100)} %. {site.delivery}</p>
         </aside>
       </form>
     </div>
@@ -217,7 +217,7 @@ export function ConfirmationPage() {
       <h1 className="display display-sm">{order.ref}</h1>
       <p className="lede">
         {when}. Envoyez la demande à l’atelier pour qu’elle soit traitée. Le message s’ouvre dans votre logiciel de
-        messagerie.
+        messagerie. {site.delivery}
       </p>
       <div className="summary">
         <h2>
@@ -331,6 +331,7 @@ function mailtoHref(order: StoredOrder) {
     `Total HT : ${formatXOF(order.totals.ht)}`,
     `TVA ${Math.round(site.vatRate * 100)} % : ${formatXOF(order.totals.vat)}`,
     "Transport : inclus",
+    site.delivery,
     `Total TTC : ${formatXOF(order.totals.totalTtc)}`,
   ]
     .filter((line) => line !== "")

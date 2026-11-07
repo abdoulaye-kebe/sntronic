@@ -17,6 +17,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [mobileSection, setMobileSection] = useState<string | null>(null);
   const section = sectionOf(location.pathname, location.search);
 
   useEffect(() => {
@@ -27,6 +28,7 @@ export function Header() {
     setMenuOpen(false);
     setSearchOpen(false);
     setOpenMenu(null);
+    setMobileSection(null);
   }, [location.pathname, location.search]);
 
   useEffect(() => {
@@ -55,7 +57,7 @@ export function Header() {
   }
 
   return (
-    <header className={`mast ${searchOpen ? "search-open" : ""}`}>
+    <header className={`mast ${searchOpen ? "search-open" : ""} ${menuOpen ? "menu-open" : ""}`}>
       <a className="skip" href="#contenu">
         Aller au contenu
       </a>
@@ -119,12 +121,14 @@ export function Header() {
             type="button"
             className="icon-btn menu-toggle"
             aria-expanded={menuOpen}
+            aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
             onClick={() => {
               setMenuOpen((value) => !value);
               setSearchOpen(false);
+              setMobileSection(null);
             }}
           >
-            {menuOpen ? "Fermer" : "Menu"}
+            {menuOpen ? <CloseIcon /> : <MenuIcon />}
           </button>
         </div>
       </div>
@@ -161,7 +165,13 @@ export function Header() {
       {menuOpen && (
         <nav className="nav-mobile wrap" aria-label="Menu mobile">
           {menu.map((item) => (
-            <MobileGroup key={item.id} item={item} onNavigate={() => setMenuOpen(false)} />
+            <MobileGroup
+              key={item.id}
+              item={item}
+              open={mobileSection === item.id}
+              onToggle={() => setMobileSection((current) => (current === item.id ? null : item.id))}
+              onNavigate={() => setMenuOpen(false)}
+            />
           ))}
         </nav>
       )}
@@ -169,17 +179,43 @@ export function Header() {
   );
 }
 
-function MobileGroup({ item, onNavigate }: { item: MenuItem; onNavigate: () => void }) {
+function MobileGroup({
+  item,
+  open,
+  onToggle,
+  onNavigate,
+}: {
+  item: MenuItem;
+  open: boolean;
+  onToggle: () => void;
+  onNavigate: () => void;
+}) {
+  const extras = (item.children ?? []).filter((child) => {
+    if (item.id === "blog") return false;
+    if ((item.id === "contact" || item.id === "produits") && child.to === item.to) return false;
+    return true;
+  });
   return (
-    <div className="nav-group">
-      <Link to={item.to ?? "/"} onClick={onNavigate}>
-        {item.label}
-      </Link>
-      {item.children?.map((child) => (
-        <Link key={child.label} className="nav-sub" to={child.to} onClick={onNavigate}>
-          {child.label}
+    <div className={open ? "nav-group open" : "nav-group"}>
+      <div className="nav-row">
+        <Link to={item.to ?? "/"} onClick={onNavigate}>
+          {item.label}
         </Link>
-      ))}
+        {extras.length > 0 && (
+          <button type="button" aria-expanded={open} aria-label={open ? `Replier ${item.label}` : `Déplier ${item.label}`} onClick={onToggle}>
+            <Caret />
+          </button>
+        )}
+      </div>
+      {open && extras.length > 0 && (
+        <div className="nav-subs">
+          {extras.map((child) => (
+            <Link key={child.label} to={child.to} onClick={onNavigate}>
+              {child.label}
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -219,6 +255,22 @@ function BagIcon() {
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
       <path d="M6.5 8h11l-.8 12h-9.4L6.5 8z" />
       <path d="M9 8V7a3 3 0 0 1 6 0v1" />
+    </svg>
+  );
+}
+
+function MenuIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+      <path d="M6 6l12 12M18 6 6 18" />
     </svg>
   );
 }

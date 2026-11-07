@@ -149,7 +149,7 @@ export function ChatWidget() {
               />
               <button type="submit" className="advisor-analyse" disabled={pending || !draft.trim()}>
                 <ChainIcon />
-                Analyser
+                <span>Analyser</span>
               </button>
               <button type="button" className="advisor-mic" aria-label="Dicter la question" onClick={dictate}>
                 <MicIcon />
@@ -165,9 +165,11 @@ export function ChatWidget() {
         type="button"
         className="advisor-toggle"
         aria-expanded={open}
+        aria-label={open ? "Fermer le conseiller" : "Ouvrir le conseiller"}
         onClick={() => setOpen((value) => !value)}
       >
-        {open ? "Fermer" : "Conseiller"}
+        <AdvisorIcon />
+        <span>{open ? "Fermer" : "Conseiller"}</span>
       </button>
     </div>
   );
@@ -178,6 +180,14 @@ type Dictation = new () => {
   start: () => void;
   onresult: ((event: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void) | null;
 };
+
+function AdvisorIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+      <path d="M5 16.5V8.8A3.8 3.8 0 0 1 8.8 5h6.4A3.8 3.8 0 0 1 19 8.8v4.2a3.8 3.8 0 0 1-3.8 3.8H9.2L5 20.2z" />
+    </svg>
+  );
+}
 
 function MicIcon() {
   return (

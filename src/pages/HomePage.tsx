@@ -32,16 +32,8 @@ export function HomePage() {
     <>
       {slide && (
         <section className={`vitrine ${slideTones[safeIndex] ?? "vitrine-pine"}`} aria-roledescription="carrousel">
-          <button
-            type="button"
-            className="vitrine-nav vitrine-prev"
-            aria-label="Vitrine précédente"
-            onClick={() => setIndex((value) => (value - 1 + count) % count)}
-          >
-            ‹
-          </button>
           <div className="wrap vitrine-inner">
-            <div>
+            <div className="vitrine-copy">
               <p className="vitrine-kicker">
                 <span>{String(safeIndex + 1).padStart(2, "0")}</span>
                 {slide.line}
@@ -66,18 +58,28 @@ export function HomePage() {
                 </li>
               </ul>
             </div>
-            <div className="vitrine-visual">
-              <ProductPhoto product={slide} large alt={slide.name} />
+            <div className="vitrine-stage">
+              <button
+                type="button"
+                className="vitrine-nav vitrine-prev"
+                aria-label="Vitrine précédente"
+                onClick={() => setIndex((value) => (value - 1 + count) % count)}
+              >
+                ‹
+              </button>
+              <div className="vitrine-visual">
+                <ProductPhoto product={slide} large alt={slide.name} />
+              </div>
+              <button
+                type="button"
+                className="vitrine-nav vitrine-next"
+                aria-label="Vitrine suivante"
+                onClick={() => setIndex((value) => (value + 1) % count)}
+              >
+                ›
+              </button>
             </div>
           </div>
-          <button
-            type="button"
-            className="vitrine-nav vitrine-next"
-            aria-label="Vitrine suivante"
-            onClick={() => setIndex((value) => (value + 1) % count)}
-          >
-            ›
-          </button>
           <div className="vitrine-dots">
             {slides.map((item, dot) => (
               <button

@@ -45,7 +45,7 @@ export function CartPage() {
           <aside className="summary">
             <h2>Récapitulatif</h2>
             <TotalsBlock ht={totals.ht} vat={totals.vat} totalTtc={totals.totalTtc} />
-            <p className="fine">Transport inclus. TVA {Math.round(site.vatRate * 100)} %.</p>
+            <p className="fine">Transport inclus. TVA {Math.round(site.vatRate * 100)} %. {site.delivery}</p>
             <Link className="btn btn-clay" to="/commande">
               Continuer la commande
             </Link>
