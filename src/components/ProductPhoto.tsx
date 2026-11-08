@@ -14,14 +14,16 @@ export function ProductPhoto({
   alt?: string;
 }) {
   const [failed, setFailed] = useState(false);
-  const tone = product.image?.includes("/tektelic-")
+  const src = productImage(product);
+  const tone = src.includes("/tektelic-")
     ? " photo-cutout"
-    : product.image?.includes("/sensecap-") || product.image?.includes("/adeunis-")
+    : src.includes("/sensecap-") || src.includes("/adeunis-")
       ? " photo-studio"
-      : product.image?.includes("/compteurs/")
+      : src.includes("/compteurs/")
         ? " photo-meter"
         : "";
-  const size = `${large ? "photo photo-lg" : small ? "photo photo-sm" : "photo"}${tone}`;
+  const plate = /\.(jpe?g|webp)$/i.test(src) ? " photo-plate" : "";
+  const size = `${large ? "photo photo-lg" : small ? "photo photo-sm" : "photo"}${tone}${plate}`;
 
   if (failed) {
     return <DeviceArt art={product.art} category={product.category} label={product.ref} large={large} small={small} />;
@@ -29,7 +31,7 @@ export function ProductPhoto({
 
   return (
     <div className={size}>
-      <img src={productImage(product)} alt={alt} onError={() => setFailed(true)} />
+      <img src={src} alt={alt} onError={() => setFailed(true)} />
     </div>
   );
 }

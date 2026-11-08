@@ -2064,6 +2064,19 @@ a.offer-card:hover { border-color: #b7d4c8; }
   padding: 0;
 }
 
+.photo-plate {
+  background: #d8d2c9;
+}
+
+.photo-plate::after { display: none; }
+
+.photo-plate img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: none;
+}
+
 .photo-lg { height: 460px; border-radius: 28px; }
 
 .photo-sm { width: 72px; height: 72px; border-radius: 12px; }
@@ -2285,7 +2298,15 @@ a.offer-card:hover { border-color: #b7d4c8; }
 .card-compact .photo.photo-cutout img,
 .card-compact .photo.photo-studio img {
   object-fit: contain;
-  padding: 0.55rem;
+  padding: 0;
+}
+
+.card-compact .photo.photo-plate img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  padding: 0;
+  filter: none;
 }
 
 .card-compact .badge {
