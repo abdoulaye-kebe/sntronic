@@ -7,6 +7,20 @@ import { ProductPhoto } from "./ProductPhoto.tsx";
 import { Price, Stock } from "./Price.tsx";
 import { QtyStepper } from "./QtyStepper.tsx";
 
+function networkOf(product: Product): string | null {
+  if (product.connectivity === "LoRaWAN" || product.connectivity === "LTE-M" || product.connectivity === "NB-IoT") {
+    return product.connectivity;
+  }
+  if (product.category === "lorawan") return "LoRaWAN";
+  if (product.category === "lte-m") return "LTE-M";
+  if (product.category === "nb-iot") return "NB-IoT";
+  return null;
+}
+
+function traitsOf(product: Product, network: string | null) {
+  return product.highlights.filter((item) => item !== "Sur devis" && item !== network).slice(0, 2);
+}
+
 export function ProductCard({
   product,
   shelf = false,
@@ -18,6 +32,8 @@ export function ProductCard({
 }) {
   const { add } = useCart();
   const [qty, setQty] = useState(1);
+  const network = networkOf(product);
+  const traits = traitsOf(product, network);
 
   if (shelf) {
     const ttcLabel = product.quote ? "Sur devis" : formatXOF(lineTtcXof(product.priceHt));
@@ -57,6 +73,7 @@ export function ProductCard({
       <Link className="card-main" to={`/produit/${product.slug}`}>
         <div className="art-wrap">
           {product.badge && <span className="badge">{product.badge}</span>}
+          {network ? <span className="net-badge">{network}</span> : null}
           <ProductPhoto product={product} alt="" />
         </div>
         <div className="card-body">
@@ -64,27 +81,25 @@ export function ProductCard({
             {product.line} · {product.ref}
           </p>
           <h3>{product.name}</h3>
-          {compact ? null : (
-            <>
-              <p className="card-summary">{product.summary}</p>
-              <ul className="chips">
-                {product.highlights.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </>
-          )}
+          <p className="card-summary">{product.summary}</p>
+          {traits.length > 0 ? (
+            <ul className="chips">
+              {traits.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          ) : null}
           <Price ht={product.priceHt} compact={compact} quote={product.quote} />
-          {product.quote ? <p className="stock stock-out">Sur devis</p> : <Stock stock={product.stock} lead={compact ? undefined : product.lead} />}
+          {product.quote ? null : <Stock stock={product.stock} lead={compact ? undefined : product.lead} />}
         </div>
       </Link>
       <div className="card-actions">
         {product.quote ? (
-          <Link className="btn btn-clay btn-small" to={`/contact?produit=${product.slug}`}>
+          <Link className="btn btn-quiet btn-small" to={`/contact?produit=${product.slug}`}>
             Demander un devis
           </Link>
         ) : product.stock > 0 ? (
-          <button type="button" className="btn btn-clay btn-small" onClick={() => add(product.slug, 1)}>
+          <button type="button" className="btn btn-quiet btn-small" onClick={() => add(product.slug, 1)}>
             Ajouter
           </button>
         ) : (

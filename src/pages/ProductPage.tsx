@@ -47,6 +47,10 @@ export function ProductPage() {
           <h1 className="section-title">{product.name}</h1>
           <p className="card-line">Réf. {product.ref}</p>
           <p className="lede">{product.summary}</p>
+          <div className="product-allows">
+            <p className="eyebrow">Ce que ça permet</p>
+            <p>{product.description}</p>
+          </div>
           <ul className="chips">
             {product.highlights.map((item) => (
               <li key={item}>{item}</li>
@@ -84,8 +88,6 @@ export function ProductPage() {
           </Link>
         </aside>
         <div className="product-story">
-          <h2>En clair</h2>
-          <p>{product.description}</p>
           <h2>Caractéristiques</h2>
           <dl className="specs">
             {product.specs.map(([label, value]) => (

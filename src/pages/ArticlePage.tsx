@@ -8,12 +8,12 @@ import { NotFoundPage } from "./NotFoundPage.tsx";
 const related: Record<string, { to: string; label: string }[]> = {
   "compteur-eau-lorawan": [
     { to: "/produit/shengda-lorawan", label: "Voir le compteur d’eau LoRaWAN" },
-    { to: "/usages#eau-postpaye", label: "Cas d’usage postpayé" },
+    { to: "/usages/eau-postpaye", label: "Facturer l’eau après consommation" },
   ],
   "compteur-prepaye-sts": [
     { to: "/produit/shengda-sts", label: "Voir le compteur prépayé STS" },
     { to: "/produit/shengda-smart-card", label: "Voir le compteur à carte" },
-    { to: "/usages#eau-prepaye", label: "Cas d’usage prépayé" },
+    { to: "/usages/eau-prepaye", label: "Faire payer l’eau avant de la livrer" },
   ],
   "qualifier-un-reseau": [
     { to: "/produit/adeunis-ftd", label: "Voir le testeur Adeunis FTD" },

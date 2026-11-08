@@ -1,7 +1,15 @@
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type ReactNode } from "react";
 import { site } from "../data/site.ts";
 import { useTitle } from "../lib/useTitle.ts";
 import { whatsappHref } from "../components/WhatsAppButton.tsx";
+
+function TrainIcon({ children }: { children: ReactNode }) {
+  return (
+    <svg className="train-ico" viewBox="0 0 48 48" aria-hidden="true">
+      {children}
+    </svg>
+  );
+}
 
 const schoolTypes = [
   "École d’ingénieurs",
@@ -15,31 +23,106 @@ const durations = ["Demi-journée", "1 à 2 jours", "3 à 5 jours", "Module de s
 const needOptions = ["Sessions de formation", "Laboratoire IoT", "Formation des enseignants"];
 const techOptions = ["LoRaWAN", "LTE-M", "NB-IoT", "Intégration de services IoT"];
 
+const chain = [
+  {
+    title: "Capteur",
+    text: "Mesure et module radio",
+    icon: (
+      <>
+        <rect x="12" y="12" width="24" height="24" rx="3" />
+        <path d="M18 6v6M24 6v6M30 6v6M18 36v6M24 36v6M30 36v6M6 18h6M6 24h6M6 30h6M36 18h6M36 24h6M36 30h6" />
+      </>
+    ),
+  },
+  {
+    title: "Réseau",
+    text: "LoRaWAN, LTE-M ou NB-IoT",
+    icon: (
+      <>
+        <circle cx="24" cy="36" r="3" />
+        <path d="M17 29a10 10 0 0 1 14 0M11 23a18 18 0 0 1 26 0M5 17a26 26 0 0 1 38 0" />
+      </>
+    ),
+  },
+  {
+    title: "Plateforme",
+    text: "Serveur réseau et base de données",
+    icon: (
+      <>
+        <ellipse cx="24" cy="12" rx="14" ry="5" />
+        <path d="M10 12v12c0 3 6 5 14 5s14-2 14-5V12M10 24v12c0 3 6 5 14 5s14-2 14-5V24" />
+      </>
+    ),
+  },
+  {
+    title: "Application",
+    text: "Tableau de bord et alertes",
+    icon: (
+      <>
+        <path d="M8 8v32h32" />
+        <path d="M14 32l8-10 6 6 10-14" />
+      </>
+    ),
+  },
+];
+
 const sessions = [
   {
     title: "Choisir la bonne technologie",
     text: "Comparer LoRaWAN, LTE-M et NB-IoT selon le besoin.",
     points: ["Portée, débit, consommation, coût", "Études de cas locaux", "Atelier de choix sur un cahier des charges"],
+    icon: (
+      <>
+        <path d="M24 8v32M12 40h24M12 14h24" />
+        <path d="M12 14l-6 12a6 6 0 0 0 12 0zM36 14l-6 12a6 6 0 0 0 12 0z" />
+      </>
+    ),
   },
   {
     title: "LoRaWAN en pratique",
     text: "Monter un réseau et y connecter des capteurs.",
     points: ["Passerelle et nœuds, classes A, B et C", "Serveur réseau (ChirpStack ou TTN)", "Activation, décodage des données"],
+    icon: (
+      <>
+        <circle cx="24" cy="36" r="3" />
+        <path d="M17 29a10 10 0 0 1 14 0M11 23a18 18 0 0 1 26 0M5 17a26 26 0 0 1 38 0" />
+      </>
+    ),
   },
   {
     title: "LTE-M et NB-IoT en pratique",
     text: "Connecter un module cellulaire et l’exploiter.",
     points: ["Modules, carte SIM IoT, configuration réseau", "Commandes AT, modes d’économie d’énergie", "Mesures de couverture et de consommation"],
+    icon: (
+      <>
+        <circle cx="24" cy="16" r="3" />
+        <path d="M24 22v20M16 42l8-20 8 20M19 34h10M17 11a8 8 0 0 0 0 10M31 11a8 8 0 0 1 0 10" />
+      </>
+    ),
   },
   {
     title: "Intégration de services IoT",
     text: "Transformer la donnée en service.",
     points: ["MQTT, HTTP et API", "Base de données et tableau de bord", "Alertes et supervision"],
+    icon: (
+      <>
+        <circle cx="10" cy="24" r="4" />
+        <circle cx="38" cy="12" r="4" />
+        <circle cx="38" cy="36" r="4" />
+        <path d="M14 24h8l8-12h4M22 24l8 12h4" />
+      </>
+    ),
   },
   {
     title: "Projet fil rouge",
     text: "Un cas d’usage réel, du capteur à l’application.",
     points: ["Eau, agriculture, bâtiment ou logistique", "Travail en équipe, restitution finale", "Évaluation adaptée à votre cursus"],
+    icon: (
+      <>
+        <path d="M12 6v38" />
+        <path d="M12 8h26l-6 9 6 9H12" />
+      </>
+    ),
   },
 ];
 
@@ -137,9 +220,18 @@ export function TrainingPage() {
       <section className="train-block">
         <h2 className="section-title">Trois réseaux, trois usages</h2>
         <p className="train-intro">
-          Chaque technologie répond à un besoin différent. Les étudiants apprennent à les comparer, puis à choisir la
-          bonne pour un projet.
+          Un projet IoT suit toujours la même chaîne. Le réseau en est une étape, et c’est celle qui change selon le
+          besoin. Les étudiants apprennent à comparer les technologies, puis à choisir la bonne.
         </p>
+        <ol className="train-chain">
+          {chain.map((step) => (
+            <li key={step.title}>
+              <TrainIcon>{step.icon}</TrainIcon>
+              <strong>{step.title}</strong>
+              <span>{step.text}</span>
+            </li>
+          ))}
+        </ol>
         <div className="table-wrap" role="region" aria-label="Comparatif des technologies" tabIndex={0}>
           <table>
             <thead>
@@ -199,6 +291,7 @@ export function TrainingPage() {
         <div className="train-sessions">
           {sessions.map((session) => (
             <article key={session.title}>
+              <TrainIcon>{session.icon}</TrainIcon>
               <h3>{session.title}</h3>
               <p>{session.text}</p>
               <ul>
@@ -246,7 +339,10 @@ export function TrainingPage() {
 
       <section className="train-block" id="demande">
         <h2 className="section-title">Votre demande</h2>
-        <p className="train-intro">Décrivez votre besoin. Nous revenons vers vous avec une proposition adaptée.</p>
+        <p className="train-intro">
+          Décrivez votre besoin. La demande est envoyée à {site.email}. Nous revenons vers vous avec une proposition
+          adaptée.
+        </p>
         <form className="train-form" onSubmit={submit}>
           <label className="field">
             <span>Nom de l’établissement</span>

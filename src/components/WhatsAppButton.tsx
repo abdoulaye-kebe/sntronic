@@ -22,7 +22,7 @@ export function WhatsAppButton() {
       : "Bonjour SNTRONIC, je souhaite un devis.";
 
   return (
-    <a className="whatsapp" href={whatsappHref(text)} target="_blank" rel="noreferrer">
+    <a className="whatsapp" href={whatsappHref(text)} target="_blank" rel="noreferrer" aria-label="WhatsApp">
       <WhatsAppIcon />
       <span>WhatsApp</span>
     </a>

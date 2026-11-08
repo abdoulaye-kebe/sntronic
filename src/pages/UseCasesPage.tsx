@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { usages } from "../data/menu.ts";
 import { useTitle } from "../lib/useTitle.ts";
 
+export type Usage = (typeof usages)[number];
+
 function ArchIcon({ children }: { children: ReactNode }) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -11,7 +13,7 @@ function ArchIcon({ children }: { children: ReactNode }) {
   );
 }
 
-function IntegrationArchitecture() {
+export function IntegrationArchitecture() {
   return (
     <section className="arch" aria-labelledby="arch-title">
       <h2 id="arch-title">Architecture d’intégration</h2>
@@ -25,9 +27,8 @@ function IntegrationArchitecture() {
             </ArchIcon>
           </span>
           <div>
-            <h3>Device</h3>
-            <p>Capteurs et compteurs connectés</p>
-            <p>Mesure et envoi des données</p>
+            <h3>Appareil</h3>
+            <p>Capteurs et compteurs</p>
           </div>
         </li>
         <li>
@@ -42,8 +43,7 @@ function IntegrationArchitecture() {
           </span>
           <div>
             <h3>Réseau</h3>
-            <p>LoRaWAN ou NB-IoT</p>
-            <p>Couverture opérateur ou réseau dédié</p>
+            <p>LoRaWAN, LTE-M ou NB-IoT</p>
           </div>
         </li>
         <li>
@@ -55,9 +55,8 @@ function IntegrationArchitecture() {
             </ArchIcon>
           </span>
           <div>
-            <h3>Cœur de réseau IoT</h3>
-            <p>Collecte et acheminement des données</p>
-            <p>Gestion et sécurité des équipements</p>
+            <h3>Plateforme</h3>
+            <p>Collecte et sécurité des données</p>
           </div>
         </li>
         <li>
@@ -70,14 +69,67 @@ function IntegrationArchitecture() {
             </ArchIcon>
           </span>
           <div>
-            <h3>Application métier</h3>
-            <p className="arch-brand">Plateforme SNTRONIC</p>
+            <h3>Application</h3>
             <p>Tableaux de bord et alertes</p>
-            <p>Intégration au système du client</p>
           </div>
         </li>
       </ol>
     </section>
+  );
+}
+
+export function UsageCard({ usage }: { usage: Usage }) {
+  return (
+    <article className="usage-card" id={usage.id}>
+      <UsageMark id={usage.id} />
+      <h3>{usage.name}</h3>
+      <p>{usage.pitch}</p>
+      <ul className="chips">
+        {usage.networks.map((network) => (
+          <li key={network}>{network}</li>
+        ))}
+      </ul>
+      <div className="usage-card-actions">
+        <Link className="text-link" to={`/usages/${usage.id}`}>
+          Voir les équipements
+        </Link>
+        <Link className="btn btn-quiet" to={`/contact?sujet=${encodeURIComponent(usage.name)}`}>
+          Demander un devis
+        </Link>
+      </div>
+    </article>
+  );
+}
+
+function UsageMark({ id }: { id: string }) {
+  const icon =
+    id === "energie" ? (
+      <path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z" />
+    ) : id === "smart-city" ? (
+      <>
+        <path d="M3 21h18" />
+        <path d="M6 21V9l6-4 6 4v12" />
+        <path d="M10 21v-5h4v5" />
+      </>
+    ) : id === "agriculture" ? (
+      <>
+        <path d="M12 22V10" />
+        <path d="M12 10c-4 0-6-3-6-6 4 0 6 3 6 6zM12 12c4 0 6-2 6-5-4 0-6 2-6 5z" />
+      </>
+    ) : id === "eau-prepaye" ? (
+      <>
+        <rect x="3" y="7" width="18" height="12" rx="2" />
+        <path d="M3 11h18" />
+      </>
+    ) : (
+      <>
+        <path d="M12 2.5s6 6.2 6 10.2a6 6 0 0 1-12 0C6 8.7 12 2.5 12 2.5z" />
+      </>
+    );
+  return (
+    <span className="usage-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24">{icon}</svg>
+    </span>
   );
 }
 
@@ -90,24 +142,16 @@ export function UseCasesPage() {
         <p className="eyebrow">SNTRONIC</p>
         <h1 className="section-title">Cas d’usage</h1>
         <p className="lede">
-          Cinq façons d’utiliser les équipements : l’eau, l’énergie, la ville et l’agriculture. L’architecture
-          d’intégration reste la même.
+          Cinq façons d’utiliser les équipements : l’eau après ou avant consommation, l’énergie, la ville et
+          l’agriculture. L’architecture reste la même.
         </p>
       </header>
       <IntegrationArchitecture />
-      <div className="usage-list">
+      <div className="usage-grid">
         {usages.map((usage) => (
-          <article key={usage.id} id={usage.id} className="usage-block">
-            <h2>{usage.name}</h2>
-            <p>{usage.text}</p>
-          </article>
+          <UsageCard key={usage.id} usage={usage} />
         ))}
       </div>
-      <p className="usage-more">
-        <Link className="text-link" to="/catalogue/devices">
-          Voir les devices
-        </Link>
-      </p>
     </div>
   );
 }

@@ -18,7 +18,7 @@ export const waterMeterProducts: Product[] = [
     line: "Shengda",
     connectivity: "Multi",
     ...quote,
-    summary: "Compteur d’eau à ultrasons, DN15 à DN25, communication selon la configuration.",
+    summary: "Mesurer le volume d’eau sans pièce mobile, du DN15 au DN25.",
     description:
       "Compteur Shengda sans pièce mobile de mesure. La gamme résidentielle va de DN15 à DN25. LoRaWAN, NB-IoT ou 4G Cat1 selon la configuration.",
     highlights: ["Ultrasons", "DN15–DN25", "Sur devis"],
@@ -38,7 +38,7 @@ export const waterMeterProducts: Product[] = [
     line: "Shengda",
     connectivity: "LoRaWAN",
     ...quote,
-    summary: "Compteur d’eau à télérelève LoRaWAN.",
+    summary: "Remonter l’index à distance pour facturer l’eau réellement consommée.",
     description:
       "Compteur Shengda qui remonte l’index en LoRaWAN. La télérelève sert la facturation après consommation, et une vanne peut être prévue selon la référence.",
     highlights: ["LoRaWAN", "Télérelève", "Sur devis"],
@@ -57,7 +57,7 @@ export const waterMeterProducts: Product[] = [
     line: "Shengda",
     connectivity: "Radio",
     ...quote,
-    summary: "Le crédit est chargé par carte, et la vanne suit le solde.",
+    summary: "Charger un crédit par carte, puis ouvrir ou fermer l’eau selon le solde.",
     description:
       "Compteur prépayé Shengda à carte. Le crédit est écrit sur la carte, puis la vanne ouvre ou ferme selon le solde.",
     highlights: ["Carte", "Prépayé", "Sur devis"],
@@ -77,7 +77,7 @@ export const waterMeterProducts: Product[] = [
     line: "Shengda",
     connectivity: "Multi",
     ...quote,
-    summary: "Jeton STS de 20 chiffres, vanne automatique, DN15 à DN25.",
+    summary: "Distribuer l’eau avec un jeton STS, et couper la vanne quand le crédit est fini.",
     description:
       "Compteur Shengda LXS-S et STS Ultrasonic. Jeton STS de 20 chiffres, vanne automatique, modes prépayé et postpayé. LoRaWAN, NB-IoT et 4G Cat1 selon la configuration. DN15 à DN25 sur la gamme résidentielle.",
     highlights: ["STS", "Vanne", "Sur devis"],

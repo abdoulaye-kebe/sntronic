@@ -1603,8 +1603,34 @@ export function productsInAisle(aisle: AisleId, list: Product[] = products): Pro
   return list.filter((product) => aisleOf(product) === aisle);
 }
 
+const cutoutExt = new Set([
+  "adeunis-ftd",
+  "cellspan-core",
+  "cellspan-leak",
+  "cellspan-modem",
+  "cellspan-temp",
+  "fieldnode-door",
+  "fieldnode-level",
+  "gatehouse-mini",
+  "gatehouse-modbus",
+  "modulab-5v",
+  "modulab-drive",
+  "modulab-gnss",
+  "modulab-proto",
+  "modulab-rf",
+  "modulab-rs485",
+  "sensecap-s2107",
+  "shengda-lorawan",
+  "shengda-smart-card",
+  "shengda-sts",
+  "shengda-ultrasonic",
+  "tektelic-aeris",
+  "tektelic-seal",
+]);
+
 export function productImage(product: { slug: string; image?: string }): string {
-  return product.image || `/produits/${product.slug}.jpg`;
+  const path = product.image || `/produits/${product.slug}.jpg`;
+  return cutoutExt.has(product.slug) ? path.replace(/\.(jpe?g|webp)$/i, ".png") : path;
 }
 
 export function getProduct(slug: string | undefined, list: Product[] = products): Product | undefined {

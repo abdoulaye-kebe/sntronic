@@ -6,6 +6,7 @@ import { AboutPage } from "./pages/AboutPage.tsx";
 import { ArticlePage } from "./pages/ArticlePage.tsx";
 import { BlogPage } from "./pages/BlogPage.tsx";
 import { ServicesPage } from "./pages/ServicesPage.tsx";
+import { UseCasePage } from "./pages/UseCasePage.tsx";
 import { UseCasesPage } from "./pages/UseCasesPage.tsx";
 import { CartPage } from "./pages/CartPage.tsx";
 import { CatalogPage } from "./pages/CatalogPage.tsx";
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="services" element={<ServicesPage />} />
         <Route path="formation" element={<TrainingPage />} />
         <Route path="usages" element={<UseCasesPage />} />
+        <Route path="usages/:id" element={<UseCasePage />} />
         <Route path="blog" element={<BlogPage />} />
         <Route path="blog/:slug" element={<ArticlePage />} />
         <Route path="a-propos" element={<AboutPage />} />

@@ -111,7 +111,9 @@ export function DocumentMeta() {
     const category = getCategory(aisleId);
     const params = new URLSearchParams(search);
     const accessory = pathname === "/catalogue" ? getAccessory(params.get("accessoire")) : undefined;
-    const usage = pathname === "/catalogue" ? getUsage(params.get("usage")) : undefined;
+    const usageFromCatalog = pathname === "/catalogue" ? getUsage(params.get("usage")) : undefined;
+    const usagePage = pathname.startsWith("/usages/") ? getUsage(pathname.slice("/usages/".length)) : undefined;
+    const usage = usagePage ?? usageFromCatalog;
 
     let title = HOME_TITLE;
     let description = pages["/"].description;

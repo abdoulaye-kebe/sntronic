@@ -202,7 +202,7 @@ type Dictation = new () => {
 
 function AdvisorIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
       <path d="M5 16.5V8.8A3.8 3.8 0 0 1 8.8 5h6.4A3.8 3.8 0 0 1 19 8.8v4.2a3.8 3.8 0 0 1-3.8 3.8H9.2L5 20.2z" />
     </svg>
   );

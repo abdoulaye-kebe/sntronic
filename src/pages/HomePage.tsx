@@ -4,12 +4,14 @@ import { ProductCard } from "../components/ProductCard.tsx";
 import { ProductPhoto } from "../components/ProductPhoto.tsx";
 import { useCatalog } from "../context/CatalogContext.tsx";
 import { aisles } from "../data/catalog.ts";
+import { usages } from "../data/menu.ts";
 import { useTitle } from "../lib/useTitle.ts";
 import { services } from "./ServicesPage.tsx";
+import { UsageCard } from "./UseCasesPage.tsx";
 
 const slideSlugs = ["shengda-lorawan", "tektelic-vivid", "sensecap-s2120", "tektelic-breeze"];
 const meterSlugs = ["shengda-ultrasonic", "shengda-lorawan", "shengda-smart-card", "shengda-sts"];
-const slideTones = ["vitrine-pine", "vitrine-blue", "vitrine-pine", "vitrine-pine"];
+const slideTones = ["vitrine-pine", "vitrine-night", "vitrine-pine", "vitrine-night"];
 
 export function HomePage() {
   useTitle("Accueil");
@@ -42,7 +44,10 @@ export function HomePage() {
                 {slide.line}
               </p>
               <h2>{slide.name}</h2>
-              <p className="vitrine-text">{slide.summary}</p>
+              <p className="vitrine-text">
+                <span>Ce que ça permet</span>
+                {slide.summary}
+              </p>
               <Link className="btn btn-banner" to={`/produit/${slide.slug}`}>
                 Découvrir
               </Link>
@@ -57,7 +62,7 @@ export function HomePage() {
                 </li>
                 <li>
                   <strong>F CFA</strong>
-                  <span>prix affichés</span>
+                  <span>affichés ou sur devis</span>
                 </li>
               </ul>
             </div>
@@ -163,6 +168,15 @@ export function HomePage() {
             </div>
           </article>
         )}
+        <div className="shelf-head">
+          <h2>Cas d’usage</h2>
+          <Link to="/usages">Tous les cas</Link>
+        </div>
+        <div className="usage-grid home-usages">
+          {usages.map((usage) => (
+            <UsageCard key={usage.id} usage={usage} />
+          ))}
+        </div>
         <h2 className="home-aisle-title">Les équipements</h2>
         <div className="family-grid">
           {aisles.map((aisle) => {
