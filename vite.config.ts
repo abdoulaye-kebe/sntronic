@@ -33,19 +33,41 @@ function shopChat(apiKey: string | undefined, model: string): Plugin {
       return;
     }
     try {
-      const raw = await readBody(req, 1_500_000);
+      const raw = await readBody(req, 400_000);
       const body = JSON.parse(raw) as { messages?: unknown; catalog?: unknown };
-      const reply = await answerShop({ apiKey, model, messages: body.messages, catalog: body.catalog });
-      res.statusCode = 200;
-      res.setHeader("Content-Type", "application/json; charset=utf-8");
-      res.end(JSON.stringify(reply));
+      let started = false;
+      const reply = await answerShop({
+        apiKey,
+        model,
+        messages: body.messages,
+        catalog: body.catalog,
+        onDelta(piece) {
+          if (!started) {
+            started = true;
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "text/plain; charset=utf-8");
+            res.setHeader("Cache-Control", "no-cache");
+            res.setHeader("X-Accel-Buffering", "no");
+            res.flushHeaders();
+          }
+          res.write(piece);
+        },
+      });
+      if (!started) {
+        res.statusCode = 200;
+        res.setHeader("Content-Type", "application/json; charset=utf-8");
+        res.end(JSON.stringify(reply));
+        return;
+      }
+      res.end();
     } catch (error) {
       const status = error instanceof ChatError ? error.status : error instanceof SyntaxError ? 400 : 500;
-      const message = error instanceof ChatError || error instanceof SyntaxError
-        ? error instanceof SyntaxError
-          ? "Message illisible."
-          : error.message
-        : "Le conseiller est indisponible.";
+      const message =
+        error instanceof ChatError
+          ? error.message
+          : error instanceof SyntaxError
+            ? "Message illisible."
+            : "Le conseiller est indisponible.";
       res.statusCode = status;
       res.setHeader("Content-Type", "application/json; charset=utf-8");
       res.end(JSON.stringify({ error: message }));

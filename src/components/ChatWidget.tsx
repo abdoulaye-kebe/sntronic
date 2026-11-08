@@ -68,9 +68,26 @@ export function ChatWidget() {
           catalog: catalogForChat(products),
         }),
       });
-      const payload = (await response.json()) as { reply?: string; error?: string };
-      const reply = payload.reply?.trim() || payload.error || "Le conseiller n’a pas répondu.";
-      setTurns([...history, { role: "assistant", text: reply }]);
+      const type = response.headers.get("content-type") ?? "";
+      if (!response.ok || type.includes("json")) {
+        const payload = (await response.json()) as { reply?: string; error?: string };
+        const reply = payload.reply?.trim() || payload.error || "Le conseiller n’a pas répondu.";
+        setTurns([...history, { role: "assistant", text: reply }]);
+        return;
+      }
+      const reader = response.body?.getReader();
+      if (!reader) throw new Error("Réponse vide.");
+      const decoder = new TextDecoder();
+      let reply = "";
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        reply += decoder.decode(value, { stream: true });
+        setTurns([...history, { role: "assistant", text: reply }]);
+      }
+      if (!reply.trim()) {
+        setTurns([...history, { role: "assistant", text: "Le conseiller n’a pas répondu." }]);
+      }
     } catch {
       setTurns([...history, { role: "assistant", text: "Le conseiller ne répond pas pour le moment." }]);
     } finally {
@@ -109,7 +126,9 @@ export function ChatWidget() {
                   : turn.text}
               </p>
             ))}
-            {pending && <p className="advisor-bot">Je consulte le catalogue…</p>}
+            {pending && turns.at(-1)?.role !== "assistant" && (
+              <p className="advisor-bot">Je consulte le catalogue…</p>
+            )}
           </div>
           <form
             className="advisor-form"
