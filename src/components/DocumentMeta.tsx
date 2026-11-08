@@ -47,7 +47,7 @@ const pages: Record<string, { title: string; description: string }> = {
   "/formation": {
     title: "Formation",
     description:
-      "Sessions pratiques pour les écoles de formation : technologies LoRaWAN, intégration de services IoT, et laboratoire sur place. Demande par formulaire.",
+      "Sessions pratiques et laboratoire IoT pour les écoles : LoRaWAN, LTE-M et NB-IoT, du capteur jusqu’au service intégré.",
   },
   "/contact": {
     title: "Contact",

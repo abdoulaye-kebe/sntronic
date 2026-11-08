@@ -30,7 +30,7 @@ export const services: { short: string; title: string; text: string; to?: string
   {
     short: "Formation",
     title: "Sessions de formation",
-    text: "Sessions pratiques pour les écoles de formation : technologies LoRaWAN et intégration de services IoT. Un laboratoire peut rester dans l’école.",
+    text: "Sessions pratiques pour les écoles : LoRaWAN, LTE-M, NB-IoT et intégration de services. Un laboratoire peut rester dans l’école.",
     to: "/formation",
   },
 ];
