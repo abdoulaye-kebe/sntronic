@@ -3,6 +3,7 @@ import { Layout } from "./components/Layout.tsx";
 import { AdminEditor } from "./pages/AdminEditor.tsx";
 import { AdminPage } from "./pages/AdminPage.tsx";
 import { AboutPage } from "./pages/AboutPage.tsx";
+import { ArticlePage } from "./pages/ArticlePage.tsx";
 import { BlogPage } from "./pages/BlogPage.tsx";
 import { ServicesPage } from "./pages/ServicesPage.tsx";
 import { UseCasesPage } from "./pages/UseCasesPage.tsx";
@@ -16,6 +17,7 @@ import { LegalPage } from "./pages/LegalPage.tsx";
 import { NotFoundPage } from "./pages/NotFoundPage.tsx";
 import { ProductPage } from "./pages/ProductPage.tsx";
 import { ShippingPage } from "./pages/ShippingPage.tsx";
+import { TrainingPage } from "./pages/TrainingPage.tsx";
 
 export default function App() {
   return (
@@ -29,8 +31,10 @@ export default function App() {
         <Route path="commande" element={<CheckoutPage />} />
         <Route path="commande/confirmation" element={<ConfirmationPage />} />
         <Route path="services" element={<ServicesPage />} />
+        <Route path="formation" element={<TrainingPage />} />
         <Route path="usages" element={<UseCasesPage />} />
         <Route path="blog" element={<BlogPage />} />
+        <Route path="blog/:slug" element={<ArticlePage />} />
         <Route path="a-propos" element={<AboutPage />} />
         <Route path="contact" element={<ContactPage />} />
         <Route path="guide" element={<GuidePage />} />

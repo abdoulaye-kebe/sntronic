@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { aisles } from "../data/catalog.ts";
 import { site } from "../data/site.ts";
 import { Logo } from "./Logo.tsx";
+import { whatsappHref } from "./WhatsAppButton.tsx";
 
 export function Footer() {
   return (
@@ -34,6 +35,9 @@ export function Footer() {
               <Link to="/services">Services</Link>
             </li>
             <li>
+              <Link to="/formation">Formation</Link>
+            </li>
+            <li>
               <Link to="/a-propos">À propos de nous</Link>
             </li>
             <li>
@@ -57,6 +61,11 @@ export function Footer() {
           </p>
           <p>
             <a href={`tel:${site.phoneTel}`}>{site.phone}</a>
+          </p>
+          <p>
+            <a href={whatsappHref("Bonjour SNTRONIC, je souhaite un devis.")} target="_blank" rel="noreferrer">
+              WhatsApp
+            </a>
           </p>
           <p>{site.hours}</p>
           <p>{site.cityLine}</p>

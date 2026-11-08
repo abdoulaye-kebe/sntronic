@@ -17,9 +17,10 @@ export function LegalPage() {
         mise en ligne.
       </p>
       <p>
-        Le panier est enregistré dans votre navigateur. Aucun compte n’est créé. Le formulaire de contact et la demande
-        de commande ouvrent votre logiciel de messagerie : le message part quand vous l’envoyez. Les coordonnées
-        saisies servent à préparer ce message, elles ne sont pas stockées sur un serveur du site.
+        Le panier est enregistré dans votre navigateur. Aucun compte n’est créé. Le formulaire de contact, la demande
+        de formation et la demande de commande ouvrent votre logiciel de messagerie : le message part quand vous
+        l’envoyez. Les coordonnées saisies servent à préparer ce message, elles ne sont pas stockées sur un serveur du
+        site.
       </p>
     </div>
   );

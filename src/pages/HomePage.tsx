@@ -105,12 +105,19 @@ export function HomePage() {
           des besoins à la mise en œuvre et à l’exploitation.
         </p>
         <div className="offer-grid">
-          {services.map((service) => (
-            <article key={service.title} className="offer-card">
-              <h2>{service.short}</h2>
-              <p>{service.text}</p>
-            </article>
-          ))}
+          {services.map((service) =>
+            service.to ? (
+              <Link key={service.title} className="offer-card" to={service.to}>
+                <h2>{service.short}</h2>
+                <p>{service.text}</p>
+              </Link>
+            ) : (
+              <article key={service.title} className="offer-card">
+                <h2>{service.short}</h2>
+                <p>{service.text}</p>
+              </article>
+            ),
+          )}
         </div>
         <p className="home-close">
           De la fourniture des équipements à l’exploitation de vos données, nous vous accompagnons tout au long du

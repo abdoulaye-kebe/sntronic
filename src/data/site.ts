@@ -1,9 +1,12 @@
 /** Coordonnées et conditions affichées sur le site. À personnaliser. */
 export const site = {
   name: "SNTRONIC",
-  email: "contact@sntronic.fr",
+  url: "https://sntronic.com",
+  email: "contact@sntronic.com",
   phone: "+221 78 100 07 34",
   phoneTel: "+221781000734",
+  /** Numéro WhatsApp, sans + ni espaces. */
+  whatsapp: "221781000734",
   address: "Golf sud, villa 610",
   city: "Dakar",
   hours: "Du lundi au vendredi, 9h–18h",

@@ -1,3 +1,4 @@
+import { articles } from "./articles.ts";
 import { aisles } from "./catalog.ts";
 
 export const accessoryGroups = [
@@ -65,7 +66,15 @@ export const menu: MenuItem[] = [
       { label: "Guide de choix", to: "/guide" },
     ],
   },
-  { id: "services", label: "Services", to: "/services" },
+  {
+    id: "services",
+    label: "Services",
+    to: "/services",
+    children: [
+      { label: "Les services", to: "/services" },
+      { label: "Formation et laboratoire", to: "/formation" },
+    ],
+  },
   {
     id: "accessoires",
     label: "Accessoires",
@@ -93,7 +102,7 @@ export const menu: MenuItem[] = [
     id: "blog",
     label: "Blog",
     to: "/blog",
-    children: [{ label: "Le journal", to: "/blog" }],
+    children: articles.map((article) => ({ label: article.title, to: `/blog/${article.slug}` })),
   },
 ];
 

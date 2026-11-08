@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useTitle } from "../lib/useTitle.ts";
 
-export const services = [
+export const services: { short: string; title: string; text: string; to?: string }[] = [
   {
     short: "Vente d’équipements",
     title: "Vente d’équipements IoT",
@@ -26,6 +26,12 @@ export const services = [
     short: "Données",
     title: "Exploitation et valorisation des données",
     text: "Collecte, traitement, visualisation et analyse des données grâce aux plateformes IoT, à l’intelligence artificielle et aux outils d’analyse avancée.",
+  },
+  {
+    short: "Formation",
+    title: "Sessions de formation",
+    text: "Sessions pratiques pour les écoles de formation : technologies LoRaWAN et intégration de services IoT. Un laboratoire peut rester dans l’école.",
+    to: "/formation",
   },
 ];
 
@@ -73,10 +79,18 @@ function ServiceIcon({ index }: { index: number }) {
       </svg>
     );
   }
+  if (index === 4) {
+    return (
+      <svg {...common}>
+        <path d="M4 19.5h16" />
+        <path d="M7 16.5V11M12 16.5V6.5M17 16.5v-4" />
+      </svg>
+    );
+  }
   return (
     <svg {...common}>
-      <path d="M4 19.5h16" />
-      <path d="M7 16.5V11M12 16.5V6.5M17 16.5v-4" />
+      <path d="m3 9 9-4.5L21 9l-9 4.5L3 9z" />
+      <path d="M7 11.2V15c1.6 1.2 3.2 1.8 5 1.8s3.4-.6 5-1.8v-3.8" />
     </svg>
   );
 }
@@ -89,7 +103,7 @@ export function ServicesPage() {
         <p className="eyebrow">SNTRONIC</p>
         <h1 className="section-title">Services</h1>
         <p className="lede">
-          Une gamme complète, de l’équipement jusqu’à l’exploitation des données.
+          Une gamme complète, de l’équipement jusqu’à la formation des équipes.
         </p>
       </header>
       <div className="service-board">
@@ -103,6 +117,11 @@ export function ServicesPage() {
             </div>
             <h2>{service.title}</h2>
             <p>{service.text}</p>
+            {service.to ? (
+              <Link className="text-link" to={service.to}>
+                Voir les sessions
+              </Link>
+            ) : null}
           </article>
         ))}
       </div>

@@ -169,7 +169,7 @@ function shopTerms() {
     transport: "inclus dans le prix affiché",
     retours: "14 jours",
     horaires: "Du lundi au vendredi, 9h–18h",
-    email: "contact@sntronic.fr",
+    email: "contact@sntronic.com",
     paiement: "La commande part par e-mail. Il n’y a pas de paiement en ligne.",
     prix: "Les prix sont en francs CFA, transport et TVA 18 % compris.",
   };

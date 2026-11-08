@@ -191,7 +191,6 @@ function MobileGroup({
   onNavigate: () => void;
 }) {
   const extras = (item.children ?? []).filter((child) => {
-    if (item.id === "blog") return false;
     if ((item.id === "contact" || item.id === "produits") && child.to === item.to) return false;
     return true;
   });
@@ -225,7 +224,7 @@ function sectionOf(pathname: string, search: string): string {
   if (query.get("accessoire")) return "accessoires";
   if (query.get("usage")) return "usages";
   if (pathname === "/") return "accueil";
-  if (pathname.startsWith("/services")) return "services";
+  if (pathname.startsWith("/services") || pathname.startsWith("/formation")) return "services";
   if (pathname.startsWith("/usages")) return "usages";
   if (pathname.startsWith("/blog")) return "blog";
   if (pathname.startsWith("/contact") || pathname.startsWith("/a-propos") || pathname.startsWith("/livraison")) return "contact";
