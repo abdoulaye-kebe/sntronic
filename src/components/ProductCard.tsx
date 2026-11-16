@@ -100,29 +100,31 @@ export function ProductCard({
               ))}
             </ul>
           ) : null}
-          <div className="card-meta">
-            <Price ht={product.priceHt} compact={compact} quote={quoted} />
-            {quoted ? null : <Stock stock={product.stock} lead={compact ? undefined : product.lead} />}
-          </div>
         </div>
       </Link>
-      <div className="card-actions">
-        <span className="sr-only" aria-live="polite">
-          {added ? `${product.name} ajouté au panier` : ""}
-        </span>
-        {quoted ? (
-          <Button variant="secondary" size="sm" to={`/contact?produit=${product.slug}`}>
-            Demander un devis
-          </Button>
-        ) : product.stock > 0 ? (
-          <Button variant="primary" size="sm" aria-label={`Ajouter ${product.name} au panier`} onClick={() => addToCart(1)}>
-            {added ? "Ajouté" : "Ajouter"}
-          </Button>
-        ) : (
-          <Button variant="ghost" size="sm" to={`/contact?produit=${product.slug}&intention=delai`}>
-            Demander le délai
-          </Button>
-        )}
+      <div className="card-foot">
+        <div className="card-meta">
+          <Price ht={product.priceHt} compact={compact} quote={quoted} />
+          {quoted ? null : <Stock stock={product.stock} lead={compact ? undefined : product.lead} />}
+        </div>
+        <div className="card-actions">
+          <span className="sr-only" aria-live="polite">
+            {added ? `${product.name} ajouté au panier` : ""}
+          </span>
+          {quoted ? (
+            <Button variant="ghost" size="sm" to={`/contact?produit=${product.slug}`} aria-label={`Demander un devis pour ${product.name}`}>
+              Devis
+            </Button>
+          ) : product.stock > 0 ? (
+            <Button variant="primary" size="sm" aria-label={`Ajouter ${product.name} au panier`} onClick={() => addToCart(1)}>
+              {added ? "Ajouté" : "Ajouter"}
+            </Button>
+          ) : (
+            <Button variant="ghost" size="sm" to={`/contact?produit=${product.slug}&intention=delai`} aria-label={`Demander le délai pour ${product.name}`}>
+              Délai
+            </Button>
+          )}
+        </div>
       </div>
     </article>
   );

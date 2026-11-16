@@ -11,7 +11,7 @@ type Common = {
   className?: string;
 };
 
-type AsLink = Common & { to: string };
+type AsLink = Common & { to: string; "aria-label"?: string };
 type AsButton = Common & {
   to?: undefined;
   type?: "button" | "submit";
@@ -33,7 +33,7 @@ export function Button(props: AsLink | AsButton) {
 
   if ("to" in props && props.to) {
     return (
-      <Link className={className} to={props.to}>
+      <Link className={className} to={props.to} aria-label={props["aria-label"]}>
         {props.children}
       </Link>
     );

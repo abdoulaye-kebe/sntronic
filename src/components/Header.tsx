@@ -109,11 +109,11 @@ export function Header() {
               </ul>
             )}
           </form>
+          <Link className="btn btn-clay btn-devis" to="/contact">
+            <span className="devis-long">Demander un devis</span>
+            <span className="devis-short">Devis</span>
+          </Link>
           <nav className="shop-links" aria-label="Raccourcis">
-            <Link className="btn btn-clay btn-devis" to="/contact">
-              <span className="devis-long">Demander un devis</span>
-              <span className="devis-short">Devis</span>
-            </Link>
             <button type="button" className="cart-link" aria-label={`Panier, ${count} article${count > 1 ? "s" : ""}`} onClick={() => setOpen(true)}>
               <BagIcon />
               <span className="cart-label">Panier</span>
