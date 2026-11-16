@@ -38,7 +38,7 @@ function Mark() {
         <path d="M46 12c3.4 2.2 5 5 5 5" />
         <path d="M50 8c4.6 3.2 7 7.2 7 7.2" />
       </g>
-      <circle cx="30" cy="46" r="3.3" fill="#e8771a" />
+      <circle cx="30" cy="46" r="3.3" fill="#8d6438" />
     </svg>
   );
 }
@@ -49,11 +49,11 @@ function Power() {
       <path
         d="M7.4 8.2a7.2 7.2 0 1 0 9.2 0"
         fill="none"
-        stroke="#e8771a"
+        stroke="#8d6438"
         strokeWidth="3"
         strokeLinecap="round"
       />
-      <path d="M12 2.4v6.8" fill="none" stroke="#e8771a" strokeWidth="3" strokeLinecap="round" />
+      <path d="M12 2.4v6.8" fill="none" stroke="#8d6438" strokeWidth="3" strokeLinecap="round" />
     </svg>
   );
 }

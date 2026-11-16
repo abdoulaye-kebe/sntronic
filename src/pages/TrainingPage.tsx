@@ -209,7 +209,7 @@ export function TrainingPage() {
         </p>
         <div className="home-actions">
           <a className="btn btn-clay" href="#demande">
-            Demander une formation ou un laboratoire
+            Faire une demande
           </a>
           <a className="btn btn-ghost" href="#sessions">
             Voir les sessions

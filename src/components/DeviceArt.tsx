@@ -2,12 +2,12 @@ import { useId } from "react";
 import type { ArtKind, CategoryId } from "../data/catalog.ts";
 
 const tones: Record<CategoryId, { bg: string; fg: string; accent: string; ink: string }> = {
-  lorawan: { bg: "#d7ebe3", fg: "#12382c", accent: "#e07a45", ink: "#f7f4ee" },
-  "lte-m": { bg: "#d9e4f2", fg: "#1a365d", accent: "#e07a45", ink: "#f4f7fb" },
-  "nb-iot": { bg: "#f3e2d2", fg: "#6a3b16", accent: "#1f6f5b", ink: "#fff8f2" },
-  "passerelles-lorawan": { bg: "#e4e7ee", fg: "#1c2430", accent: "#d4532b", ink: "#f4f6f8" },
-  "passerelles-iot": { bg: "#e8e3f2", fg: "#2d2640", accent: "#d4532b", ink: "#f7f5fb" },
-  modules: { bg: "#efe6d4", fg: "#243528", accent: "#c6a15b", ink: "#f8f1e4" },
+  lorawan: { bg: "#d5d8de", fg: "#1c2430", accent: "#8d6438", ink: "#f2f1ed" },
+  "lte-m": { bg: "#d7dbe3", fg: "#1a2433", accent: "#8d6438", ink: "#f2f1ed" },
+  "nb-iot": { bg: "#ddd8d0", fg: "#2a261f", accent: "#2c3a4f", ink: "#f2f1ed" },
+  "passerelles-lorawan": { bg: "#d9d7d2", fg: "#1c1e22", accent: "#8d6438", ink: "#f2f1ed" },
+  "passerelles-iot": { bg: "#d4d6dc", fg: "#1c1e22", accent: "#8d6438", ink: "#f2f1ed" },
+  modules: { bg: "#e0dcd4", fg: "#1c1e22", accent: "#2c3a4f", ink: "#f2f1ed" },
 };
 
 export function DeviceArt({
@@ -95,7 +95,7 @@ function Gateway({ tone }: { tone: (typeof tones)[CategoryId] }) {
       <circle cx="242" cy="24" r="4" fill={tone.accent} />
       <rect x="78" y="68" width="204" height="108" rx="16" fill={tone.fg} />
       <rect x="96" y="86" width="120" height="46" rx="6" fill={tone.ink} opacity="0.14" />
-      <circle cx="250" cy="96" r="4" fill="#7dcea0" />
+      <circle cx="250" cy="96" r="4" fill="#8d6438" />
       <circle cx="250" cy="112" r="4" fill={tone.accent} />
       <rect x="96" y="148" width="28" height="10" rx="2" fill={tone.ink} opacity="0.35" />
       <rect x="132" y="148" width="28" height="10" rx="2" fill={tone.ink} opacity="0.35" />
