@@ -78,10 +78,10 @@ export function IntegrationArchitecture() {
   );
 }
 
-export function UsageCard({ usage }: { usage: Usage }) {
+export function UsageCard({ usage, cover }: { usage: Usage; cover?: ReactNode }) {
   return (
     <article className="usage-card" id={usage.id}>
-      <UsageMark id={usage.id} />
+      {cover ?? <UsageMark id={usage.id} />}
       <h3>{usage.name}</h3>
       <p>{usage.pitch}</p>
       <ul className="chips">

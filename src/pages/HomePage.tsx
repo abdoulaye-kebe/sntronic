@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ProductCard } from "../components/ProductCard.tsx";
 import { ProductPhoto } from "../components/ProductPhoto.tsx";
+import { SectionTitle } from "../components/SectionTitle.tsx";
+import { ServiceCard } from "../components/ServiceCard.tsx";
 import { useCatalog } from "../context/CatalogContext.tsx";
 import { aisles } from "../data/catalog.ts";
 import { usages } from "../data/menu.ts";
@@ -11,7 +13,6 @@ import { UsageCard } from "./UseCasesPage.tsx";
 
 const slideSlugs = ["shengda-lorawan", "tektelic-vivid", "sensecap-s2120", "tektelic-breeze"];
 const meterSlugs = ["shengda-ultrasonic", "shengda-lorawan", "shengda-smart-card", "shengda-sts"];
-const slideTones = ["vitrine-pine", "vitrine-night", "vitrine-pine", "vitrine-night"];
 
 export function HomePage() {
   useTitle("Accueil");
@@ -21,6 +22,7 @@ export function HomePage() {
     return product ? [product] : [];
   });
   const tester = getProduct("adeunis-ftd");
+  const brands = [...new Set(products.map((item) => item.line))];
   const [index, setIndex] = useState(0);
   const count = slides.length;
   const safeIndex = count ? index % count : 0;
@@ -35,106 +37,111 @@ export function HomePage() {
 
   return (
     <>
-      {slide && (
-        <section className={`vitrine ${slideTones[safeIndex] ?? "vitrine-pine"}`} aria-roledescription="carrousel">
-          <div className="wrap vitrine-inner">
-            <div className="vitrine-copy">
-              <p className="vitrine-kicker">
-                <span>{String(safeIndex + 1).padStart(2, "0")}</span>
-                {slide.line}
-              </p>
-              <h2>{slide.name}</h2>
-              <p className="vitrine-text">
-                <span>Ce que ça permet</span>
-                {slide.summary}
-              </p>
-              <Link className="btn btn-banner" to={`/produit/${slide.slug}`}>
-                Découvrir
+      <section className="marque">
+        <div className="wrap marque-grid">
+          <div className="marque-copy">
+            <p className="marque-kicker">
+              <span>SNTRONIC</span>
+              Dakar
+            </p>
+            <h1>Votre partenaire pour réussir vos projets IoT.</h1>
+            <p className="marque-lede">
+              Une plateforme dédiée à la vente, à l’intégration et à l’accompagnement de projets IoT. De
+              l’identification des besoins à la mise en œuvre et à l’exploitation.
+            </p>
+            <div className="home-actions">
+              <Link className="btn btn-primary" to="/catalogue">
+                Voir le catalogue
               </Link>
-              <ul className="vitrine-facts">
-                <li>
-                  <strong>{products.length}</strong>
-                  <span>références</span>
-                </li>
-                <li>
-                  <strong>EU868</strong>
-                  <span>LoRaWAN</span>
-                </li>
-                <li>
-                  <strong>F CFA</strong>
-                  <span>affichés ou sur devis</span>
-                </li>
-              </ul>
+              <Link className="btn btn-clay" to="/contact">
+                Demander un devis
+              </Link>
             </div>
-            <div className="vitrine-stage">
-              <button
-                type="button"
-                className="vitrine-nav vitrine-prev"
-                aria-label="Vitrine précédente"
-                onClick={() => setIndex((value) => (value - 1 + count) % count)}
-              >
-                ‹
-              </button>
-              <div className="vitrine-visual">
+            <ul className="marque-facts">
+              <li>
+                <strong>{products.length}</strong>
+                <span>références</span>
+              </li>
+              <li>
+                <strong>EU868</strong>
+                <span>LoRaWAN</span>
+              </li>
+              <li>
+                <strong>F CFA</strong>
+                <span>affichés ou sur devis</span>
+              </li>
+            </ul>
+            <p className="marque-brands">{brands.join(" · ")}</p>
+          </div>
+          {slide && (
+            <aside className="marque-show" aria-roledescription="carrousel">
+              <div className="marque-frame">
                 <ProductPhoto product={slide} large alt={slide.name} />
+                <button
+                  type="button"
+                  className="marque-nav marque-prev"
+                  aria-label="Vitrine précédente"
+                  onClick={() => setIndex((value) => (value - 1 + count) % count)}
+                >
+                  ‹
+                </button>
+                <button
+                  type="button"
+                  className="marque-nav marque-next"
+                  aria-label="Vitrine suivante"
+                  onClick={() => setIndex((value) => (value + 1) % count)}
+                >
+                  ›
+                </button>
               </div>
-              <button
-                type="button"
-                className="vitrine-nav vitrine-next"
-                aria-label="Vitrine suivante"
-                onClick={() => setIndex((value) => (value + 1) % count)}
-              >
-                ›
-              </button>
-            </div>
-          </div>
-          <div className="vitrine-dots">
-            {slides.map((item, dot) => (
-              <button
-                key={item.slug}
-                type="button"
-                aria-label={`Afficher ${item.name}`}
-                className={dot === safeIndex ? "on" : undefined}
-                onClick={() => setIndex(dot)}
-              />
-            ))}
-          </div>
-        </section>
-      )}
-
-      <section className="wrap home-lead">
-        <p className="eyebrow">SNTRONIC</p>
-        <h1>Votre partenaire pour réussir vos projets IoT.</h1>
-        <p className="lede">
-          Une plateforme dédiée à la vente, à l’intégration et à l’accompagnement de projets IoT. De l’identification
-          des besoins à la mise en œuvre et à l’exploitation.
-        </p>
-        <div className="offer-grid">
-          {services.map((service) =>
-            service.to ? (
-              <Link key={service.title} className="offer-card" to={service.to}>
-                <h2>{service.short}</h2>
-                <p>{service.text}</p>
-              </Link>
-            ) : (
-              <article key={service.title} className="offer-card">
-                <h2>{service.short}</h2>
-                <p>{service.text}</p>
-              </article>
-            ),
+              <div className="marque-caption">
+                <div>
+                  <p>
+                    {String(safeIndex + 1).padStart(2, "0")}
+                    <span>{slide.line}</span>
+                  </p>
+                  <h2>{slide.name}</h2>
+                </div>
+                <Link className="btn btn-banner" to={`/produit/${slide.slug}`}>
+                  Découvrir
+                </Link>
+              </div>
+              <p className="marque-sum">{slide.summary}</p>
+              <div className="marque-dots">
+                {slides.map((item, dot) => (
+                  <button
+                    key={item.slug}
+                    type="button"
+                    aria-label={`Afficher ${item.name}`}
+                    className={dot === safeIndex ? "on" : undefined}
+                    onClick={() => setIndex(dot)}
+                  />
+                ))}
+              </div>
+            </aside>
           )}
         </div>
-        <p className="home-close">
-          De la fourniture des équipements à l’exploitation de vos données, nous vous accompagnons tout au long du
-          cycle de vie du projet.
-        </p>
-        <div className="home-actions">
-          <Link className="btn btn-primary" to="/catalogue">
-            Voir le catalogue
-          </Link>
-          <Link className="btn btn-clay" to="/contact">
-            Demander un devis
-          </Link>
+      </section>
+
+      <section className="wrap home-offers" aria-labelledby="services-title">
+        <SectionTitle id="services-title" title="De l’équipement à l’exploitation" href="/services" linkLabel="Tous les services" />
+        <div className="service-board">
+          {services.map((service, index) => (
+            <ServiceCard key={service.title} service={service} index={index} more />
+          ))}
+        </div>
+      </section>
+
+      <section className="home-brands" aria-labelledby="marques-title">
+        <div className="wrap">
+          <p className="eyebrow" id="marques-title">
+            Marques au catalogue
+          </p>
+          <ul>
+            {brands.map((brand) => (
+              <li key={brand}>{brand}</li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -168,16 +175,22 @@ export function HomePage() {
             </div>
           </article>
         )}
-        <div className="shelf-head">
-          <h2>Cas d’usage</h2>
-          <Link to="/usages">Tous les cas</Link>
-        </div>
+        <SectionTitle title="Cas d’usage" href="/usages" linkLabel="Tous les cas" />
         <div className="usage-grid home-usages">
-          {usages.map((usage) => (
-            <UsageCard key={usage.id} usage={usage} />
-          ))}
+          {usages.map((usage) => {
+            const cover = getProduct(usage.slugs[0]);
+            return (
+              <UsageCard
+                key={usage.id}
+                usage={usage}
+                cover={cover ? <ProductPhoto product={cover} alt="" /> : undefined}
+              />
+            );
+          })}
         </div>
-        <h2 className="home-aisle-title">Les équipements</h2>
+        <div className="shelf-head">
+          <h2>Les équipements</h2>
+        </div>
         <div className="family-grid">
           {aisles.map((aisle) => {
             const cover = getProduct(aisle.cover);
@@ -189,6 +202,36 @@ export function HomePage() {
               </Link>
             );
           })}
+        </div>
+        <div className="home-why">
+          <SectionTitle title="Pourquoi SNTRONIC" href="/a-propos" linkLabel="À propos" />
+          <ol className="reasons">
+            <li>
+              <span>01</span>
+              <h3>Vente et intégration</h3>
+              <p>Une plateforme dédiée à la vente, à l’intégration et à l’accompagnement de projets IoT.</p>
+            </li>
+            <li>
+              <span>02</span>
+              <h3>Du besoin à l’exploitation</h3>
+              <p>De l’identification des besoins à la mise en œuvre et à l’exploitation des solutions.</p>
+            </li>
+            <li>
+              <span>03</span>
+              <h3>Équipements et données</h3>
+              <p>De la fourniture des équipements à l’exploitation des données, sur tout le cycle de vie du projet.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section className="home-band">
+        <div className="wrap home-band-inner">
+          <h2>De la fourniture des équipements à l’exploitation de vos données.</h2>
+          <p>Nous vous accompagnons tout au long du cycle de vie du projet.</p>
+          <Link className="btn btn-banner" to="/contact">
+            Demander un devis
+          </Link>
         </div>
       </section>
     </>

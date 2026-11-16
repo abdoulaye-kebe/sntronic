@@ -70,7 +70,7 @@ export const usages = [
   },
 ] as const;
 
-export type MenuLink = { label: string; to: string };
+export type MenuLink = { label: string; to: string; hint?: string };
 
 export type MenuItem = {
   id: string;
@@ -86,9 +86,9 @@ export const menu: MenuItem[] = [
     label: "Produits",
     to: "/catalogue",
     children: [
-      ...aisles.map((aisle) => ({ label: aisle.name, to: `/catalogue/${aisle.id}` })),
-      { label: "Tout le catalogue", to: "/catalogue" },
-      { label: "Guide de choix", to: "/guide" },
+      ...aisles.map((aisle) => ({ label: aisle.name, to: `/catalogue/${aisle.id}`, hint: aisle.pitch })),
+      { label: "Tout le catalogue", to: "/catalogue", hint: "Devices, gateways, modules électroniques et domotique." },
+      { label: "Guide de choix", to: "/guide", hint: "LoRaWAN, LTE-M ou NB-IoT : qui porte le réseau." },
     ],
   },
   {

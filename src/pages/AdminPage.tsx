@@ -4,7 +4,7 @@ import { ProductPhoto } from "../components/ProductPhoto.tsx";
 import { useCatalog } from "../context/CatalogContext.tsx";
 import { getCategory } from "../data/catalog.ts";
 import { site } from "../data/site.ts";
-import { formatXOF, lineTtcXof } from "../lib/money.ts";
+import { formatXOF, isQuoted, lineTtcXof } from "../lib/money.ts";
 import { useTitle } from "../lib/useTitle.ts";
 
 const AUTH_KEY = "sntronic-admin";
@@ -86,7 +86,7 @@ export function AdminPage() {
                   </small>
                 </td>
                 <td>
-                  {product.quote ? "Sur devis" : formatXOF(lineTtcXof(product.priceHt))}
+                  {isQuoted(product) ? "Sur devis" : formatXOF(lineTtcXof(product.priceHt))}
                 </td>
                 <td>{product.stock > 0 ? product.stock : "Sur commande"}</td>
                 <td>

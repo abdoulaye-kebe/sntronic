@@ -10,6 +10,7 @@ export function Footer() {
       <div className="wrap footer-grid">
         <div>
           <Logo light />
+          <p>Connecter • Accompagner • Innover</p>
           <p>
             Vente, intégration et accompagnement de projets IoT : équipements, déploiement, conseil et exploitation
             des données.

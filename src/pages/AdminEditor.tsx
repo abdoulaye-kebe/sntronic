@@ -13,7 +13,7 @@ import {
 } from "../data/catalog.ts";
 import { site } from "../data/site.ts";
 import { readImageFile } from "../lib/imageFile.ts";
-import { formatXOF, lineTtcXof } from "../lib/money.ts";
+import { formatXOF, isQuoted, lineTtcXof } from "../lib/money.ts";
 import { useTitle } from "../lib/useTitle.ts";
 import { AdminLogin, useAdminAuth } from "./AdminPage.tsx";
 
@@ -214,9 +214,9 @@ export function AdminEditor() {
             </label>
           </div>
           <p className="fine">
-            Prix affiché : {formatXOF(lineTtcXof(Number(product.priceHt) || 0))} TTC, marge{" "}
-            {Math.round(site.marginRate * 100)} %, transport {Math.round(site.transportRate * 100)} % et TVA{" "}
-            {Math.round(site.vatRate * 100)} % compris.
+            {isQuoted(product)
+              ? "Prix affiché : Sur devis. Un prix d’achat à 0 reste « Sur devis » tant qu’il n’est pas renseigné."
+              : `Prix affiché : ${formatXOF(lineTtcXof(Number(product.priceHt) || 0))} TTC, marge ${Math.round(site.marginRate * 100)} %, transport ${Math.round(site.transportRate * 100)} % et TVA ${Math.round(site.vatRate * 100)} % compris.`}
           </p>
           <Field
             label="Délai si stock à zéro"

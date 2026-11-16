@@ -9,6 +9,7 @@ import { useCart } from "../context/CartContext.tsx";
 import { useCatalog } from "../context/CatalogContext.tsx";
 import { aisleOf, getAisle, relatedProducts } from "../data/catalog.ts";
 import { site } from "../data/site.ts";
+import { isQuoted } from "../lib/money.ts";
 import { useTitle } from "../lib/useTitle.ts";
 import { NotFoundPage } from "./NotFoundPage.tsx";
 
@@ -29,6 +30,7 @@ export function ProductPage() {
 
   const aisle = getAisle(aisleOf(product));
   const related = relatedProducts(product, 3, products);
+  const quoted = isQuoted(product);
   const safeQty = Math.min(Math.max(qty, 1), Math.max(product.stock, 1));
 
   return (
@@ -59,9 +61,9 @@ export function ProductPage() {
         </div>
         <ProductPhoto product={product} large alt={product.name} />
         <aside className="buybox">
-          <Price ht={product.priceHt} large quote={product.quote} />
-          {product.quote ? <p className="stock stock-out">Sur devis</p> : <Stock stock={product.stock} lead={product.lead} />}
-          {product.quote ? (
+          <Price ht={product.priceHt} large quote={quoted} />
+          {quoted ? null : <Stock stock={product.stock} lead={product.lead} />}
+          {quoted ? (
             <Link className="btn btn-clay" to={`/contact?produit=${product.slug}`}>
               Demander un devis
             </Link>
@@ -78,7 +80,7 @@ export function ProductPage() {
             </Link>
           )}
           <p className="fine">
-            {product.quote
+            {quoted
               ? "Le montant est confirmé sur devis, avant commande."
               : "Prix TTC en francs CFA, transport et TVA 18 % compris."}{" "}
             {site.delivery}

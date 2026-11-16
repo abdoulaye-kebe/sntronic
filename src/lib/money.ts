@@ -1,8 +1,16 @@
 import { site } from "../data/site.ts";
 
+/** Prix absent ou nul : on n’affiche jamais « 0 F CFA ». */
+export function isQuoted(product: { priceHt: number; quote?: boolean }): boolean {
+  return Boolean(product.quote) || !(Number(product.priceHt) > 0);
+}
+
 export function formatXOF(value: number): string {
-  const amount = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 0 }).format(value);
-  return `${amount} F CFA`;
+  const rounded = Math.round(value);
+  if (!Number.isFinite(rounded) || rounded === 0) return "Sur devis";
+  const amount = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 0 }).format(Math.abs(rounded));
+  const grouped = amount.replace(/[\u00A0\u202F\u2009\u2007 ]/g, "\u202F");
+  return `${rounded < 0 ? "−" : ""}${grouped}\u202FF\u00A0CFA`;
 }
 
 /** Prix public d’une unité : achat converti, marge, transport, puis TVA. */

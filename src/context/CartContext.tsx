@@ -7,6 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import { getProduct, type Product } from "../data/catalog.ts";
+import { isQuoted } from "../lib/money.ts";
 import { useCatalog } from "./CatalogContext.tsx";
 
 const STORAGE_KEY = "sntronic-cart";
@@ -60,7 +61,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const add = (slug: string, qty = 1) => {
     const product = getProduct(slug, products);
-    if (!product || product.stock <= 0 || qty <= 0) return;
+    if (!product || product.stock <= 0 || qty <= 0 || isQuoted(product)) return;
     setStored((current) => {
       const existing = current.find((line) => line.slug === slug);
       const nextQty = Math.min(product.stock, (existing?.qty ?? 0) + qty);

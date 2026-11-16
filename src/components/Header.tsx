@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useCart } from "../context/CartContext.tsx";
 import { useCatalog } from "../context/CatalogContext.tsx";
 import { menu, type MenuItem } from "../data/menu.ts";
-import { formatXOF, lineTtcXof } from "../lib/money.ts";
+import { formatXOF, isQuoted, lineTtcXof } from "../lib/money.ts";
 import { Logo } from "./Logo.tsx";
 
 export function Header() {
@@ -18,7 +18,9 @@ export function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
+  const mastRef = useRef<HTMLElement>(null);
   const section = sectionOf(location.pathname, location.search);
+  const productMenu = menu.find((item) => item.id === "produits");
 
   useEffect(() => {
     setQuery(params.get("q") ?? "");
@@ -44,6 +46,15 @@ export function Header() {
     return () => document.removeEventListener("keydown", onKey);
   }, [menuOpen, openMenu, searchOpen]);
 
+  useEffect(() => {
+    if (!openMenu) return;
+    const onPointer = (event: PointerEvent) => {
+      if (!mastRef.current?.contains(event.target as Node)) setOpenMenu(null);
+    };
+    document.addEventListener("pointerdown", onPointer);
+    return () => document.removeEventListener("pointerdown", onPointer);
+  }, [openMenu]);
+
   const results = useMemo(() => (query.trim().length < 2 ? [] : search(query).slice(0, 6)), [query, search]);
 
   function submitSearch(event: FormEvent) {
@@ -57,13 +68,13 @@ export function Header() {
   }
 
   return (
-    <header className={`mast ${searchOpen ? "search-open" : ""} ${menuOpen ? "menu-open" : ""}`}>
+    <header ref={mastRef} className={`mast ${searchOpen ? "search-open" : ""} ${menuOpen ? "menu-open" : ""}`}>
       <a className="skip" href="#contenu">
         Aller au contenu
       </a>
       <div className="shopbar">
         <div className="wrap shopbar-inner">
-          <Logo light />
+          <Logo />
           <form className="search search-wide" role="search" onSubmit={submitSearch}>
             <label className="sr-only" htmlFor="search">
               Rechercher une référence
@@ -91,7 +102,7 @@ export function Header() {
                         {product.name}
                         <small>{product.ref}</small>
                       </span>
-                      <strong>{product.quote ? "Sur devis" : formatXOF(lineTtcXof(product.priceHt))}</strong>
+                      <strong>{isQuoted(product) ? "Sur devis" : formatXOF(lineTtcXof(product.priceHt))}</strong>
                     </Link>
                   </li>
                 ))}
@@ -99,6 +110,10 @@ export function Header() {
             )}
           </form>
           <nav className="shop-links" aria-label="Raccourcis">
+            <Link className="btn btn-clay btn-devis" to="/contact">
+              <span className="devis-long">Demander un devis</span>
+              <span className="devis-short">Devis</span>
+            </Link>
             <button type="button" className="cart-link" aria-label={`Panier, ${count} article${count > 1 ? "s" : ""}`} onClick={() => setOpen(true)}>
               <BagIcon />
               <span className="cart-label">Panier</span>
@@ -144,12 +159,14 @@ export function Header() {
                 to={item.to ?? "/"}
                 className={section === item.id ? "on" : undefined}
                 aria-current={section === item.id ? "page" : undefined}
+                aria-expanded={item.children ? openMenu === item.id : undefined}
+                aria-controls={item.id === "produits" ? "mega-produits" : undefined}
                 onFocus={() => setOpenMenu(item.children ? item.id : null)}
               >
                 {item.label}
                 {item.children ? <Caret /> : null}
               </Link>
-              {item.children && openMenu === item.id && (
+              {item.children && item.id !== "produits" && openMenu === item.id && (
                 <ul className="site-drop">
                   {item.children.map((child) => (
                     <li key={child.label}>
@@ -161,6 +178,21 @@ export function Header() {
             </div>
           ))}
         </nav>
+        {openMenu === "produits" && productMenu?.children && (
+          <div className="mega-panel" id="mega-produits" role="region" aria-label="Produits">
+            <div className="wrap mega-grid">
+              {productMenu.children.map((child) => (
+                <Link key={child.to} className="mega-link" to={child.to}>
+                  <MegaIcon to={child.to} />
+                  <span>
+                    <strong>{child.label}</strong>
+                    {child.hint ? <small>{child.hint}</small> : null}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       {menuOpen && (
         <nav className="nav-mobile wrap" aria-label="Menu mobile">
@@ -230,6 +262,68 @@ function sectionOf(pathname: string, search: string): string {
   if (pathname.startsWith("/contact") || pathname.startsWith("/a-propos") || pathname.startsWith("/livraison")) return "contact";
   if (pathname.startsWith("/catalogue") || pathname.startsWith("/produit") || pathname.startsWith("/guide")) return "produits";
   return "";
+}
+
+function MegaIcon({ to }: { to: string }) {
+  const common = {
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.7,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true as const,
+  };
+  if (to.includes("gateways")) {
+    return (
+      <svg {...common}>
+        <path d="M12 20v-6" />
+        <path d="M8.5 11a6 6 0 0 1 7 0" />
+        <path d="M6 8.2a10 10 0 0 1 12 0" />
+        <circle cx="12" cy="20" r="0.8" fill="currentColor" stroke="none" />
+      </svg>
+    );
+  }
+  if (to.includes("modules")) {
+    return (
+      <svg {...common}>
+        <rect x="4" y="4" width="16" height="16" rx="2" />
+        <path d="M9 4v4M15 4v4M9 16v4M15 16v4M4 9h4M4 15h4M16 9h4M16 15h4" />
+      </svg>
+    );
+  }
+  if (to.includes("domotique")) {
+    return (
+      <svg {...common}>
+        <path d="M4 11.5 12 5l8 6.5V20H4z" />
+        <path d="M10 20v-6h4v6" />
+      </svg>
+    );
+  }
+  if (to.endsWith("/guide")) {
+    return (
+      <svg {...common}>
+        <circle cx="12" cy="12" r="8" />
+        <path d="M12 8v4l2.5 1.5" />
+      </svg>
+    );
+  }
+  if (to === "/catalogue") {
+    return (
+      <svg {...common}>
+        <rect x="4" y="4" width="7" height="7" rx="1.4" />
+        <rect x="13" y="4" width="7" height="7" rx="1.4" />
+        <rect x="4" y="13" width="7" height="7" rx="1.4" />
+        <rect x="13" y="13" width="7" height="7" rx="1.4" />
+      </svg>
+    );
+  }
+  return (
+    <svg {...common}>
+      <rect x="7" y="3.5" width="10" height="17" rx="2" />
+      <path d="M10 7.5h4M10 11h4M10 14.5h2.5" />
+    </svg>
+  );
 }
 
 function Caret() {

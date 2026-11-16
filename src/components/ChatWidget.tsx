@@ -185,6 +185,7 @@ export function ChatWidget() {
         className="advisor-toggle"
         aria-expanded={open}
         aria-label={open ? "Fermer le conseiller" : "Ouvrir le conseiller"}
+        data-label="Conseiller"
         onClick={() => setOpen((value) => !value)}
       >
         <AdvisorIcon />
