@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #e3e1db;
+  --paper: #ffffff;
   --ink: #1c1e22;
   --muted: #5c6068;
-  --line: #cecbc4;
-  --card: #f2f1ed;
+  --line: #e4e1da;
+  --card: #ffffff;
   --pine: #2c3a4f;
   --pine-deep: #1a2330;
   --clay: #6e5430;
